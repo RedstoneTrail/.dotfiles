@@ -1,0 +1,13 @@
+{
+  "Lua.workspace.library": [
+    "C:\\tools\\neovim\\nvim-win64\\share\\nvim\\runtime\\lua"
+  ],
+  "Lua.runtime.version": "LuaJIT",
+  "Lua.runtime.path": [
+    "?.lua",
+    "?/init.lua",
+    "C:\\tools\\neovim\\nvim-win64\\share\\nvim\\runtime\\lua\\%s\\?.lua"
+  ],
+  "Lua.workspace.ignoreDir": ["plugin"],
+  "Lua.diagnostics.globals": ["vim"]
+}
