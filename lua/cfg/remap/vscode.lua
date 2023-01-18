@@ -29,6 +29,9 @@ vim.keymap.set("n", "<leader>t", get_vscode_cmd("terminal.focus"))
 -- Goto symbol using `<leader>sy`
 vim.keymap.set("n", "<leader>sy", get_vscode_cmd("workbench.action.gotoSymbol"))
 
+-- Focus source control using `<leader>git`
+vim.keymap.set("n", "<leader>git", get_vscode_cmd("workbench.scm.focus"))
+
 -- Hide panels using `<leader>h`
 vim.keymap.set("n", "<leader>h", function()
     call_vscode_cmd("workbench.action.closeSidebar")

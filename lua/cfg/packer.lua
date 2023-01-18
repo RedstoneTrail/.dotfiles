@@ -12,6 +12,11 @@ end
 local packer_bootstrap = ensure_packer()
 
 return require("packer").startup(function(use)
+    use("wbthomason/packer.nvim")
+    use("nvim-lua/plenary.nvim")
+    use("nvim-lua/popup.nvim")
+    use("ggandor/leap.nvim")
+
     if vim.g.vscode then
 
     else
@@ -19,9 +24,9 @@ return require("packer").startup(function(use)
         use("nvim-lualine/lualine.nvim")
         use("ThePrimeagen/vim-be-good")
         use("alec-gibson/nvim-tetris")
+        use("nvim-telescope/telescope.nvim")
     end
 
-    use("ggandor/leap.nvim")
 
     if packer_bootstrap then
         require("packer").sync()
