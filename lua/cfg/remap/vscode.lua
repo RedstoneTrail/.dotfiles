@@ -37,3 +37,6 @@ vim.keymap.set("n", "<leader>h", function()
     call_vscode_cmd("workbench.action.closeSidebar")
     call_vscode_cmd("workbench.action.closePanel")
 end)
+
+-- Command pallete using `<leader>p`
+vim.keymap.set("n", "<leader>p", get_vscode_cmd("workbench.action.showCommands"))

@@ -16,11 +16,17 @@ return require("packer").startup(function(use)
     use("nvim-lua/plenary.nvim")
     use("nvim-lua/popup.nvim")
     use("ggandor/leap.nvim")
+    use({
+        "navarasu/onedark.nvim",
+        as = "onedark",
+        config = function()
+            vim.cmd("colorscheme onedark")
+        end
+    })
 
     if vim.g.vscode then
 
     else
-        use("navarasu/onedark.nvim")
         use("nvim-lualine/lualine.nvim")
         use("ThePrimeagen/vim-be-good")
         use("alec-gibson/nvim-tetris")
