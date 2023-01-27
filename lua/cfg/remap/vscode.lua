@@ -20,9 +20,6 @@ vim.keymap.set("n", "<leader>ex", get_vscode_cmd("workbench.view.explorer"))
 -- Live share panel using `<leader>sh`
 vim.keymap.set("n", "<leader>sh", get_vscode_cmd("liveshare.session.focus"))
 
--- Focus in liveshare to the side using `<leader>fsh`
-vim.keymap.set("n", "<leader>fsh", get_vscode_cmd("liveshare.followToTheSide"))
-
 -- Focus terminal using `<leader>t`
 vim.keymap.set("n", "<leader>t", get_vscode_cmd("terminal.focus"))
 
@@ -38,5 +35,11 @@ vim.keymap.set("n", "<leader>h", function()
     call_vscode_cmd("workbench.action.closePanel")
 end)
 
--- Command pallete using `<leader>p`
-vim.keymap.set("n", "<leader>p", get_vscode_cmd("workbench.action.showCommands"))
+-- Command pallete using `<leader>pp`
+vim.keymap.set("n", "<leader>pp", get_vscode_cmd("workbench.action.showCommands"))
+
+-- Current files using `<leader>ff`
+vim.keymap.set("n", "<leader>ff", get_vscode_cmd("workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup"))
+
+-- Focus in liveshare to the side using `<leader>fc`
+vim.keymap.set("n", "<leader>fc", get_vscode_cmd("liveshare.followToTheSide"))
