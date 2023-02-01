@@ -2,7 +2,7 @@
   "Lua.workspace.library": [
     "C:\\tools\\neovim\\nvim-win64\\share\\nvim\\runtime\\lua"
   ],
-  "Lua.runtime.version": "LuaJIT",
+  "Lua.runtime.version": "Lua 5.4",
   "Lua.runtime.path": [
     "?.lua",
     "?/init.lua",

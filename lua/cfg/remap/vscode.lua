@@ -38,8 +38,16 @@ end)
 -- Command pallete using `<leader>pp`
 vim.keymap.set("n", "<leader>pp", get_vscode_cmd("workbench.action.showCommands"))
 
--- Current files using `<leader>ff`
-vim.keymap.set("n", "<leader>ff", get_vscode_cmd("workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup"))
+-- Current files using `<leader>fo`
+vim.keymap.set("n", "<leader>fo", get_vscode_cmd("workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup"))
+
+-- Find files using `<leader>ff`
+vim.keymap.set("n", "<leader>ff", function()
+    local opts = { command = "fzf" };
+    vim.api.nvim_call_function("VSCodeNotify", {
+        "command-runner.run", opts
+    })
+end)
 
 -- Focus in liveshare to the side using `<leader>fc`
 vim.keymap.set("n", "<leader>fc", get_vscode_cmd("liveshare.followToTheSide"))
