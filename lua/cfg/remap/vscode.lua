@@ -43,9 +43,8 @@ vim.keymap.set("n", "<leader>fo", get_vscode_cmd("workbench.action.quickOpenPrev
 
 -- Find files using `<leader>ff`
 vim.keymap.set("n", "<leader>ff", function()
-    local opts = { command = "fzf" };
     vim.api.nvim_call_function("VSCodeNotify", {
-        "command-runner.run", opts
+        "fzf.run"
     })
 end)
 
