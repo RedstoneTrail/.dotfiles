@@ -42,11 +42,7 @@ vim.keymap.set("n", "<leader>pp", get_vscode_cmd("workbench.action.showCommands"
 vim.keymap.set("n", "<leader>fo", get_vscode_cmd("workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup"))
 
 -- Find files using `<leader>ff`
-vim.keymap.set("n", "<leader>ff", function()
-    vim.api.nvim_call_function("VSCodeNotify", {
-        "fzf.run"
-    })
-end)
+vim.keymap.set("n", "<leader>ff", get_vscode_cmd("fzf.run"))
 
 -- Focus in liveshare to the side using `<leader>fc`
 vim.keymap.set("n", "<leader>fc", get_vscode_cmd("liveshare.followToTheSide"))
