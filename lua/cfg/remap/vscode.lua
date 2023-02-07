@@ -44,5 +44,8 @@ vim.keymap.set("n", "<leader>fo", get_vscode_cmd("workbench.action.quickOpenPrev
 -- Find files using `<leader>ff`
 vim.keymap.set("n", "<leader>ff", get_vscode_cmd("fzf.run"))
 
+-- Find workspace using `<leader>fw`
+vim.keymap.set("n", "<leader>fw", get_vscode_cmd("workbench.action.openRecent"))
+
 -- Focus in liveshare to the side using `<leader>fc`
 vim.keymap.set("n", "<leader>fc", get_vscode_cmd("liveshare.followToTheSide"))
