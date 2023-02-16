@@ -1,4 +1,4 @@
-/plugin
+/nvim/plugin
 **/node_modules
 **/*lock*
 **/out
