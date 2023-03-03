@@ -10,3 +10,8 @@ $env:FZF_DEFAULT_OPTS = "
     --layout=reverse
     --preview 'bat --style=numbers --color=always {}'
 "
+
+Invoke-Expression -Command $(gh completion -s powershell | Out-String)
+Invoke-Expression -Command $(rustup completions powershell | Out-String)
+# not currently supported
+# Invoke-Expression -Command $(rustup completions powershell cargo | Out-String)
