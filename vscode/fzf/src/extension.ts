@@ -47,6 +47,7 @@ export function activate(context: ExtensionContext) {
         `cmd /c 'set FZF_DEFAULT_COMMAND= && set FZF_DEFAULT_OPTS= && fzf --no-preview < ${pathListPath} > ${selectedPath}'`
       )
     )
+
     task.presentationOptions = {
       reveal: TaskRevealKind.Always,
       focus: true,
@@ -62,6 +63,7 @@ export function activate(context: ExtensionContext) {
       if (!fs.existsSync(selectedPath)) return
 
       const result = fs.readFileSync(selectedPath, "utf-8").split(":")[0]
+
       workspace.openTextDocument(files[+result]).then((doc) => {
         window.showTextDocument(doc)
       })

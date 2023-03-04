@@ -12,4 +12,4 @@ To use this repo, I have several symlinks set up so that, for example Neovim can
 | ---------------------------------------------------------------------------------- | ------------------------------------------ |
 | $USERPROFILE/OneDrive/Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1 | .dotfiles/Microsoft.PowerShell_profile.ps1 |
 | $USERPROFILE/AppData/Local/nvim                                                    | .dotfiles/nvim                             |
-| $USERPROFILE/.vscode/extensions/fzf                                                | .dotfiles/vscode-extensions/fzf            |
+| $USERPROFILE/.vscode/extensions/fzf                                                | .dotfiles/vscode/fzf                       |
