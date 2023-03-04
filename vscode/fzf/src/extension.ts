@@ -54,8 +54,11 @@ export function activate(context: ExtensionContext) {
       panel: TaskPanelKind.Dedicated,
       showReuseMessage: false,
       clear: true,
+      // This closes the task panel automatically, but is not in the typedefs
+      // @ts-ignore
+      close: true,
     }
-    task.isBackground = true
+    task.isBackground = false
 
     const execution = await vscode.tasks.executeTask(task)
     vscode.tasks.onDidEndTaskProcess(async (endedExecution) => {
@@ -66,6 +69,7 @@ export function activate(context: ExtensionContext) {
 
       workspace.openTextDocument(files[+result]).then((doc) => {
         window.showTextDocument(doc)
+        vscode.commands.executeCommand("workbench.action.closePanel")
       })
       console.log("fzf: changed file")
     })
