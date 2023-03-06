@@ -23,9 +23,6 @@ vim.keymap.set("n", "<leader>sh", get_vscode_cmd("liveshare.session.focus"))
 -- Focus terminal using `<leader>t`
 vim.keymap.set("n", "<leader>t", get_vscode_cmd("terminal.focus"))
 
--- Goto symbol using `<leader>sy`
-vim.keymap.set("n", "<leader>sy", get_vscode_cmd("workbench.action.gotoSymbol"))
-
 -- Focus source control using `<leader>git`
 vim.keymap.set("n", "<leader>git", get_vscode_cmd("workbench.scm.focus"))
 
@@ -38,7 +35,7 @@ end)
 -- Command pallete using `<leader>pp`
 vim.keymap.set("n", "<leader>pp", get_vscode_cmd("workbench.action.showCommands"))
 
--- Current files using `<leader>fo`
+-- Find open file using `<leader>fo`
 vim.keymap.set("n", "<leader>fo", get_vscode_cmd("workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup"))
 
 -- Find files using `<leader>ff`
@@ -47,5 +44,8 @@ vim.keymap.set("n", "<leader>ff", get_vscode_cmd("fzf.run"))
 -- Find workspace using `<leader>fw`
 vim.keymap.set("n", "<leader>fw", get_vscode_cmd("workbench.action.openRecent"))
 
--- Focus in liveshare to the side using `<leader>fc`
-vim.keymap.set("n", "<leader>fc", get_vscode_cmd("liveshare.followToTheSide"))
+-- Find person in liveshare to the side using `<leader>fp`
+vim.keymap.set("n", "<leader>fp", get_vscode_cmd("liveshare.followToTheSide"))
+
+-- Find symbol using `<leader>fs`
+vim.keymap.set("n", "<leader>fs", get_vscode_cmd("workbench.action.gotoSymbol"))
