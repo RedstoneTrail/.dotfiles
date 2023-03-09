@@ -64,6 +64,7 @@ export function activate(context: ExtensionContext) {
     vscode.tasks.onDidEndTaskProcess(async (endedExecution) => {
       if (endedExecution.execution != execution) return
       if (!fs.existsSync(selectedPath)) return
+      if (endedExecution.exitCode == 1) return
 
       const result = fs.readFileSync(selectedPath, "utf-8").split(":")[0]
 
