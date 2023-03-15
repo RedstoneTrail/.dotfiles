@@ -1,6 +1,6 @@
 local lsp = require("lsp-zero")
 
-vim.keymap.set("n", "<leader>f", ":LspZeroFormat<Enter>")
+vim.keymap.set("n", "<leader>fmt", ":LspZeroFormat<Enter>")
 
 lsp.preset("recommended")
 
