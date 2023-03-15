@@ -15,7 +15,9 @@ return require("packer").startup(function(use)
     use("wbthomason/packer.nvim")
     use("nvim-lua/plenary.nvim")
     use("nvim-lua/popup.nvim")
+
     use("ggandor/leap.nvim")
+
     use({
         "navarasu/onedark.nvim",
         as = "onedark",
@@ -30,7 +32,17 @@ return require("packer").startup(function(use)
         use("nvim-lualine/lualine.nvim")
         use("ThePrimeagen/vim-be-good")
         use("alec-gibson/nvim-tetris")
-        use("nvim-telescope/telescope.nvim")
+        use({
+            "nvim-telescope/telescope.nvim",
+            config = function()
+                local telescope = require("telescope.builtin")
+
+                vim.keymap.set("n", "<leader>ff", telescope.find_files, {})
+                vim.keymap.set("n", "<leader>fg", telescope.live_grep, {})
+                vim.keymap.set("n", "<leader>fb", telescope.buffers, {})
+                vim.keymap.set("n", "<leader>fh", telescope.help_tags, {})
+            end
+        })
         use {
             "VonHeikemen/lsp-zero.nvim",
             branch = "v1.x",
