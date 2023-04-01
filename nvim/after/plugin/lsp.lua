@@ -9,6 +9,7 @@ if not vim.g.vscode then
 	-- https://github.com/williamboman/mason-lspconfig.nvim#available-lsp-servers
 	lsp.ensure_installed({
 		"lua_ls",
+		"rust_analyzer"
 	})
 
 	lsp.nvim_workspace()
@@ -29,8 +30,8 @@ if not vim.g.vscode then
 	lsp.setup_nvim_cmp({
 		mapping = cmp_mappings
 	})
-
-	lsp.on_attach(function(client, bufnr)
+	
+	local function on_attach(client, bufnr)
 		local opts = { buffer = bufnr, remap = false }
 
 		vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
@@ -43,7 +44,29 @@ if not vim.g.vscode then
 		vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
 		vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
 		vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
-	end)
+	end
+
+	lsp.on_attach(on_attach)
+
+	lsp.skip_server_setup({ "rust_analyzer" })
 
 	lsp.setup()
+
+	local rust_tools = require("rust-tools")
+
+	rust_tools.setup({
+		server = {
+			on_attach = function(client, bufnr)
+				on_attach(client, bufnr)
+				rust_tools.inlay_hints.set()
+				vim.keymap.set("n", "<leader>K", rust_tools.hover_actions.hover_actions,
+				{ buffer = bufnr, remap = false })
+			end
+		}
+	})
+
+
+	vim.diagnostic.config({
+		virtual_text = true
+	})
 end
