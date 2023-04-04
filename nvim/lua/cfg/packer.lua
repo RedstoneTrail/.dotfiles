@@ -20,18 +20,25 @@ return require("packer").startup(function(use)
 		"navarasu/onedark.nvim",
 		as = "onedark"
 	})
-	use("nvim-lualine/lualine.nvim")
 	use("ThePrimeagen/vim-be-good")
 	use("alec-gibson/nvim-tetris")
-	use("tpope/vim-fugitive")
+	use("linrongbin16/lsp-progress.nvim")
 	use("nvim-telescope/telescope.nvim")
+
+	-- Git
+	use("tpope/vim-fugitive")
+
+	-- Statusline
+	use("nvim-lualine/lualine.nvim")
+
+	-- LSP
+	use("neovim/nvim-lspconfig")
 	use("simrat39/rust-tools.nvim")
 	use({
 		"VonHeikemen/lsp-zero.nvim",
 		branch = "v1.x",
 		requires = {
 			-- LSP Support
-			{ "neovim/nvim-lspconfig" },
 			{ "williamboman/mason.nvim" },
 			{ "williamboman/mason-lspconfig.nvim" },
 			-- Autocompletion
@@ -49,6 +56,5 @@ return require("packer").startup(function(use)
 
 	if packer_bootstrap then
 		require("packer").sync()
-	else
 	end
 end)

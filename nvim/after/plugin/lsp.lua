@@ -30,9 +30,11 @@ if not vim.g.vscode then
 	lsp.setup_nvim_cmp({
 		mapping = cmp_mappings
 	})
-	
+
 	local function on_attach(client, bufnr)
 		local opts = { buffer = bufnr, remap = false }
+
+		lsp.buffer_autoformat()
 
 		vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
 		vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
@@ -60,8 +62,59 @@ if not vim.g.vscode then
 				on_attach(client, bufnr)
 				rust_tools.inlay_hints.set()
 				vim.keymap.set("n", "<leader>K", rust_tools.hover_actions.hover_actions,
-				{ buffer = bufnr, remap = false })
+					{ buffer = bufnr, remap = false })
 			end
+		},
+		settings = {
+			["rust-analyzer"] = {
+				completions = {
+					snippets = {
+						custom = vim.json.decode([[
+							{
+								"Arc::new": {
+                                					"postfix": "arc",
+	                                    				"body": "Arc::new(${receiver})",
+	                                    				"requires": "std::sync::Arc",
+	                                    				"description": "Put the expression into an `Arc`",
+        	                            				"scope": "expr"
+                	                			},
+								"Rc::new": {
+									"postfix": "rc",
+									"body": "Rc::new(${receiver})",
+									"requires": "std::rc::Rc",
+									"description": "Put the expression into an `Rc`",
+									"scope": "expr"
+								},
+								"Box::pin": {
+									"postfix": "pinbox",
+									"body": "Box::pin(${receiver})",
+									"requires": "std::boxed::Box",
+									"description": "Put the expression into a pinned `Box`",
+									"scope": "expr"
+								},
+								"Ok": {
+									"postfix": "ok",
+									"body": "Ok(${receiver})",
+									"description": "Wrap the expression in a `Result::Ok`",
+									"scope": "expr"
+								},
+								"Err": {
+									"postfix": "err",
+									"body": "Err(${receiver})",
+									"description": "Wrap the expression in a `Result::Err`",
+									"scope": "expr"
+								},
+								"Some": {
+									"postfix": "some",
+									"body": "Some(${receiver})",
+									"description": "Wrap the expression in an `Option::Some`",
+									"scope": "expr"
+								}
+							}
+						]])
+					}
+				}
+			}
 		}
 	})
 
