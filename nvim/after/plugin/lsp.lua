@@ -63,59 +63,59 @@ if not vim.g.vscode then
 				rust_tools.inlay_hints.set()
 				vim.keymap.set("n", "<leader>K", rust_tools.hover_actions.hover_actions,
 					{ buffer = bufnr, remap = false })
-			end
-		},
-		settings = {
-			["rust-analyzer"] = {
-				completions = {
-					snippets = {
-						custom = vim.json.decode([[
-							{
-								"Arc::new": {
-                                					"postfix": "arc",
-	                                    				"body": "Arc::new(${receiver})",
-	                                    				"requires": "std::sync::Arc",
-	                                    				"description": "Put the expression into an `Arc`",
-        	                            				"scope": "expr"
-                	                			},
-								"Rc::new": {
-									"postfix": "rc",
-									"body": "Rc::new(${receiver})",
-									"requires": "std::rc::Rc",
-									"description": "Put the expression into an `Rc`",
-									"scope": "expr"
-								},
-								"Box::pin": {
-									"postfix": "pinbox",
-									"body": "Box::pin(${receiver})",
-									"requires": "std::boxed::Box",
-									"description": "Put the expression into a pinned `Box`",
-									"scope": "expr"
-								},
-								"Ok": {
-									"postfix": "ok",
-									"body": "Ok(${receiver})",
-									"description": "Wrap the expression in a `Result::Ok`",
-									"scope": "expr"
-								},
-								"Err": {
-									"postfix": "err",
-									"body": "Err(${receiver})",
-									"description": "Wrap the expression in a `Result::Err`",
-									"scope": "expr"
-								},
-								"Some": {
-									"postfix": "some",
-									"body": "Some(${receiver})",
-									"description": "Wrap the expression in an `Option::Some`",
-									"scope": "expr"
+			end,
+			settings = {
+				["rust-analyzer"] = {
+					completions = {
+						snippets = {
+							custom = vim.json.decode([[
+								{
+									"Arc::new": {
+										"postfix": "arc",
+										"body": "Arc::new(${receiver})",
+										"requires": "std::sync::Arc",
+										"description": "Put the expression into an `Arc`",
+										"scope": "expr"
+									},
+									"Rc::new": {
+										"postfix": "rc",
+										"body": "Rc::new(${receiver})",
+										"requires": "std::rc::Rc",
+										"description": "Put the expression into an `Rc`",
+										"scope": "expr"
+									},
+									"Box::pin": {
+										"postfix": "pinbox",
+										"body": "Box::pin(${receiver})",
+										"requires": "std::boxed::Box",
+										"description": "Put the expression into a pinned `Box`",
+										"scope": "expr"
+									},
+									"Ok": {
+										"postfix": "ok",
+										"body": "Ok(${receiver})",
+										"description": "Wrap the expression in a `Result::Ok`",
+										"scope": "expr"
+									},
+									"Err": {
+										"postfix": "err",
+										"body": "Err(${receiver})",
+										"description": "Wrap the expression in a `Result::Err`",
+										"scope": "expr"
+									},
+									"Some": {
+										"postfix": "some",
+										"body": "Some(${receiver})",
+										"description": "Wrap the expression in an `Option::Some`",
+										"scope": "expr"
+									}
 								}
-							}
-						]])
+							]])
+						}
 					}
 				}
 			}
-		}
+		},
 	})
 
 
