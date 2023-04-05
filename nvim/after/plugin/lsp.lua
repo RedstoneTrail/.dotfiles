@@ -66,6 +66,9 @@ if not vim.g.vscode then
 			end,
 			settings = {
 				["rust-analyzer"] = {
+					checkOnSave = {
+						command = "clippy"
+					},
 					completions = {
 						snippets = {
 							custom = vim.json.decode([[
