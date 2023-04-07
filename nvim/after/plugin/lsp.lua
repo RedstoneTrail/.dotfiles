@@ -1,8 +1,6 @@
 -- Only load on native
 if not vim.g.vscode then
-	local lsp = require("lsp-zero")
-
-	vim.keymap.set("n", "<leader>fmt", ":LspZeroFormat<Enter>")
+	local lsp = require("lsp-zero").preset({})
 
 	lsp.preset("recommended")
 
@@ -12,23 +10,27 @@ if not vim.g.vscode then
 		"rust_analyzer"
 	})
 
-	lsp.nvim_workspace()
-
 	local cmp = require("cmp")
-	local cmp_select = { behavior = cmp.SelectBehavior.Select }
-	local cmp_mappings = lsp.defaults.cmp_mappings({
-		["<C-p>"] = cmp.mapping.select_prev_item(cmp_select),
-		["<C-n>"] = cmp.mapping.select_next_item(cmp_select),
-		["<Tab>"] = cmp.mapping.confirm({ select = true }),
-		["<C-Space>"] = cmp.mapping.complete(),
-	})
+	local cmp_action = require("lsp-zero").cmp_action()
 
-	lsp.set_preferences({
-		sign_icons = {}
-	})
-
-	lsp.setup_nvim_cmp({
-		mapping = cmp_mappings
+	cmp.setup({
+		sources = {
+			{ name = "nvim_lua" },
+			{ name = "path" },
+			{ name = "nvim_lsp" },
+			{ name = "buffer",  keyword_length = 3 },
+			{ name = "luasnip", keyword_length = 2 },
+		},
+		window = {
+			completion = cmp.config.window.bordered(),
+			documentation = cmp.config.window.bordered(),
+		},
+		mapping = {
+			["<C-Space>"] = cmp.mapping.complete(),
+			["<Tab>"] = cmp.mapping.confirm({ select = true }),
+			["<C-n>"] = cmp_action.luasnip_jump_forward(),
+			["<C-p>"] = cmp_action.luasnip_jump_backward(),
+		}
 	})
 
 	local function on_attach(client, bufnr)
@@ -52,8 +54,27 @@ if not vim.g.vscode then
 
 	lsp.skip_server_setup({ "rust_analyzer" })
 
+	-- lua/neovim config config
+	local runtime_path = vim.split(package.path, ";")
+	table.insert(runtime_path, "lua/?.lua")
+	table.insert(runtime_path, "lua/?/init.lua")
+
+	require("lspconfig").lua_ls.setup(lsp.nvim_lua_ls({
+		settings = {
+			Lua = {
+				runtime = {
+					path = runtime_path
+				},
+				workspace = {
+					library = vim.api.nvim_get_runtime_file('', true),
+				},
+			}
+		}
+	}))
+
 	lsp.setup()
 
+	-- rust config
 	local rust_tools = require("rust-tools")
 
 	rust_tools.setup({

@@ -22,8 +22,18 @@ return require("packer").startup(function(use)
 	})
 	use("ThePrimeagen/vim-be-good")
 	use("alec-gibson/nvim-tetris")
-	use("linrongbin16/lsp-progress.nvim")
+	use("tpope/vim-commentary")
 	use("nvim-telescope/telescope.nvim")
+	use("j-hui/fidget.nvim")
+	use({
+		"nvim-neo-tree/neo-tree.nvim",
+		branch = "v2.x",
+		requires = {
+			"nvim-lua/plenary.nvim",
+			"nvim-tree/nvim-web-devicons",
+			"MunifTanjim/nui.nvim",
+		}
+	})
 
 	-- Git
 	use("tpope/vim-fugitive")
@@ -36,7 +46,7 @@ return require("packer").startup(function(use)
 	use("simrat39/rust-tools.nvim")
 	use({
 		"VonHeikemen/lsp-zero.nvim",
-		branch = "v1.x",
+		branch = "v2.x",
 		requires = {
 			-- LSP Support
 			{ "williamboman/mason.nvim" },
