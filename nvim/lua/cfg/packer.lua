@@ -16,11 +16,11 @@ return require("packer").startup(function(use)
 	use("nvim-lua/plenary.nvim")
 	use("nvim-lua/popup.nvim")
 	use("ggandor/leap.nvim")
-	use({
-		"navarasu/onedark.nvim",
-		as = "onedark"
-	})
 	use("ThePrimeagen/vim-be-good")
+	use({
+		"catppuccin/nvim",
+		as = "catppuccin"
+	})
 	use("alec-gibson/nvim-tetris")
 	use("tpope/vim-commentary")
 	use("nvim-telescope/telescope.nvim")

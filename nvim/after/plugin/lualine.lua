@@ -1,7 +1,11 @@
 if not vim.g.vscode then
 	local lualine = require("lualine")
 
-	lualine.setup({})
+	lualine.setup({
+		options = {
+			theme = "catppuccin"
+		}
+	})
 
 	vim.cmd([[
 		augroup lualine_augroup
