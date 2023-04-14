@@ -9,6 +9,7 @@ if not vim.g.vscode then
 			fidget = true,
 			mason = true
 		},
+		transparent_background = true,
 		no_italic = true
 	})
 	vim.cmd.colorscheme("catppuccin")
