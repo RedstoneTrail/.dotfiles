@@ -16,11 +16,14 @@ function FindWorkspace {
 	Get-ChildItem -Attributes Directory -Path $workspaces | % { $_.FullName } | fzf --no-preview | % { vim $_ }
 }
 
+function fzf-db {	
+	rg --files | rg .*\.db | fzf --preview "sqlite3 {} .tables" | % { sqlite3 $_ }
+}
+
 Set-PSReadlineKeyHandler -Chord "Ctrl+f,Ctrl+w" -ScriptBlock { 
 	[Microsoft.PowerShell.PSConsoleReadLine]::RevertLine()
 	[Microsoft.PowerShell.PSConsoleReadLine]::Insert("FindWorkspace")
 	[Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine()
-
 }
 
 Invoke-Expression -Command $(gh completion -s powershell | Out-String)
