@@ -13,7 +13,7 @@ $workspaces=@("E:/Alan","E:/Alan/Rust","E:/Alan/Web Dev",[Environment]::GetFolde
 
 function FindWorkspace {
 	cd E:\Alan
-	Get-ChildItem -Attributes Directory -Path $workspaces | % { $_.FullName } | fzf --no-preview | % { vim $_ }
+	Get-ChildItem -Attributes Directory -Path $workspaces | % { $_.FullName } | fzf --no-preview | % { cd $_ }
 }
 
 Set-PSReadlineKeyHandler -Chord Ctrl+f,Ctrl+w -ScriptBlock { 
@@ -58,7 +58,7 @@ Set-PSReadlineKeyHandler -Chord "Ctrl+a,k","Ctrl+a,UpArrow" -ScriptBlock {
 
 Set-PSReadlineKeyHandler -Chord "Ctrl+a,l","Ctrl+a,RightArrow" -ScriptBlock { 
 	[Microsoft.PowerShell.PSConsoleReadLine]::RevertLine()
-	[Microsoft.PowerShell.PSConsoleReadLine]::Insert("wt -w 0 move-focus right")
+	[Microsoft.PowerShell.PSConsoleReadLine]::Insert("wt -w 2 move-focus right")
 	[Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine()
 }
 
