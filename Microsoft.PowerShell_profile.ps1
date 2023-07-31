@@ -8,7 +8,10 @@ $env:FZF_DEFAULT_OPTS = "
 "
 
 New-Alias -Name vim -Value nvim
-New-Alias -Name just -Value just --shell powershell.exe --shell-arg -c
+
+function just {
+	cmd /c just --shell powershell.exe --shell-arg -c $args
+}
 
 $workspaces=@("E:/Alan","E:/Alan/Rust","E:/Alan/Web Dev",[Environment]::GetFolderPath("Desktop"))
 
