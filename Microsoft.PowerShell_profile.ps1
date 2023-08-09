@@ -30,13 +30,13 @@ function fzf-db {
 	rg --files | rg .*\.db | fzf --preview "sqlite3 {} .tables" | % { sqlite3 $_ }
 }
 
-Set-PSReadlineKeyHandler -Chord 'Ctrl+a,"' -ScriptBlock {
+Set-PSReadlineKeyHandler -Chord 'Ctrl+a,%' -ScriptBlock {
 	[Microsoft.PowerShell.PSConsoleReadLine]::RevertLine()
 	[Microsoft.PowerShell.PSConsoleReadLine]::Insert("wt -w 0 split-pane -V")
 	[Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine()
 }
 
-Set-PSReadlineKeyHandler -Chord 'Ctrl+a,%' -ScriptBlock { 
+Set-PSReadlineKeyHandler -Chord 'Ctrl+a,"' -ScriptBlock { 
 	[Microsoft.PowerShell.PSConsoleReadLine]::RevertLine()
 	[Microsoft.PowerShell.PSConsoleReadLine]::Insert("wt -w 0 split-pane --horizontal")
 	[Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine()
