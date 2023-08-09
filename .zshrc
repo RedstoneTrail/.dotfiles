@@ -102,7 +102,7 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-PATH="$PATH:$HOME/.fzf/bin:$HOME/bin"
+PATH=$PATH:$HOME/.fzf/bin:$HOME/bin:$HOME/.zvm/bin
 
 alias nvim="~/bin/nvim.appimage"
 alias vim="nvim"
