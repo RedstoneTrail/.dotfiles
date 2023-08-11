@@ -113,3 +113,23 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+function find-project {
+	cd ~/projects
+	rg_prefix="rg --column --line-number --no-heading --color=never --smart-case"	
+	preview_cmd="bat --color=always {1} --highlight-line {2}" 
+	open_cmd="echo ~/projects/\$(echo {1} | sed -e 's/\//\n/g' | head -n 1 | xargs echo)"
+	fzf-tmux -p 80%,80% -- \
+		--query "$1" \
+		--bind "start:unbind(change)+reload(ls)+enable-search+change-preview(ls {1})" \
+		--bind "change:reload(sleep 0.1; $rg_prefix {q} || true)" \
+		--bind "enter:become($open_cmd)" \
+		--bind "shift-tab:unbind(change)+reload(ls)+enable-search+change-preview(ls {1})" \
+		--bind "tab:rebind(change)+reload($rg_prefix {q})+disable-search+change-preview($preview_cmd)" \
+		--preview $preview_cmd \
+		--preview-window "right,60%,+{2},~1" \
+		--disabled \
+		--delimiter :
+}
+
+alias open-project="cd \$(find-project)"
