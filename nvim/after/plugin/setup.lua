@@ -2,9 +2,13 @@ vim.g.mapleader = " "
 vim.opt.clipboard = "unnamedplus"
 vim.opt.updatetime = 50
 
-require("cfg.remap")
+if vim.g.vscode then
+	require("cfg.remap.vscode")
+else
+	vim.keymap.set("n", "<C-u>", "<C-u>zz")
+	vim.keymap.set("n", "<C-d>", "<C-d>zz")
+	vim.keymap.set("t", "<ESC>", "<C-\\><C-n>")
 
-if not vim.g.vscode then
 	vim.opt.nu = true
 	vim.opt.relativenumber = true
 

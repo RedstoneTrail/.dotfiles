@@ -24,7 +24,6 @@ return require("packer").startup(function(use)
 	use("alec-gibson/nvim-tetris")
 	use("tpope/vim-commentary")
 	use("nvim-telescope/telescope.nvim")
-	use("j-hui/fidget.nvim")
 	use({
 		"nvim-neo-tree/neo-tree.nvim",
 		branch = "v2.x",
@@ -43,26 +42,26 @@ return require("packer").startup(function(use)
 
 	-- LSP
 	use("neovim/nvim-lspconfig")
+	use("williamboman/mason-lspconfig.nvim")
+	use("williamboman/mason.nvim")
+
 	use("simrat39/rust-tools.nvim")
-	use({
-		"VonHeikemen/lsp-zero.nvim",
-		branch = "v2.x",
-		requires = {
-			-- LSP Support
-			{ "williamboman/mason.nvim" },
-			{ "williamboman/mason-lspconfig.nvim" },
-			-- Autocompletion
-			{ "hrsh7th/nvim-cmp" },
-			{ "hrsh7th/cmp-nvim-lsp" },
-			{ "hrsh7th/cmp-buffer" },
-			{ "hrsh7th/cmp-path" },
-			{ "saadparwaiz1/cmp_luasnip" },
-			{ "hrsh7th/cmp-nvim-lua" },
-			-- Snippets
-			{ "L3MON4D3/LuaSnip" },
-			{ "rafamadriz/friendly-snippets" },
-		}
-	})
+	use("folke/neodev.nvim")
+	use("j-hui/fidget.nvim")
+
+	-- cmp
+	use("hrsh7th/nvim-cmp")
+	use("hrsh7th/cmp-nvim-lsp")
+	use("hrsh7th/cmp-buffer")
+	use("hrsh7th/cmp-path")
+	use("saadparwaiz1/cmp_luasnip")
+	use("L3MON4D3/LuaSnip")
+	use("rafamadriz/friendly-snippets")
+
+	-- Treesitter
+	use("nvim-treesitter/nvim-treesitter")
+	use("nvim-treesitter/nvim-treesitter-context")
+	use("nvim-treesitter/playground")
 
 	if packer_bootstrap then
 		require("packer").sync()
