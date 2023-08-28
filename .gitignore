@@ -1,5 +1,4 @@
 /nvim/plugin
 **/node_modules
-**/*lock*
 **/out
 **/.luarc.json

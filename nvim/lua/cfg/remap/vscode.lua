@@ -1,11 +1,11 @@
 local function call_vscode_cmd(cmd)
-    vim.api.nvim_call_function("VSCodeNotify", { cmd })
+	vim.api.nvim_call_function("VSCodeNotify", { cmd })
 end
 
 local function get_vscode_cmd(cmd)
-    return function()
-        call_vscode_cmd(cmd)
-    end
+	return function()
+		call_vscode_cmd(cmd)
+	end
 end
 
 -- Toggle zen mode using `<leader>z`
@@ -28,8 +28,8 @@ vim.keymap.set("n", "<leader>git", get_vscode_cmd("workbench.scm.focus"))
 
 -- Hide panels using `<leader>h`
 vim.keymap.set("n", "<leader>h", function()
-    call_vscode_cmd("workbench.action.closeSidebar")
-    call_vscode_cmd("workbench.action.closePanel")
+	call_vscode_cmd("workbench.action.closeSidebar")
+	call_vscode_cmd("workbench.action.closePanel")
 end)
 
 -- Command pallete using `<leader>pp`
