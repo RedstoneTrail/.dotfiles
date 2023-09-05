@@ -21,6 +21,7 @@ else
 	vim.keymap.set("n", "<C-u>", "<C-u>zz")
 	vim.keymap.set("n", "<C-d>", "<C-d>zz")
 	vim.keymap.set("t", "<ESC>", "<C-\\><C-n>")
+	vim.keymap.set("x", " md", ":!prettier --parser markdown<CR>", { desc = "Format [M]ark[d]own Range" })
 
 	vim.opt.nu = true
 	vim.opt.relativenumber = true
