@@ -72,7 +72,9 @@ ZSH_THEME="agnoster"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git tmux)
 
-ZSH_TMUX_AUTOSTART=true
+if [[ $TERM_PROGRAM != "vscode" ]]; then
+	ZSH_TMUX_AUTOSTART=true
+fi
 
 source $ZSH/oh-my-zsh.sh
 
@@ -106,6 +108,8 @@ PATH=$PATH:$HOME/.fzf/bin:$HOME/bin:$HOME/.zvm/bin
 
 alias nvim="~/bin/nvim.appimage"
 alias vim="nvim"
+
+export EDITOR=nvim
 
 . "$HOME/.cargo/env"
 
