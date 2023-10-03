@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+
+[ ! -d ~/.config/nvim ] && ln -st ~/.config "$(dirname $0)/../nvim"
+[ ! -d ~/scripts ] && ln -st ~ "$(dirname $0)/../scripts"
