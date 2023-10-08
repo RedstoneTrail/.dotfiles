@@ -2,3 +2,5 @@
 
 [ ! -d ~/.config/nvim ] && ln -st ~/.config "$(dirname $0)/../nvim"
 [ ! -d ~/scripts ] && ln -st ~ "$(dirname $0)/../scripts"
+[ ! -f ~/.zshrc ] && ln -s ~ "$(dirname $0)/../.zshrc"
+[ ! -f ~/.tmux.conf ] && ln -s ~ "$(dirname $0)/../.tmux.conf" 
