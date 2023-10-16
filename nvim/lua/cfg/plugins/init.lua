@@ -15,5 +15,12 @@ return {
 	{ "alec-gibson/nvim-tetris",  cmd = "Tetris" },
 	{ "tpope/vim-fugitive",       cmd = "Git" },
 	"tpope/vim-commentary",
+	{
+		"kylechui/nvim-surround",
+		event = "VeryLazy",
+		config = function()
+			require("nvim-surround").setup({})
+		end
+	}
 	-- "ggandor/leap.nvim"
 }

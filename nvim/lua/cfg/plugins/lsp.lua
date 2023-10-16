@@ -1,7 +1,41 @@
+local prettier_filetypes = {
+	css = true,
+	graphql = true,
+	html = true,
+	javascript = true,
+	javascriptreact = true,
+	json = true,
+	less = true,
+	markdown = true,
+	scss = true,
+	typescript = true,
+	typescriptreact = true,
+	yaml = true,
+}
+
+local format_on_save = vim.api.nvim_create_augroup("FormatOnSave", { clear = true });
+
 vim.api.nvim_create_autocmd("BufWritePre", {
-	group = vim.api.nvim_create_augroup("FormatOnSave", { clear = true }),
-	callback = function(_)
-		vim.lsp.buf.format()
+	group = format_on_save,
+	callback = function(ev)
+		local ft = vim.fn.getbufvar(ev.buf, "&filetype")
+		if prettier_filetypes[ft] then
+			return
+		end
+
+		vim.lsp.buf.format({ bufnr = ev.buf })
+	end,
+})
+
+vim.api.nvim_create_autocmd("BufWritePost", {
+	group = format_on_save,
+	callback = function(ev)
+		local ft = vim.fn.getbufvar(ev.buf, "&filetype")
+		if not prettier_filetypes[ft] then
+			return
+		end
+
+		vim.cmd("!prettier % --use-tabs -w")
 	end,
 })
 
