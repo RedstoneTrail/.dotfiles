@@ -13,7 +13,7 @@ return {
 	},
 	{ "ThePrimeagen/vim-be-good", cmd = "VimBeGood" },
 	{ "alec-gibson/nvim-tetris",  cmd = "Tetris" },
-	{ "tpope/vim-fugitive",       cmd = "Git" },
+	{ "tpope/vim-fugitive",       cmd = "Git",      cond = not vim.g.vscode },
 	"tpope/vim-commentary",
 	{
 		"kylechui/nvim-surround",
