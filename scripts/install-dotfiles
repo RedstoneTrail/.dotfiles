@@ -1,6 +1,10 @@
 #!/usr/bin/env sh
 
-[ ! -d ~/.config/nvim ] && ln -st ~/.config "$(dirname $0)/../nvim"
-[ ! -d ~/scripts ] && ln -st ~ "$(dirname $0)/../scripts"
-[ ! -f ~/.zshrc ] && ln -s ~ "$(dirname $0)/../.zshrc"
-[ ! -f ~/.tmux.conf ] && ln -s ~ "$(dirname $0)/../.tmux.conf" 
+cd "$(dirname $0)/.."
+
+[ ! -d ~/.config/nvim ] && ln -st ~/.config "$(realpath ./nvim)"
+[ ! -d ~/.config/sway ] && ln -st ~/.config "$(realpath ./sway)"
+[ ! -d ~/.config/alacritty ] && ln -st ~/.config "$(realpath ./alacritty)"
+[ ! -d ~/scripts ] && ln -st ~ "$(realpath ./scripts)"
+[ ! -f ~/.zshrc ] && ln -s ~ "$(realpath .zshrc)"
+[ ! -f ~/.tmux.conf ] && ln -s ~ "$(realpath .tmux.conf)" 
