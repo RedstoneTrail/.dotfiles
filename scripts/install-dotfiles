@@ -4,6 +4,7 @@ cd "$(dirname $0)/.."
 
 [ ! -d ~/.config/nvim ] && ln -st ~/.config "$(realpath ./nvim)"
 [ ! -d ~/.config/sway ] && ln -st ~/.config "$(realpath ./sway)"
+[ ! -d ~/.config/i3status ] && ln -st ~/.config "$(realpath ./i3status)"
 [ ! -d ~/.config/alacritty ] && ln -st ~/.config "$(realpath ./alacritty)"
 [ ! -d ~/scripts ] && ln -st ~ "$(realpath ./scripts)"
 [ ! -f ~/.zshrc ] && ln -s ~ "$(realpath .zshrc)"
