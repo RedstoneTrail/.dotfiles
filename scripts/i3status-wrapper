@@ -1,0 +1,16 @@
+#!/bin/sh
+
+i3status | while :
+do
+        read i3status
+
+	if pactl get-source-mute @DEFAULT_SOURCE@ | grep -q "no"; then
+		source_info=""
+	else
+		source_info=""
+	fi
+
+	source_info+="  $(pactl get-source-volume @DEFAULT_SOURCE@ | head -n1 | cut -d% -f1 | awk '{ print $(NF) }')%"
+	
+        echo "$i3status | $source_info" || exit 1
+done
