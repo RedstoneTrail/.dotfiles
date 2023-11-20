@@ -1,0 +1,48 @@
+set $rosewater #f2d5cf
+set $flamingo  #eebebe
+set $pink      #f4b8e4
+set $mauve     #ca9ee6
+set $red       #e78284
+set $maroon    #ea999c
+set $peach     #ef9f76
+set $green     #a6d189
+set $teal      #81c8be
+set $sky       #99d1db
+set $sapphire  #85c1dc
+set $blue      #8caaee
+set $lavender  #babbf1
+set $text      #c6d0f5
+set $subtext1  #b5bfe2
+set $subtext0  #a5adce
+set $overlay2  #949cbb
+set $overlay1  #838ba7
+set $overlay0  #737994
+set $surface2  #626880
+set $surface1  #51576d
+set $surface0  #414559
+set $base      #303446
+set $mantle    #292c3c
+set $crust     #232634
+
+set {
+    $col_urgent                    $red
+    $col_focused                   $green
+    $col_unfocused                 $base
+    $col_focused_inactive          $col_unfocused
+    $col_text_dark                 $base
+    $col_text_light                $text
+    $col_urgent_border             $col_urgent
+    $col_focused_border            $col_focused
+    $col_unfocused_border          $col_unfocused
+    $col_focused_inactive_border   $col_focused_inactive
+}
+
+# class                 border                       background             text           indicator             child_border
+client.focused          $col_focused_border          $col_focused           $col_text_dark $col_focused          $col_focused_border
+client.focused_inactive $col_focused_inactive_border $col_focused_inactive  $col_text_dark $col_focused_inactive $col_focused_inactive_border
+client.unfocused        $col_unfocused_border        $col_unfocused         $col_text_dark $col_unfocused        $col_unfocused_border
+client.urgent           $col_urgent_border           $col_urgent            $col_text_dark $col_urgent           $col_urgent_border
+
+for_window [class="^.*"] border pixel 2
+
+output * bg wallpaper.jpg fill

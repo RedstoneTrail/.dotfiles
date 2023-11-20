@@ -10,10 +10,7 @@ set $term alacritty
 set $browser firefox
 set $menu dmenu_path | dmenu | xargs swaymsg exec --
 
-### Output configuration
-#
-# Default wallpaper (more resolutions are available in @datadir@/backgrounds/sway/)
-# output * bg @datadir@/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
+include catppuccin-frappe
 
 font pango:"FiraMono Nerd Font" Regular 11
 
@@ -42,7 +39,11 @@ floating_modifier $mod normal
 bindsym $mod+Shift+c reload
 
 # Exit sway (logs you out of your Wayland session)
-bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+bindsym $mod+Shift+e exec swaynag \
+	-t warning \
+	-m 'Exit or shutdown?' \
+	-B 'Exit' 'swaymsg exit' \
+	-B 'Shutdown' 'shutdown -h now'
 
 # Moving around:
 #
@@ -142,9 +143,10 @@ bar {
 	status_command ~/scripts/i3status-wrapper
 
 	colors {
-		statusline #ffffff
-		background #323232
-		inactive_workspace #32323200 #32323200 #5c5c5c
+		statusline $text
+		background $base
+		inactive_workspace $base $base $text
+		focused_workspace $green $green $col_text_dark
 	}
 }
 
@@ -161,5 +163,8 @@ mode "source-volume" {
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
+
+bindsym Print exec grim -t png - | wl-copy -t image/png
+bindsym Shift+Print exec grim -t png -g "$(slurp)" - | wl-copy -t image/png
 
 include @sysconfdir@/sway/config.d/*
