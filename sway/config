@@ -11,6 +11,7 @@ set $browser firefox
 set $menu dmenu_path | dmenu | xargs swaymsg exec --
 
 include catppuccin-frappe
+gaps inner 10
 
 font pango:"FiraMono Nerd Font" Regular 11
 
