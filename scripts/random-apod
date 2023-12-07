@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [ $1 = "reset" ]; then
+if [[ $1 = "reset" ]]; then
 	pid=$(pidof swaybg)
 	swaybg -i ~/.config/sway/wallpaper.jpg -m fill &
 	sleep 1
@@ -19,7 +19,7 @@ url=https://api.nasa.gov/planetary/apod\?api_key=$key\&date=$date\&thumbs=true
 data=$(curl -Ss $url)
 url=$(echo $data | jq -r .hdurl || .thumbnail_url)
 
-if [ $url = "null" ]; then
+if [[ $url = "null" ]]; then
 	echo $url
 	echo $data
 	exit 1

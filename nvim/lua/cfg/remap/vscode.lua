@@ -12,7 +12,13 @@ end
 vim.keymap.set("n", "<leader>z", get_vscode_cmd("extension.toggleZenMode"))
 
 vim.keymap.set("n", "[d", get_vscode_cmd("editor.action.marker.next"))
+
 vim.keymap.set("n", "]d", get_vscode_cmd("editor.action.marker.prev"))
+
+vim.keymap.set("n", "<leader>ca", get_vscode_cmd("editor.action.refactor"))
+
+vim.keymap.set("n", "<leader>rn", get_vscode_cmd("editor.action.rename"))
+
 vim.keymap.set("n", "<leader>ft", get_vscode_cmd("workbench.view.explorer"))
 
 -- Live share panel using `<leader>sh`

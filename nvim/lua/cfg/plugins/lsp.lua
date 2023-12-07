@@ -64,6 +64,7 @@ return {
 		"folke/neodev.nvim",
 		"simrat39/rust-tools.nvim",
 	},
+	cond = not vim.g.vscode,
 	init = function()
 		capabilities = vim.lsp.protocol.make_client_capabilities()
 		capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
