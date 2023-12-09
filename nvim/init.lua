@@ -35,5 +35,3 @@ else
 end
 
 require("lazy").setup("cfg.plugins")
-
--- require("cfg.packer")
