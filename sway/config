@@ -140,17 +140,18 @@ mode "resize" {
     bindsym Escape mode "default"
 }
 
-bar {
-	position top
-	status_command ~/scripts/i3status-wrapper
+# bar {
+# 	position top
+# 	status_command ~/scripts/i3status-wrapper
 
-	colors {
-		statusline $text
-		background $base
-		inactive_workspace $base $base $text
-		focused_workspace $green $green $col_text_dark
-	}
-}
+# 	colors {
+# 		statusline $text
+# 		background $base
+# 		inactive_workspace $base $base $text
+# 		focused_workspace $green $green $col_text_dark
+# 	}
+# }
+bar swaybar_command waybar
 
 bindsym $mod+Shift+v mode "source-volume"
 mode "source-volume" {
