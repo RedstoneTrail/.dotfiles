@@ -8,33 +8,28 @@ if [[ $1 = "reset" ]]; then
 	exit
 fi
 
-download() {
-	key=$(cat ~/scripts/apod-api-key)
-	date=$(
-		shuf -n1 \
-		-i $(date -d '2000-01-01' '+%s')-$(date '+%s') \
-		| xargs -I{} date -d '@{}' +%Y-%m-%d
-	)
+key=$(cat ~/scripts/apod-api-key)
+date=$(
+	shuf -n1 \
+	-i $(date -d '2000-01-01' '+%s')-$(date '+%s') \
+	| xargs -I{} date -d '@{}' +%Y-%m-%d
+)
 
-	url=https://api.nasa.gov/planetary/apod\?api_key=$key\&date=$date\&thumbs=true
-	data=$(curl -Ss $url)
-	url=$(echo $data | jq -r .hdurl || .thumbnail_url)
+url=https://api.nasa.gov/planetary/apod\?api_key=$key\&date=$date\&thumbs=true
+data=$(curl -Ss $url)
+url=$(echo $data | jq -r .hdurl || .thumbnail_url)
 
-	if [[ $url = "null" ]]; then
-		echo $url
-		echo $data
-		exit 1
-	fi
+if [[ $url = "null" ]]; then
+	echo $url
+	echo $data
+	exit 1
+fi
 
-	ext=$(echo $url | awk -F. '{print $NF}')
+ext=$(echo $url | awk -F. '{print $NF}')
 
-	[ -f /tmp/apod.$ext ] && rm /tmp/apod.$ext
-	curl -Sso /tmp/apod.$ext $url
-}
+[ -f /tmp/apod.$ext ] && rm /tmp/apod.$ext
+curl -Sso /tmp/apod.$ext $url
 
-download
-
-ext=jpg
 IFS=, read w h < <(cat /sys/class/graphics/*/virtual_size)
 padding=20
 ffmpeg -y -pix_fmt rgba -i /tmp/apod.$ext \
