@@ -1,7 +1,7 @@
 while :; do
 	capacity=$(cat /sys/class/power_supply/BAT1/capacity)
 	status=$(cat /sys/class/power_supply/BAT1/status)
-	if [ $capacity -lt 20 && $status -ne "Charging" ]; then
+	if [[ $capacity -lt 20 && $status != "Charging" ]]; then
 		notify-send "Battery Low" "$capacity%"
 		sleep 60
 	else
