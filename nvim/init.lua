@@ -15,11 +15,10 @@ vim.g.mapleader = " "
 vim.opt.clipboard = "unnamedplus"
 vim.opt.updatetime = 50
 
-vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
-	pattern = "*.wgsl",
-	callback = function()
-		vim.bo.filetype = "wgsl"
-	end,
+vim.filetype.add({
+	extension = {
+		wgsl = "wgsl",
+	},
 })
 
 if vim.g.vscode then
@@ -27,6 +26,12 @@ if vim.g.vscode then
 else
 	vim.keymap.set("n", "<C-u>", "<C-u>zz")
 	vim.keymap.set("n", "<C-d>", "<C-d>zz")
+	vim.keymap.set("n", "n", "nzzzv")
+	vim.keymap.set("n", "N", "Nzzzv")
+
+	vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
+	vim.keymap.set("x", "<leader>p", [["_dP]])
+
 	vim.keymap.set("t", "<ESC>", "<C-\\><C-n>")
 	vim.keymap.set("x", " md", ":!prettier --parser markdown<CR>", { desc = "Format [M]ark[d]own Range" })
 

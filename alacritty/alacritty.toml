@@ -1,0 +1,10 @@
+import = ["/home/alan/.config/alacritty/catppuccin-frappe.toml"]
+
+[env]
+TERM = "xterm-256color"
+
+[font.normal]
+family = "FiraMono Nerd Font"
+
+[window]
+opacity = 0.9
