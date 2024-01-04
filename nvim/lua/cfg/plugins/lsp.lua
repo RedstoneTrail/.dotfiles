@@ -1,18 +1,3 @@
-local format_on_save = vim.api.nvim_create_augroup("FormatOnSave", { clear = true })
-
-vim.api.nvim_create_autocmd("BufWritePre", {
-	group = format_on_save,
-	callback = function(ev)
-		vim.lsp.buf.format({ bufnr = ev.buf })
-	end,
-})
-
-vim.diagnostic.config({
-	virtual_text = true,
-})
-
-vim.o.signcolumn = "yes"
-
 local function on_attach(client, bufnr)
 	local function nmap(key, action, desc)
 		vim.keymap.set("n", key, action, { buffer = bufnr, desc = desc })
@@ -31,25 +16,26 @@ local function on_attach(client, bufnr)
 
 	nmap("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
 	nmap("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
+	nmap("K", vim.lsp.buf.hover, "Hover Documentation")
 
-	if client.name == "rust_analyzer" then
-		local rust_tools = require("rust-tools")
-		rust_tools.inlay_hints.enable()
-		nmap("K", rust_tools.hover_actions.hover_actions, "Hover Documentation")
-	else
-		nmap("K", vim.lsp.buf.hover, "Hover Documentation")
-	end
+	require("inlay-hints").on_attach(client, bufnr)
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
-local servers = {
-	rust_analyzer = {
-		settings = require("cfg.lsp.settings.rust_analyzer"),
+vim.g.rustaceanvim = {
+	server = {
+		capabilities = capabilities,
+		on_attach = on_attach,
+		settings = {
+			["rust-analyzer"] = {
+				checkOnSave = {
+					command = "clippy",
+				},
+			},
+		},
 	},
-	lua_ls = true,
-	zls = true,
 }
 
 return {
@@ -62,12 +48,19 @@ return {
 			"folke/neodev.nvim",
 		},
 		cond = not vim.g.vscode,
-		init = function()
+		config = function()
 			require("neodev").setup()
 
 			require("mason").setup()
 			require("mason-lspconfig").setup({
-				ensure_installed = vim.tbl_keys(servers),
+				ensure_installed = {
+					"rust_analyzer",
+					"lua_ls",
+					"zls",
+					"cssls",
+					"emmet_ls",
+					"html",
+				},
 				handlers = {
 					function(server_name)
 						require("lspconfig")[server_name].setup({
@@ -75,20 +68,24 @@ return {
 							on_attach = on_attach,
 						})
 					end,
+					-- rustaceanvim handles this
 					rust_analyzer = function() end,
 				},
 			})
 		end,
 	},
 	{
-		"simrat39/rust-tools.nvim",
-		ft = { "rust", "rs" },
+		"mrcjkb/rustaceanvim",
+		cond = not vim.g.vscode,
+		version = "^3",
+		ft = { "rust" },
+	},
+	{
+		"simrat39/inlay-hints.nvim",
 		cond = not vim.g.vscode,
 		config = function()
-			require("rust-tools").setup({
-				capabilites = capabilities,
-				on_attach = on_attach,
-				settings = servers.rust_analyzer.settings,
+			require("inlay-hints").setup({
+				renderer = "inlay-hints/render/eol",
 			})
 		end,
 	},
