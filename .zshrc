@@ -110,7 +110,7 @@ alias vim="nvim"
 
 export EDITOR=nvim
 
-. "$HOME/.cargo/env"
+[ -f $HOME/.cargo/env ] && . "$HOME/.cargo/env"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"

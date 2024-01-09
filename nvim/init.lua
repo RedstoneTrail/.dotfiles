@@ -1,3 +1,7 @@
+-- TODO: Collaborative editing:
+-- https://github.com/chipsenkbeil/distant.nvim
+-- https://github.com/64-Tesseract/moment
+
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
 	vim.fn.system({
@@ -24,6 +28,11 @@ vim.filetype.add({
 		wgsl = "wgsl",
 	},
 })
+
+vim.keymap.set("n", "<C-h>", "<C-w>h")
+vim.keymap.set("n", "<C-j>", "<C-w>j")
+vim.keymap.set("n", "<C-k>", "<C-w>k")
+vim.keymap.set("n", "<C-l>", "<C-w>l")
 
 if vim.g.vscode then
 	require("cfg.vscode")

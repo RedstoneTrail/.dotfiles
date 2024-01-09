@@ -98,15 +98,10 @@ return {
 			})
 		end,
 	},
-	{
-		"nvim-treesitter/nvim-treesitter-context",
-		dependencies = { "nvim-treesitter/nvim-treesitter" },
-		config = function()
-			require("treesitter-context").setup({ enable = true })
-		end,
-	},
+	{ "nvim-treesitter/nvim-treesitter-context" },
 	{
 		"nvim-treesitter/playground",
 		cmd = { "TSPlaygroundToggle", "TSPlayground" },
 	},
+	{ "nvim-treesitter/nvim-treesitter-textobjects" },
 }

@@ -9,5 +9,4 @@ return {
 		{ "<leader>fd", "<cmd>Telescope diagnostics<cr>", desc = "[F]ind [D]iagnostic" },
 	},
 	cmd = "Telescope",
-	cond = not vim.g.vscode,
 }
