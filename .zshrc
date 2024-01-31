@@ -73,6 +73,7 @@ ZSH_THEME="agnoster"
 plugins=(git tmux)
 
 if [[ $TERM_PROGRAM != "vscode" ]]; then
+	ZSH_TMUX_AUTOQUIT=false
 	ZSH_TMUX_AUTOSTART=true
 fi
 

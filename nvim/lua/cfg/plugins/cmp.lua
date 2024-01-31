@@ -26,7 +26,7 @@ return {
 			sources = {
 				{ name = "path" },
 				{ name = "nvim_lsp" },
-				{ name = "buffer",  keyword_length = 3 },
+				{ name = "buffer", keyword_length = 3 },
 				{ name = "luasnip", keyword_length = 2 },
 			},
 			window = {
@@ -40,7 +40,7 @@ return {
 				["<C-p>"] = cmp.mapping.select_prev_item(),
 				["<Down>"] = cmp.mapping.select_next_item(),
 				["<Up>"] = cmp.mapping.select_prev_item(),
-			}
+			},
 		})
 
 		---@diagnostic disable-next-line: missing-fields
@@ -54,5 +54,5 @@ return {
 		})
 	end,
 	cond = not vim.g.vscode,
-	event = { "InsertEnter", "CmdlineEnter", },
+	event = { "InsertEnter", "CmdlineEnter" },
 }

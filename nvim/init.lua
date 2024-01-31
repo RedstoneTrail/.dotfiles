@@ -52,7 +52,7 @@ else
 		virtual_text = true,
 	})
 
-	require("cfg.autosave")
+	require("cfg.autoformat")
 end
 
 require("lazy").setup("cfg.plugins")
