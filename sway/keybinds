@@ -1,0 +1,122 @@
+# Logo key
+set $mod Mod4
+
+set $left h
+set $down j
+set $up k
+set $right l
+
+set $term alacritty
+set $browser firefox
+for_window [app_id="^launcher$"] floating enable, sticky enable, resize set 60 ppt 25 ppt
+set $menu exec $term --class launcher -e sway-launcher-desktop
+
+# Reload the configuration file
+bindsym $mod+Shift+c reload
+
+bindsym $mod+Shift+e exec swaynag \
+	-t warning \
+	-m 'Exit or shutdown?' \
+	-B 'Exit' 'swaymsg exit' \
+	-B 'Shutdown' 'shutdown -h now'
+
+bindsym $mod+Shift+q kill
+
+bindsym $mod+Return exec $term
+bindsym $mod+b exec $browser
+bindsym $mod+d exec $menu
+
+bindsym $mod+f fullscreen
+
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
+
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move right
+
+bindsym $mod+Ctrl+h split h
+bindsym $mod+Ctrl+v split v
+
+bindsym $mod+1 workspace number 1
+bindsym $mod+2 workspace number 2
+bindsym $mod+3 workspace number 3
+bindsym $mod+4 workspace number 4
+bindsym $mod+5 workspace number 5
+bindsym $mod+6 workspace number 6
+bindsym $mod+7 workspace number 7
+bindsym $mod+8 workspace number 8
+bindsym $mod+9 workspace number 9
+bindsym $mod+0 workspace number 10
+
+bindsym $mod+Shift+1 move container to workspace number 1
+bindsym $mod+Shift+2 move container to workspace number 2
+bindsym $mod+Shift+3 move container to workspace number 3
+bindsym $mod+Shift+4 move container to workspace number 4
+bindsym $mod+Shift+5 move container to workspace number 5
+bindsym $mod+Shift+6 move container to workspace number 6
+bindsym $mod+Shift+7 move container to workspace number 7
+bindsym $mod+Shift+8 move container to workspace number 8
+bindsym $mod+Shift+9 move container to workspace number 9
+bindsym $mod+Shift+0 move container to workspace number 10
+
+bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+minus scratchpad show
+
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+space focus mode_toggle
+
+floating_modifier $mod normal
+
+bindsym $mod+a focus parent
+
+bindsym $mod+r mode "resize"
+mode "resize" {
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+
+    bindsym $left resize shrink width 10px
+    bindsym $down resize grow height 10px
+    bindsym $up resize shrink height 10px
+    bindsym $right resize grow width 10px
+}
+
+bindsym $mod+v mode "source-volume"
+mode "source-volume" {
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+
+	bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-source-volume @DEFAULT_SOURCE@ +5%
+	bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-source-volume @DEFAULT_SOURCE@ -5%
+	bindsym XF86AudioMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
+}
+
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
+
+bindsym Print exec grim -t png - | wl-copy -t image/png
+bindsym Shift+Print exec grim -t png -g "$(slurp)" - | wl-copy -t image/png
+
+bindsym $mod+m mode "media"
+mode "media" {
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+
+	bindsym space exec playerctl play-pause
+	bindsym $left exec playerctl position 5-
+	bindsym $right exec playerctl position 5+
+}
+
+# NASA apod for background
+bindsym $mod+n exec ~/scripts/random-apod
+bindsym $mod+Shift+n exec ~/scripts/random-apod reset
+
+# Switch the current container between different layout styles
+# bindsym $mod+s layout stacking
+# bindsym $mod+w layout tabbed
+# bindsym $mod+e layout toggle split
+

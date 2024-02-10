@@ -1,10 +1,10 @@
 * {
-	font-family: "FiraMono Nerd Font";
+  font-family: "FiraMono Nerd Font";
 }
 
 window#waybar {
-	background: transparent;
-	color: #c6d0f5;
+  background: transparent;
+  color: #c6d0f5;
 }
 
 #clock,
@@ -22,44 +22,45 @@ window#waybar {
 #mode,
 #idle_inhibitor,
 #scratchpad,
-#mpd {
-	background: #303446;
-	margin: 4px;
-	padding: 0.2em 1em;
-	border-radius: 1000px;
+#mpd,
+#mpris {
+  background: #303446;
+  margin: 4px;
+  padding: 0.2em 1em;
+  border-radius: 1000px;
 }
 
 @keyframes battery-pulse {
-	0% {
-		background: #303446;
-	}
+  0% {
+    background: #303446;
+  }
 
-	100% {
-		background: #d33;
-	}
+  100% {
+    background: #d33;
+  }
 }
 
 #battery.critical {
-	animation: battery-pulse 1s ease-in-out alternate infinite;
+  animation: battery-pulse 1s ease-in-out alternate infinite;
 }
 
 #workspaces {
-	background: #303446;
-	margin: 4px;
-	border-radius: 1000px;
+  background: #303446;
+  margin: 4px;
+  border-radius: 1000px;
 }
 
 #workspaces button {
-	background: #303446;
-	color: #c6d0f5;
-	border: none;
-	box-shadow: none;
-	text-shadow: none;
-	padding: 0.2em 0.4em;
-	border-radius: 1000px;
+  background: #303446;
+  color: #c6d0f5;
+  border: none;
+  box-shadow: none;
+  text-shadow: none;
+  padding: 0.2em 0.4em;
+  border-radius: 1000px;
 }
 
 #workspaces button.focused {
-	background-color: #a6d189;
-	color: #303446;
+  background-color: #a6d189;
+  color: #303446;
 }
