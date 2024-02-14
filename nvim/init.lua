@@ -46,13 +46,14 @@ else
 
 	vim.opt.nu = true
 	vim.opt.relativenumber = true
-	vim.o.signcolumn = "yes"
+	vim.opt.signcolumn = "yes"
 
 	vim.diagnostic.config({
 		virtual_text = true,
 	})
 
 	require("cfg.autoformat")
+	require("cfg.writing")
 end
 
 require("lazy").setup("cfg.plugins")
