@@ -99,9 +99,5 @@ return {
 		end,
 	},
 	{ "nvim-treesitter/nvim-treesitter-context" },
-	{
-		"nvim-treesitter/playground",
-		cmd = { "TSPlaygroundToggle", "TSPlayground" },
-	},
 	{ "nvim-treesitter/nvim-treesitter-textobjects" },
 }
