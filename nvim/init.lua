@@ -54,6 +54,7 @@ else
 
 	require("cfg.autoformat")
 	require("cfg.writing")
+	require("cfg.wasm")
 end
 
 require("lazy").setup("cfg.plugins")

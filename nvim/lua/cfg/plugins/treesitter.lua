@@ -2,6 +2,16 @@ return {
 	{
 		"nvim-treesitter/nvim-treesitter",
 		config = function()
+			local list = require("nvim-treesitter.parsers").get_parser_configs()
+			---@diagnostic disable-next-line: inject-field
+			list.wat = {
+				install_info = {
+					url = "https://github.com/wasm-lsp/tree-sitter-wasm",
+					files = { "wat/src/parser.c" },
+					branch = "main",
+				},
+			}
+
 			---@diagnostic disable-next-line: missing-fields
 			require("nvim-treesitter.configs").setup({
 				ensure_installed = {
