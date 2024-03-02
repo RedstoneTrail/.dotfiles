@@ -28,6 +28,9 @@ bindsym $mod+d exec $menu
 
 bindsym $mod+f fullscreen
 
+# Toggle touchpad
+bindsym $mod+t exec swaymsg input type:touchpad events toggle enabled disabled
+
 bindsym $mod+$left focus left
 bindsym $mod+$down focus down
 bindsym $mod+$up focus up
