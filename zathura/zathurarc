@@ -1,0 +1,7 @@
+set selection-clipboard clipboard
+set adjust-open "best-fit"
+
+unmap a
+map a zoom "best-fit"
+
+include catppuccin-frappe

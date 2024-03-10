@@ -57,4 +57,9 @@ else
 	require("cfg.wasm")
 end
 
+vim.api.nvim_create_user_command("XdgOpen", function(opts)
+	local filepath = require("plenary.path").new(opts.fargs[1]):absolute()
+	vim.fn.system({ "swaymsg", "exec", "xdg-open", filepath })
+end, { nargs = 1 })
+
 require("lazy").setup("cfg.plugins")
