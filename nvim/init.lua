@@ -40,8 +40,6 @@ vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 
-vim.keymap.set("x", " md", ":!prettier --parser markdown<CR>", { desc = "Format [M]ark[d]own Range" })
-
 vim.opt.nu = true
 vim.opt.signcolumn = "yes"
 
@@ -51,6 +49,5 @@ vim.diagnostic.config({
 
 require("cfg.autoformat")
 require("cfg.writing")
-require("cfg.wasm")
 
 require("lazy").setup("cfg.plugins")
