@@ -57,9 +57,6 @@ return {
 					"rust_analyzer",
 					"lua_ls",
 					"zls",
-					"cssls",
-					"emmet_ls",
-					"html",
 				},
 				handlers = {
 					function(server_name)
@@ -98,8 +95,6 @@ return {
 			null_ls.setup({
 				sources = {
 					null_ls.builtins.formatting.stylua,
-					null_ls.builtins.formatting.prettier,
-					-- null_ls.builtins.completion.spell,
 				},
 			})
 		end,

@@ -34,32 +34,23 @@ vim.keymap.set("n", "<C-j>", "<C-w>j")
 vim.keymap.set("n", "<C-k>", "<C-w>k")
 vim.keymap.set("n", "<C-l>", "<C-w>l")
 
-if vim.g.vscode then
-	require("cfg.vscode")
-else
-	vim.keymap.set("n", "<C-u>", "<C-u>zz")
-	vim.keymap.set("n", "<C-d>", "<C-d>zz")
-	vim.keymap.set("n", "n", "nzzzv")
-	vim.keymap.set("n", "N", "Nzzzv")
 
-	vim.keymap.set("x", " md", ":!prettier --parser markdown<CR>", { desc = "Format [M]ark[d]own Range" })
+vim.keymap.set("n", "<C-u>", "<C-u>zz")
+vim.keymap.set("n", "<C-d>", "<C-d>zz")
+vim.keymap.set("n", "n", "nzzzv")
+vim.keymap.set("n", "N", "Nzzzv")
 
-	vim.opt.nu = true
-	vim.opt.relativenumber = true
-	vim.opt.signcolumn = "yes"
+vim.keymap.set("x", " md", ":!prettier --parser markdown<CR>", { desc = "Format [M]ark[d]own Range" })
 
-	vim.diagnostic.config({
-		virtual_text = true,
-	})
+vim.opt.nu = true
+vim.opt.signcolumn = "yes"
 
-	require("cfg.autoformat")
-	require("cfg.writing")
-	require("cfg.wasm")
-end
+vim.diagnostic.config({
+	virtual_text = true,
+})
 
-vim.api.nvim_create_user_command("XdgOpen", function(opts)
-	local filepath = require("plenary.path").new(opts.fargs[1]):absolute()
-	vim.fn.system({ "swaymsg", "exec", "xdg-open", filepath })
-end, { nargs = 1 })
+require("cfg.autoformat")
+require("cfg.writing")
+require("cfg.wasm")
 
 require("lazy").setup("cfg.plugins")

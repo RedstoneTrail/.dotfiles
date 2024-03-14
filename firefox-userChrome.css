@@ -1,8 +1,0 @@
-#navigator-toolbox {
-  transition: margin-top 200ms !important;
-}
-
-#navigator-toolbox:not(:focus-within, :hover) {
-  --toolbar-height: 120px;
-  margin-top: calc(-1 * var(--toolbar-height));
-}
