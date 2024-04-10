@@ -1,0 +1,57 @@
+{
+  "height": 30,
+  "spacing": 4,
+  "modules-left": [
+    "sway/workspaces",
+    "sway/mode",
+    "mpris",
+    "custom/touchpad",
+  ],
+  "modules-right": [
+    "pulseaudio#sink",
+    "network",
+    "battery",
+    "clock",
+    "tray"
+  ],
+  "clock": {
+    "format": "{:%d-%m-%Y %H:%M} "
+  },
+  "battery": {
+    "states": {
+      "warning": 30,
+      "critical": 15
+    },
+    "format": "{capacity}% {icon} ",
+    "format-charging": "{capacity}% {icon} c",
+    "format-icons": [
+      "vl",
+      "l",
+      "m",
+      "h",
+      "vh"
+    ]
+  },
+  "network": {
+    "format-wifi": "{essid} {signalStrength}%",
+    "format-ethernet": "{ipaddr}/{cidr}",
+    "format-disconnected": "Disconnected",
+    "on-click": "alacritty -e nmtui"
+  },
+  "pulseaudio#sink": {
+    "format": "{volume}% {icon}",
+    "format-muted": "{volume}% m",
+    "format-icons": {
+      "headphone": [
+        "l h",
+	"m h",
+	"h h"
+      ],
+      "default": [
+        "l",
+        "m",
+        "h"
+      ]
+    }
+  }
+}

@@ -1,5 +1,0 @@
-/nvim/plugin
-**/node_modules
-**/out
-**/.luarc.json
-scripts/apod-api-key

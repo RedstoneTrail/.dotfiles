@@ -1,0 +1,65 @@
+* {
+  font-family: "FiraMono Nerd Font";
+}
+
+window#waybar {
+  background: transparent;
+  color: #000000;
+}
+
+#clock,
+#battery,
+#cpu,
+#memory,
+#disk,
+#temperature,
+#backlight,
+#network,
+#pulseaudio,
+#wireplumber,
+#custom-media,
+#custom-touchpad,
+#tray,
+#mode,
+#idle_inhibitor,
+#scratchpad,
+#mpd,
+#mpris {
+  background: #303446;
+  margin: 4px;
+  padding: 0.2em 1em;
+}
+
+@keyframes battery-pulse {
+  0% {
+    background: #303446;
+  }
+
+  100% {
+    background: #d33;
+  }
+}
+
+#battery.critical {
+  animation: battery-pulse 1s ease-in-out alternate infinite;
+}
+
+#workspaces {
+  background: #303446;
+  margin: 4px;
+}
+
+#workspaces button {
+  background: #303446;
+  color: #c6d0f5;
+  border: none;
+  box-shadow: none;
+  text-shadow: none;
+  padding: 0.2em 0.4em;
+  border-radius: 0px;
+}
+
+#workspaces button.focused {
+  background-color: #37a030;
+  color: #000000;
+}

@@ -1,0 +1,7 @@
+UPPER_THRESHOLD = 100
+
+NOTIFY = yes
+
+BARCHART = yes
+
+KDE_OSD = yes
