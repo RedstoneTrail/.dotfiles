@@ -20,16 +20,17 @@ set $browser firefox
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
-set $menu dmenu_path | dmenu | xargs swaymsg exec --
+
+# sway-launcher-desktop setup
+for_window [app_id="^launcher$"] floating enable, sticky enable, resize set 30 ppt 60 ppt, border pixel 10
+set $menu exec $term --class launcher -e sway-launcher-desktop
+
+# lock binding
+bindsym $mod+Shift+s exec swaylock
 
 ### Output configuration
 #
-# Default wallpaper (more resolutions are available in /run/current-system/sw/share/backgrounds/sway/)
-output * bg ~/.config/sway/2023-06-18_18.56.51.png fill
-#
-# Example configuration:
-#
-#   output HDMI-A-1 resolution 1920x1080 position 1920,0
+output * bg ~/.config/sway/wallpaper.png fill
 #
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 
@@ -46,20 +47,6 @@ output * bg ~/.config/sway/2023-06-18_18.56.51.png fill
 # your displays after another 300 seconds, and turn your screens back on when
 # resumed. It will also lock your screen before your computer goes to sleep.
 
-### Input configuration
-#
-# Example configuration:
-#
-#   input "2:14:SynPS/2_Synaptics_TouchPad" {
-#       dwt enabled
-#       tap enabled
-#       natural_scroll enabled
-#       middle_emulation enabled
-#   }
-#
-# You can get the names of your inputs by running: swaymsg -t get_inputs
-# Read `man 5 sway-input` for more information about this section.
-
 ### Key bindings
 #
 # Basics:
@@ -68,7 +55,7 @@ output * bg ~/.config/sway/2023-06-18_18.56.51.png fill
     bindsym $mod+Return exec $term
 
     # Open browser
-    bindsym $mod+b exec $brower
+    bindsym $mod+b exec $browser
 
     # Kill focused window
     bindsym $mod+Shift+q kill
@@ -87,7 +74,7 @@ output * bg ~/.config/sway/2023-06-18_18.56.51.png fill
     bindsym $mod+Shift+c reload
 
     # Exit sway (logs you out of your Wayland session)
-    bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+    bindsym $mod+Shift+e exec swaymsg exit
 #
 # Moving around:
 #
@@ -126,6 +113,7 @@ output * bg ~/.config/sway/2023-06-18_18.56.51.png fill
     bindsym $mod+8 workspace number 8
     bindsym $mod+9 workspace number 9
     bindsym $mod+0 workspace number 10
+    bindsym $mod+t workspace        t
     # Move focused container to workspace
     bindsym $mod+Shift+1 move container to workspace number 1
     bindsym $mod+Shift+2 move container to workspace number 2
@@ -137,6 +125,7 @@ output * bg ~/.config/sway/2023-06-18_18.56.51.png fill
     bindsym $mod+Shift+8 move container to workspace number 8
     bindsym $mod+Shift+9 move container to workspace number 9
     bindsym $mod+Shift+0 move container to workspace number 10
+    bindsym $mod+Shift+t move container to workspace        t
     # Note: workspaces can have any name you want, not just numbers.
     # We just use 1-10 as the default.
 #
@@ -226,10 +215,14 @@ include /etc/sway/config.d/*
 # The parts that I added on
 # pulseaudio things
 exec    pulseaudio --start
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume     @DEFAULT_SINK@ +5%
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume     @DEFAULT_SINK@ -5%
-bindsym XF86AudioMute        exec --no-startup-id pactl set-sink-mute       @DEFAULT_SINK@ toggle
-bindsym XF86AudioMicMute     exec --no-startup-id pactl set-sink-input-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioRaiseVolume       exec --no-startup-id pactl set-sink-volume     @DEFAULT_SINK@ +5%
+bindsym XF86AudioLowerVolume       exec --no-startup-id pactl set-sink-volume     @DEFAULT_SINK@ -5%
+bindsym XF86AudioMute              exec --no-startup-id pactl set-sink-mute       @DEFAULT_SINK@ toggle
+bindsym XF86AudioMicMute           exec --no-startup-id pactl set-sink-input-mute @DEFAULT_SINK@ toggle
+
+bindsym XF86AudioRaiseVolume+Shift exec --no-startup-id pactl set-source-volume   @DEFAULT_SOURCE@ +5%
+bindsym XF86AudioLowerVolume+Shift exec --no-startup-id pactl set-source-volume   @DEFAULT_SOURCE@ -5%
+bindsym XF86AudioMute+Shift        exec --no-startup-id pactl set-source-mute     @DEFAULT_SOURCE@ toggle
 
 # Stop using the god damn us keyboard
 input * {
@@ -237,7 +230,7 @@ input * {
 	xkb_model "asus_laptop"
 }
 
-# Toggle touchpad (wip?)
+# Toggle touchpad
 input type:touchpad {
 	events disabled
 }
@@ -250,3 +243,9 @@ exec mako
 bindsym XF86MonBrightnessUp   exec brightnessctl s 5%+
 bindsym XF86MonBrightnessDown exec brightnessctl s 5%-
 bindsym XF86ScreenSaver       exec brightnessctl s 0
+
+# xwayland
+xwayland enable
+
+# Remove window titles and borders
+for_window [class="^.*"] border none

@@ -1,7 +1,3 @@
--- TODO: Collaborative editing:
--- https://github.com/chipsenkbeil/distant.nvim
--- https://github.com/64-Tesseract/moment
-
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
 	vim.fn.system({
@@ -51,3 +47,6 @@ require("cfg.autoformat")
 require("cfg.writing")
 
 require("lazy").setup("cfg.plugins")
+
+vim.opt.spelllang = "en"
+

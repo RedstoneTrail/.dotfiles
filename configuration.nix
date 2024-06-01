@@ -4,6 +4,11 @@
 
 { config, pkgs, ... }:
 
+let
+  unstable = import <nixpkgs-unstable> {
+    config = { allowUnfree = true; };
+  };
+in
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -65,10 +70,11 @@
   environment.systemPackages = with pkgs; [
 	pulseaudio
 	wl-clipboard
-	neovim
+	unstable.neovim
 	firefox
 	tmux
 	git
+	gh
 	zig
 	mako
 	pulseaudio-ctl
@@ -79,7 +85,7 @@
 	steam-run
 	htop
 	minecraft
-	jre8
+	jdk21
 	xwayland
 	sway-launcher-desktop
 	fuse
@@ -91,6 +97,13 @@
 	xdg-utils
 	r2modman
 	libGL
+	prismlauncher
+	unzip
+	lm_sensors
+	wget
+	lolcat
+	figlet
+	glow
   ];
 
   # This value determines the NixOS release from which the default

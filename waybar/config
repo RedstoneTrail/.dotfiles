@@ -4,53 +4,70 @@
   "modules-left": [
     "sway/workspaces",
     "sway/mode",
-    "mpris",
     "custom/touchpad",
   ],
   "modules-right": [
+    "tray",
+    "pulseaudio#source",
     "pulseaudio#sink",
     "network",
+    "backlight",
     "battery",
-    "clock",
-    "tray"
+    "clock"
   ],
   "clock": {
-    "format": "{:%d-%m-%Y %H:%M} "
+    "format": "{:%d/%m/%Y %H:%M}"
   },
   "battery": {
     "states": {
       "warning": 30,
       "critical": 15
     },
-    "format": "{capacity}% {icon} ",
-    "format-charging": "{capacity}% {icon} c",
+    "format": "{capacity}% {icon}  ",
+    "format-charging": "{capacity}% {icon} 󱐋",
     "format-icons": [
-      "vl",
-      "l",
-      "m",
-      "h",
-      "vh"
+      "",
+      "",
+      "",
+      "",
+      ""
     ]
   },
+  "backlight": {
+    "device": "intel_backlight",
+    "format": "{percent}% {icon}",
+    "format-icons": ["󰃞", "󰃟", "󰃠"]
+  },
   "network": {
-    "format-wifi": "{essid} {signalStrength}%",
-    "format-ethernet": "{ipaddr}/{cidr}",
-    "format-disconnected": "Disconnected",
+    "format-wifi": "{essid} {signalStrength}% 󰖩",
+    "format-ethernet": "{ipaddr}/{cidr} ",
+    "format-disconnected": "Disconnected 󰖪",
     "on-click": "alacritty -e nmtui"
+  },
+  "pulseaudio#source": {
+    "format": "{format_source} {icon}",
+    "format-muted": "{volume} 󰝟",
+    "format-icons": {
+      "default": [
+        "󰕿",
+        "󰖀",
+        "󰕾"
+      ]
+    }
   },
   "pulseaudio#sink": {
     "format": "{volume}% {icon}",
-    "format-muted": "{volume}% m",
+    "format-muted": "{volume} 󰝟",
     "format-icons": {
       "headphone": [
-        "l h",
-	"m h",
-	"h h"
+        " 󰕿",
+	" 󰖀",
+	" 󰕾"
       ],
       "default": [
-        "l",
-        "m",
-        "h"
+        "󰓃 󰕿",
+        "󰓃 󰖀",
+        "󰓃 󰕾"
       ]
     }
   }
