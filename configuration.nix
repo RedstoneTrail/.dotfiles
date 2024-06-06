@@ -1,7 +1,3 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { config, pkgs, ... }:
 
 let
@@ -15,24 +11,19 @@ in
       /etc/nixos/hardware-configuration.nix
     ];
 
-  # Bootloader.
+  # Bootloader garbage, don't really know to be honest
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "nixos"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+  networking.hostName = "nixos"; # My hostname.
 
   # Enable networking
   networking.networkmanager.enable = true;
 
-  # Set your time zone.
+  # Time zone
   time.timeZone = "Europe/London";
 
-  # Select internationalisation properties.
+  # Internationalisation properties.
   i18n.defaultLocale = "en_GB.UTF-8";
 
   i18n.extraLocaleSettings = {
@@ -47,10 +38,15 @@ in
     LC_TIME = "en_GB.UTF-8";
   };
 
-  # Configure console keymap
+  # Configure to use actual keyboard layout (twice?)
   console.keyMap = "uk";
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
+  services.xserver = {
+    layout = "gb";
+    xkbVariant = "";
+  };
+
+  # Define me as a user (kind of important)
   users.users.redstonetrail = {
     isNormalUser = true;
     description = "Joe Bearchell";
@@ -59,73 +55,74 @@ in
     uid = 1000;
   };
 
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
   # Allow electron-25.9.0
   nixpkgs.config.permittedInsecurePackages = [ "electron-25.9.0" ];
 
- # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs; [
-	pulseaudio
-	wl-clipboard
-	unstable.neovim
-	firefox
-	tmux
-	git
-	gh
-	zig
-	mako
-	pulseaudio-ctl
-	waybar
-	alacritty
-	wev
-	brightnessctl
-	steam-run
-	htop
-	minecraft
-	jdk21
-	xwayland
-	sway-launcher-desktop
-	fuse
-	lshw
-	glxinfo
-	neofetch
-	pipewire
-	yuzu-mainline
-	xdg-utils
-	r2modman
-	libGL
-	prismlauncher
-	unzip
-	lm_sensors
-	wget
-	lolcat
-	figlet
-	glow
+  # Allow unfree packages
+  nixpkgs.config.allowUnfree = true;
+
+  # My packages list
+  environment.systemPackages = [
+
+        # Basic utilities
+        unstable.neovim
+	pkgs.git
+	pkgs.tmux
+	pkgs.gh
+	pkgs.zig # In part for a C compiler
+	pkgs.htop
+	pkgs.brightnessctl
+	pkgs.fuse
+	pkgs.unzip
+	pkgs.wget
+	pkgs.xdg-utils
+	pkgs.libGL
+	pkgs.glow
+	pkgs.lshw
+	pkgs.lm_sensors
+
+	# Funny utilities
+	pkgs.neofetch
+	pkgs.lolcat
+	pkgs.figlet
+
+	# Window manager e.t.c.
+	pkgs.pulseaudio
+	pkgs.wl-clipboard
+	pkgs.firefox
+	pkgs.mako
+	pkgs.pulseaudio-ctl
+	pkgs.waybar
+	pkgs.alacritty
+	pkgs.wev
+	pkgs.xwayland
+	pkgs.sway-launcher-desktop
+	pkgs.glxinfo
+	pkgs.pipewire
+
+	# Gaming
+	pkgs.steam-run
+	pkgs.minecraft
+	pkgs.jdk21
+	pkgs.yuzu-mainline
+	pkgs.r2modman
+	pkgs.prismlauncher
   ];
 
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "23.11"; # Did you read the comment?
+  system.stateVersion = "23.11";
 
-  # gnome thing i will try to understand later
+  # GNOME keyring (for saved passwords or something)
   services.gnome.gnome-keyring.enable = true;
 
-  # Steam?
+  # Steam
   programs.steam.enable = true;
 
-  # Fonts
+  # Use Fira Mono Nerd Font, and we will use nothing else in my christian configuration.nix
   fonts.packages = with pkgs; [
         (nerdfonts.override { fonts = [ "FiraMono" ]; })
   ];
 
-  # Be able to read NTFS filesystems e.g. windows partition
+  # Be able to read NTFS filesystems e.g. my windows partition
   boot.supportedFilesystems = ["ntfs"];
 
   # Mount windows partition as /windows
@@ -143,15 +140,11 @@ in
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
   services.xserver.videoDrivers = [ "nvidia" ]; 
 
-  services.xserver = {
-    layout = "gb";
-    xkbVariant = "";
-  };
-
+  # Kind of need OpenGL
   hardware.opengl = {
     enable = true;
   };
 
-  # swaywm things (regret trying hyprland not worth it due to laziness)
+  # Enable SwayWM
   programs.sway.enable = true;
  }

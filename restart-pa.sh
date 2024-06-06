@@ -1,0 +1,2 @@
+pactl exit
+pulseaudio --start
