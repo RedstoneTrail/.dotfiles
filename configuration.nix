@@ -7,7 +7,8 @@ let
 in
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Include the results of the hardware scan.
       /etc/nixos/hardware-configuration.nix
     ];
 
@@ -51,7 +52,7 @@ in
     isNormalUser = true;
     description = "Joe Bearchell";
     extraGroups = [ "networkmanager" "wheel" "%wheel" "video" ];
-    packages = with pkgs; [];
+    packages = with pkgs; [ ];
     uid = 1000;
   };
 
@@ -64,49 +65,56 @@ in
   # My packages list
   environment.systemPackages = [
 
-        # Basic utilities
-        unstable.neovim
-	pkgs.git
-	pkgs.tmux
-	pkgs.gh
-	pkgs.zig # In part for a C compiler
-	pkgs.htop
-	pkgs.brightnessctl
-	pkgs.fuse
-	pkgs.unzip
-	pkgs.wget
-	pkgs.xdg-utils
-	pkgs.libGL
-	pkgs.glow
-	pkgs.lshw
-	pkgs.lm_sensors
+    # Basic utilities
+    unstable.neovim
+    pkgs.git
+    pkgs.tmux
+    pkgs.gh
+    pkgs.zig
+    pkgs.htop
+    pkgs.brightnessctl
+    pkgs.fuse
+    pkgs.unzip
+    pkgs.wget
+    pkgs.xdg-utils
+    pkgs.libGL
+    pkgs.glow
+    pkgs.lshw
+    pkgs.lm_sensors
+    pkgs.rustup
+    pkgs.clang
+    pkgs.zsh
 
-	# Funny utilities
-	pkgs.neofetch
-	pkgs.lolcat
-	pkgs.figlet
+    # Funny utilities
+    pkgs.neofetch
+    pkgs.lolcat
+    pkgs.figlet
 
-	# Window manager e.t.c.
-	pkgs.pulseaudio
-	pkgs.wl-clipboard
-	pkgs.firefox
-	pkgs.mako
-	pkgs.pulseaudio-ctl
-	pkgs.waybar
-	pkgs.alacritty
-	pkgs.wev
-	pkgs.xwayland
-	pkgs.sway-launcher-desktop
-	pkgs.glxinfo
-	pkgs.pipewire
+    # Window manager e.t.c.
+    pkgs.pulseaudio
+    pkgs.wl-clipboard
+    pkgs.firefox
+    pkgs.mako
+    pkgs.pulseaudio-ctl
+    pkgs.waybar
+    pkgs.alacritty
+    pkgs.wev
+    pkgs.xwayland
+    pkgs.sway-launcher-desktop
+    pkgs.glxinfo
+    pkgs.pipewire
+    pkgs.grim
+    pkgs.slurp
 
-	# Gaming
-	pkgs.steam-run
-	pkgs.minecraft
-	pkgs.jdk21
-	pkgs.yuzu-mainline
-	pkgs.r2modman
-	pkgs.prismlauncher
+    # Gaming
+    pkgs.steam-run
+    pkgs.minecraft
+    pkgs.jdk21
+    pkgs.r2modman
+    pkgs.prismlauncher
+
+    # Emulation
+    pkgs.yuzu-mainline
   ];
 
   system.stateVersion = "23.11";
@@ -119,32 +127,54 @@ in
 
   # Use Fira Mono Nerd Font, and we will use nothing else in my christian configuration.nix
   fonts.packages = with pkgs; [
-        (nerdfonts.override { fonts = [ "FiraMono" ]; })
+    (nerdfonts.override { fonts = [ "FiraMono" ]; })
   ];
 
   # Be able to read NTFS filesystems e.g. my windows partition
-  boot.supportedFilesystems = ["ntfs"];
+  boot.supportedFilesystems = [ "ntfs" ];
 
   # Mount windows partition as /windows
   fileSystems."/windows" =
-    { device  = "/dev/nvme0n1p3";
-      fsType  = "ntfs-3g";
+    {
+      device = "/dev/nvme0n1p3";
+      fsType = "ntfs-3g";
       options = [ "rw" "uid=1000" ];
     };
 
   # Epic bluetooth moment
-  hardware.bluetooth.enable      = true;
+  hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
 
   # love nvidia, love closed source, love proprietary --my-next-gpu-wont-be-nvidia
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
-  services.xserver.videoDrivers = [ "nvidia" ]; 
+  services.xserver.videoDrivers = [ "nvidia" ];
 
   # Kind of need OpenGL
   hardware.opengl = {
     enable = true;
   };
 
-  # Enable SwayWM
+  # Enable sway
   programs.sway.enable = true;
- }
+
+  # Enable zsh
+  programs.zsh.enable = true;
+  users.defaultUserShell = pkgs.zsh;
+
+  # Start sway on login
+  systemd.user.services.swaystart = {
+    description = "start sway on login";
+    serviceConfig.PassEnvironment = "DISPLAY";
+    script = ''sway --unsupported-gpu'';
+    wantedBy = [ "multi-user.target" ];
+  };
+
+
+  # Delete unused stuff on rebuild and gc weekly (in case auto-optimise-store doesnt help much)
+  nix.settings.auto-optimise-store = true;
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 30d";
+  };
+}

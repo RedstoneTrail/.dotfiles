@@ -60,15 +60,11 @@ output * bg ~/.config/sway/wallpaper.png fill
     # Kill focused window
     bindsym $mod+Shift+q kill
 
+    # Drag with logo key
+    bindsym $mod normal
+
     # Start your launcher
     bindsym $mod+d exec $menu
-
-    # Drag floating windows by holding down $mod and left mouse button.
-    # Resize them with right mouse button + $mod.
-    # Despite the name, also works for non-floating windows.
-    # Change normal to inverse to use left mouse button for resizing and right
-    # mouse button for dragging.
-    floating_modifier $mod normal
 
     # Reload the configuration file
     bindsym $mod+Shift+c reload
@@ -249,3 +245,11 @@ xwayland enable
 
 # Remove window titles and borders
 for_window [class="^.*"] border none
+
+# Screenshot keys
+bindsym print             exec grim - | wl-copy
+bindsym $mod+print        exec grim -g "$(swaymsg -t get_tree | jq -j '.. | select(.type?) | select(.focused).rect | "\(.x),\(.y) \(.width)x\(.height)"')" - | wl-copy
+bindsym Shift+print       exec grim -g "$(slurp)" - | wl-copy
+bindsym Alt_L+print       exec grim
+bindsym Alt_L+$mod+print  exec grim -g "$(swaymsg -t get_tree | jq -j '.. | select(.type?) | select(.focused).rect | "\(.x),\(.y) \(.width)x\(.height)"')"
+bindsym Alt_L+Shift+print exec grim -g "$(slurp)"
