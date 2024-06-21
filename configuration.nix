@@ -4,6 +4,9 @@ let
   unstable = import <nixpkgs-unstable> {
     config = { allowUnfree = true; };
   };
+  pkgs2311 = import <nixos-23.11> {
+    config = { allowUnfree = true; };
+  };
 in
 {
   imports =
@@ -42,9 +45,9 @@ in
   # Configure to use actual keyboard layout (twice?)
   console.keyMap = "uk";
 
-  services.xserver = {
+  services.xserver.xkb = {
     layout = "gb";
-    xkbVariant = "";
+    variant = "";
   };
 
   # Define me as a user (kind of important)
@@ -96,25 +99,28 @@ in
     pkgs.firefox
     pkgs.mako
     pkgs.pulseaudio-ctl
-    pkgs.waybar
     pkgs.alacritty
     pkgs.wev
     pkgs.xwayland
-    pkgs.sway-launcher-desktop
     pkgs.glxinfo
     pkgs.pipewire
     pkgs.grim
     pkgs.slurp
+    pkgs.waybar
+    pkgs.hyprpaper
+    pkgs.sway-launcher-desktop
+    pkgs.hyprcursor
+    pkgs.hyprland
 
     # Gaming
     pkgs.steam-run
-    pkgs.minecraft
+    pkgs2311.minecraft
     pkgs.jdk21
     pkgs.r2modman
     pkgs.prismlauncher
 
     # Emulation
-    pkgs.yuzu-mainline
+    pkgs2311.yuzu-mainline
   ];
 
   system.stateVersion = "23.11";
@@ -146,7 +152,7 @@ in
   hardware.bluetooth.powerOnBoot = true;
 
   # love nvidia, love closed source, love proprietary --my-next-gpu-wont-be-nvidia
-  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
+  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.production;
   services.xserver.videoDrivers = [ "nvidia" ];
 
   # Kind of need OpenGL
@@ -154,21 +160,12 @@ in
     enable = true;
   };
 
-  # Enable sway
-  programs.sway.enable = true;
+  # Enable hyprland
+  programs.hyprland.enable = true;
 
   # Enable zsh
   programs.zsh.enable = true;
   users.defaultUserShell = pkgs.zsh;
-
-  # Start sway on login
-  systemd.user.services.swaystart = {
-    description = "start sway on login";
-    serviceConfig.PassEnvironment = "DISPLAY";
-    script = ''sway --unsupported-gpu'';
-    wantedBy = [ "multi-user.target" ];
-  };
-
 
   # Delete unused stuff on rebuild and gc weekly (in case auto-optimise-store doesnt help much)
   nix.settings.auto-optimise-store = true;
@@ -177,4 +174,7 @@ in
     dates = "weekly";
     options = "--delete-older-than 30d";
   };
+
+  # Update kernel when new versions are available
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 }

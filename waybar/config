@@ -2,9 +2,7 @@
   "height": 30,
   "spacing": 4,
   "modules-left": [
-    "sway/workspaces",
-    "sway/mode",
-    "custom/touchpad",
+    "hyprland/workspaces",
   ],
   "modules-right": [
     "tray",
@@ -42,7 +40,7 @@
     "format-wifi": "{essid} {signalStrength}% 󰖩",
     "format-ethernet": "{ipaddr}/{cidr} ",
     "format-disconnected": "Disconnected 󰖪",
-    "on-click": "alacritty -e nmtui"
+    "on-click": "alacritty --class nmtui -e nmtui"
   },
   "pulseaudio#source": {
     "format": "{format_source} {icon}",
