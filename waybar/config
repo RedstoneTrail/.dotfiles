@@ -44,7 +44,7 @@
   },
   "pulseaudio#source": {
     "format": "{format_source} {icon}",
-    "format-muted": "{volume} 󰝟",
+    "format-muted": "{format_source} 󰝟",
     "format-icons": {
       "default": [
         "󰕿",
@@ -55,7 +55,7 @@
   },
   "pulseaudio#sink": {
     "format": "{volume}% {icon}",
-    "format-muted": "{volume} 󰝟",
+    "format-muted": "{volume}% 󰝟",
     "format-icons": {
       "headphone": [
         " 󰕿",
@@ -67,6 +67,7 @@
         "󰓃 󰖀",
         "󰓃 󰕾"
       ]
-    }
+    },
+    "on-click": "pavucontrol"
   }
 }
