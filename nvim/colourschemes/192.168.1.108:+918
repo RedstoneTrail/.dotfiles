@@ -1,0 +1,500 @@
+xit
+exit
+nmtui
+nvim .
+nvim School/Computer\ Science/Projects/Computing\ Challenges/
+cd School/Computer\ Science/Projects/Computing\ Challenges/
+l
+nvim 19/main.c 
+nvim 2/main.c 
+l 2
+cd 2
+l
+tree
+rm -rf cd
+l
+exit
+wev
+exit
+cd Projects/c-vulkan/
+l
+rm ma*
+l
+mv \!\!\!test-vkcude\!\!\! \!\!\!test-vkcube\!\!\! 
+l
+rm 192.168.1.108\:+918 
+l
+cd src/
+l
+nvim main.c 
+nvim main.c 
+exit
+l /dev
+ls /dev
+sudo bash .dotfiles/scripts/enable_dgpu.sh 
+vkcube
+vkcube
+exit
+cd Projects/c-vulkan/
+l
+nvim src/main.c 
+python
+sudo pacman -Syu noto-fonts-emoji 
+sudo pacman -S noto-fonts-emoji 
+python
+cd School/Computer\ Science/Notes/
+l
+cd Unorganised/
+ll
+l
+nvim P5-11-11-2024
+sudo bash .dotfiles/scripts/school_mode.sh 
+brightnessctl set 25%
+brightnessctl set 50%
+brightnessctl set 100%
+Hyprland 
+python
+exot
+python
+cd School/Computer\ Science/Notes/Unorganised/
+nvim P5-11-11-2024
+cd Projects/c-vulkan/
+nvim src/main.c 
+exit
+Hyprland 
+exit
+exit
+python
+nmtui
+exit
+tree /
+exit
+tmux
+tree /
+exit
+nvim .bash_profile 
+exit
+exit
+bash
+exit
+ly-dm
+exit
+tput 
+tput -V
+tput
+tput
+su root
+exit
+ly-dm
+exit
+nvim School/Computer\ Science/Notes/Unorganised/P3-12-11-2024 
+cd
+Hyprland 
+exit
+sudo bash .dotfiles/scripts/school_mode.sh 
+systemctl status vconsole-setup
+systemctl list-units
+systemctl status systemd-vconsole-setup
+su root
+Hyprland 
+btop
+brightnessctl set 5%
+btop
+btop
+btop
+systemctl hibernaate
+systemctl hibernate
+cd School/Physics/Practicals/5/
+l
+nvim data.csv 
+:q
+:q!
+:q!
+brightnessctl set 99999
+brightnessctl set 100%
+nvim data.csv 
+nvim data.csv 
+cd
+brightnessctl set 15%
+systemctl hibernate
+nvim School/Physics/Practicals/5/data.csv 
+tmux
+Hyprland 
+cd School/Computer\ Science/Notes/Unorganised/
+nvim P3-12-11-2024
+bash
+tmux
+cat .bash_profile 
+nvim .bash_profile 
+l
+l | grep profile
+mv .bash_profile .profile
+exit
+exit
+mv .profile .bash_profile
+l
+l | grep rc
+cat .bash_profile 
+cat .bashrc
+nvim .bash_profile 
+nvim .bashrc 
+exit
+nvim .bashrc
+exit
+udiskie --help
+exit
+nvim .bashrc
+exit
+exit
+exit
+Hyprland 
+exit
+exit
+exit
+exit
+exit
+tmux
+tmux --help
+fg
+exit
+nvim .bashrc
+bash .dotfiles/scripts/school_mode.sh 
+bash .dotfiles/scripts/school_mode.sh 
+brightnessctl set 20%
+brightnessctl set 25%
+brightnessctl set 30%
+exit
+exit
+exit
+exit
+xeit
+nvim leeming-may-oct-1987.csv 
+python
+nvim
+python
+nvim leeming-may-oct-1987.csv 
+python
+cd School/Maths/large-data-set/
+l
+nvim leeming-may-oct-1987.csv 
+nvim
+nvim beijing-may-oct-2015.csv 
+nvim
+vkcube --help
+hyperfine vkcube --c 144
+hyperfine "vkcube --c 144"
+hyperfine "vkcube --c 144"
+btop
+vkcube --help
+vkcube --gpu_number 1
+vkcube --gpu_number 0
+
+vkcube --gpu_number 0
+vkcube --gpu_number 1
+nvtop
+vkcube --valida
+vkcube --gpu_number 1 --validate-checks-disabled
+vkcube --break
+vkcube --help
+vkcube --present_mode mailbox
+vkcube --present_mode fifo-relaxed
+vkcube --present_mode 3
+vkcube --present_mode 2
+vkcube --present_mode 1
+vkcube --present_mode 0
+nmtui
+exit
+xeit
+nvim .bash_profile 
+nvim .bashrc
+exit
+udiskie --help
+exit
+exit
+tmux -T 8
+tmux -T 1
+exit
+exit
+exit
+exit
+exit
+exit
+udiskie --help
+pgrep udiskie
+l /run/media/redstonetrail/
+l /run/media/redstonetrail/
+udiskie --help
+nvim .bashrc
+tmux --help
+man tmux
+tmux -T 8
+$TMUX=0 tmux -T 8
+nvim .dotfiles/tmux/tmux.conf 
+xterm .java/
+exit
+exit
+nnn
+nvim .config/tmux/tmux.conf 
+nvim .config/tmux/tmux.conf 
+vkcube
+asusctl profile -p
+vkcube --help
+vkcube --present_mode 0
+vkcube --present_mode 0 --c 
+vkcube --present_mode 0 --c 10000
+vkcube --present_mode 0 --c 10000
+time vkcube --present_mode 0 --c 10000
+python
+python
+zsj
+zsh
+eit
+exit
+cd Projects/c-vulkan/
+;l
+l
+l;l
+l
+nvim src/main.c 
+sudo bash .dotfiles/scripts/school_mode.sh 
+brightnessctl set 50%
+cd
+cd Projects/c-vulkan/
+l
+7z --help
+7z a src/main.c a.7z
+7z src/main/c
+7z src/main.c
+zip --help
+zip src/main.c 
+zip src/main.c  -0
+zip src/main.c -9
+exit
+exit
+nmcli d w c WPS-CHROME
+nmcli d w c WPS-CHROME
+nmcli d w r
+nmcli d w l
+nmcli d w c WPS-CHROME
+cd /windows/Users/Joe\ mama/AppData/Local/NVIDIA/NvBackend/ApplicationOntology/data/translations/
+nvim .
+nvim .
+nvim among_us.translation 
+nvim minecraft.translation 
+nvim .
+nvim .
+cd
+cd School/Computer\ Science/Notes/Unorganised/
+nvim P3-13-11-2024
+l
+for f in *; do case "$f" in *.txt) echo skipped $f;; *) mv "$f" "$f".txt; esac; done
+l
+ping 14.132.250.10
+dig 14.132.250.10
+sudo pacman -S dig
+pacman -h
+pacman -Sh
+pacman -h
+pacman -Th
+pacman -Qh
+pacman -Qo dig
+sudo pacman -Syu dnsutils
+dig
+dig 127.0.0.1
+exit
+nvim P3-13-11-2024.txt 
+cd /tmp/lynxXXXX2pKFbs/
+l
+nvim L20795-3184TMP.pdf 
+nvim School/Maths/large-data-set/leeming-may-oct-1987.csv 
+tmux --help
+nmtui
+tmux list-sessions
+tmux attach 22
+tmux attach
+nmtui
+tree /
+l /windows/intel
+l /windows/
+l -color=false /windows/
+l -color=no /windows/
+l -color= /windows/
+l -color=0 /windows/
+ls /windows
+nnn /windows
+cd Downloads/
+lynx A-Level\ Textbooks.html 
+nnn
+cd Downloads/A-Level\ Textbooks_files/
+cd Downloads/
+l
+cd A-Level\ Textbooks_files/
+l
+cd commandline_data/
+l
+cd
+l
+cd .links/
+l
+cat links.cfg 
+cat links.his 
+l
+cat cookies.txt 
+lynx Downloads/A-Level\ Textbooks.html 
+lynx Downloads/A-Level\ Textbooks.html 
+links Downloads/A-Level\ Textbooks.html 
+nmcli d w c 0x077000ff
+exit
+l | grep x
+l | grep xi
+exit
+exit
+exit
+nvim /usr/share/kbd/keymaps/
+sudo nvim /usr/share/kbd/keymaps/
+exit
+exit
+nvim .dotfiles/tmux/
+nvim .dotfiles/hypr/hyprland.conf 
+nvim .dotfiles/hypr/hyprland.conf 
+nvim .dotfiles/tmux/tmux.conf 
+nvim .dotfiles/tmux/tmux.conf 
+tmux source .dotfiles/tmux/tmux.conf 
+tmux source .dotfiles/tmux/tmux.conf 
+tmux source .dotfiles/tmux/tmux.conf 
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+tmux source .dotfiles/tmux/tmux.conf 
+/bin/echo --help
+/bin/echo -e "\a h"
+/bin/echo -e "\a h"
+/bin/echo -e "\a h"
+/bin/echo -e "\a h"
+hyperfine /bin/echo -e "\a h"
+hyperfine "/bin/echo -e "\a h"C"
+hyperfine -N "/bin/echo -e "\a h"C"
+hyperfine -N "/bin/echo -e "\a h"C"
+pacman -h
+nmcli d w c 0x077000ff
+nmcli d w r && nmcli d w c 0x077000ff
+nmcli d w r && nmcli d w c 0x077000ff
+nmcli d w r && nmcli d w c 0x077000ff
+nmcli d w r && nmcli d w c 0x077000ff
+nmcli d w r && nmcli d w c 0x077000ff
+nmcli d w r && nmcli d w c 0x077000ff
+nmcli d w r && nmcli d w c 0x077000ff
+nmcli d w r && nmcli d w c 0x077000ff
+nmcli d w r && nmcli d w c 0x077000ff
+nmcli d w r && nmcli d w c 0x077000ff
+nmcli d w r && nmcli d w c 0x077000ff
+nmcli d w r && nmcli d w c 0x077000ff
+nmcli d w r && nmcli d w c 0x077000ff
+nmcli d w r && nmcli d w c 0x077000ff
+nmcli d w r && nmcli d w c 0x077000ff
+nmcli d w r && nmcli d w c 0x077000ff
+nmcli d w r && nmcli d w c 0x077000ff
+nmcli d w r && nmcli d w c 0x077000ff
+nmcli d w r && nmcli d w c 0x077000ff
+nmcli d w r && nmcli d w c 0x077000ff
+nmcli d w r && nmcli d w c 0x077000ff
+nmcli d w r && nmcli d w c 0x077000ff
+nmcli d w r && nmcli d w c 0x077000ff
+nmcli d w r && nmcli d w c 0x077000ff
+nmcli d w r && nmcli d w c 0x077000ff
+nmcli d w r && nmcli d w c 0x077000ffexit
+tmux source .dotfiles/tmux/tmux.conf 
+tmux source .dotfiles/tmux/tmux.conf 
+tmux source .dotfiles/tmux/tmux.conf 
+ly-dm
+sudo nvim /etc/ly/config.ini
+exit
+exit
+exit
+exit
+exit
+exit
+systemctl list-units
+systemctl reset nvidia-power
+systemctl reset-failed nvidia-powerd
+systemctl list-units
+nvim /usr/share/kbd/keymaps
+nvim /usr/share/kbd/keymaps/
+su root
+su root
+exit
+l /usr/share/kbd
+exit
+tmux
+nvim .dotfiles/tmux/tmux.conf 
+tmux source-config .dotfiles/tmux/tmux.conf 
+tmux source .dotfiles/tmux/tmux.conf 
+upower 
+upower --help
+upower -m
+upower -i
+upower -e
+upower -i /org/freedesktop/UPower/devices/battery_BAT1
+upower -i /org/freedesktop/UPower/devices/line_power_ACAD
+upower -i /org/freedesktop/UPower/devices/DisplayDevice
+nvim .dotfiles/tmux/tmux.conf 
+tmux source .dotfiles/tmux/tmux.conf 
+nmtui
+bash .dotfiles/scripts/school_mode.sh 
+brightnessctl set 50%
+nvim .dotfiles/tmux/tmux.conf 
+tmux source .dotfiles/tmux/tmux.conf 
+nvim .dotfiles/tmux/tmux.conf 
+tmux source .dotfiles/tmux/tmux.conf 
+tmux source .dotfiles/tmux/tmux.conf 
+nvim .dotfiles/tmux/tmux.conf 
+tmux source .dotfiles/tmux/tmux.conf 
+nvim .dotfiles/tmux/tmux.conf 
+cd .dotfiles/tmux/
+tmux source tmux.conf 
+links
+lynx
+Hyprland 
+nmcli d w l
+tmux source .dotfiles/tmux/tmux.conf 
+exit
+exit
+tmux source .dotfiles/tmux/tmux.conf 
+btop
+exit
+tmux source .dotfiles/tmux/tmux.conf 
+tmux source .dotfiles/tmux/tmux.conf 
+exit
+tmux source .dotfiles/tmux/tmux.conf 
+exit
+nvim .dotfiles/tmux/tmux.conf 
+exit
+exit
+nvim --embed
+nvim --help
+nvim --headless
+nvim -d .lynxrc .bashrc 
+nvim -n .lynxrc 
+nvim -n .lynxrc 
+nvim -n .links/
+lynx
+su root
+exit
+nvim .dotfiles/
+nvim
+nvim .dotfiles/
+cd .dotfiles/
+l
+cd nvim/
+l
+mkdir colourschemes
+cd 
+cd .dotfiles/nvim/colourschemes/
+l
+mkdir defualt-green.lua
+nvim defualt-green.lua/
+rm -rf defualt-green.lua/
+nvim default-green.lua
+nvim ~/Projects/prime-factoriser/src/main.rs 
+nvim ~/Projects/prime-factoriser/src/main.rs 
+nvim ~/Projects/prime-factoriser/src/main.rs 
+2exit
+exit

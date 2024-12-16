@@ -1,0 +1,500 @@
+exit
+sudo bash .dotfiles/scripts/school_mode.sh 
+cd School/
+l
+mkdir Physics
+l
+c Physics/
+l
+cd Physics/
+mkdir Practicals
+cd Practicals/
+mkdir 5
+cd 5
+l
+nvim data.csv
+:qq
+brightnessctl set 15%
+brightnessctl set 50 %
+brightnessctl set 515%
+brightnessctl set 50%
+l
+nvim data.csv
+cd
+systemctl hibernate 
+cd School/Physics/Practicals/5/
+nvim data.csv 
+cd
+Hyprland 
+btop
+nmtui
+btop
+brightnessctl set 10%
+btop
+brightnessctl set 10%
+btop
+lscpu
+btop
+brightnessctl set 5%
+btop
+systemctl hibernate 
+Hyprland 
+nm
+nmtui
+eit
+exit
+slurp | grim | gimp
+slurp | grim | wl-copy
+wl-paste | gimp
+wl-paste | gimp
+eit
+exit
+exit
+nmtui
+exit
+nvim main.c 
+exit
+k
+l
+cd..
+ cd ..
+l
+clang src/main.c -o vktest
+pacman -T vulkan.h
+pacman --help
+pacman -Th
+pacman -Tv vulkan.h
+sudo pacman -Syu vulkan.h
+pacman -Tv vulkan-h
+pacman -Tv vulkan-headers
+sudo pacman -Syu vulkan-headers
+
+clang --help
+clang --help | nvim
+gcc src/main.c -o vktest -I/usr/include/vulkan
+gcc src/main.c -o vktest
+gcc src/main.c -o vktest -I/usr/include/vulkan
+echo gcc src/main.c -o vktest -I/usr/include/vulkan > command.txt
+cat command.txt 
+exit
+nmtui
+btop
+sudo swapoff /dev/nvme0n1p2
+btop
+exit
+nmtui
+exit
+sudo bash .dotfiles/scripts/enable_dgpu.sh 
+l /dev/
+l /dev/ | grep gpu
+l /dev/ | grep 
+l /dev/
+/dev/nvidiactl
+sudo /dev/nvidiactl
+exit
+sudo bash .dotfiles/scripts/school_mode.sh 
+Hyprland 
+l Projects/
+cd School/Computer\ Science/Projects/Computing\ Challenges/
+l
+l 19
+nvim 19/main.c 
+cd 19
+nvim main.c #
+:q
+nvim main.c
+systemctl hibernate 
+cd
+cd Projects/c-vulkan/
+l
+cd src/
+nvim main.c 
+tmux
+cd
+Hyprland 
+cd Projects/c-vulkan/
+l
+l
+cat 192.168.1.108\:+918 
+rm 192.168.1.108\:+918 
+l
+cat command.txt | wl-copy
+gcc src/main.c -o vktest -I/usr/include/vulkan
+gcc src/main.c -o vktest -I/usr/include/vulkan
+nvim
+nvim /
+nvim .
+rm src/192.168.1.108\:+918 
+nvim src/main.c 
+sudo pacman -Syu vulkan-devel
+sudo pacman -Syu vulkan-devel
+vkcube
+sudo bash ~/.dotfiles/scripts/enable_dgpu.sh 
+sudo bash ~/.dotfiles/scripts/enable_dgpu.sh 
+su root
+l
+vkcube
+sudo bash ~/.dotfiles/scripts/disable_dgpu.sh 
+vkcube
+sudo bash ~/.dotfiles/scripts/enable_dgpu.sh 
+vkcube
+systemctl soft-reboot
+exit
+vkcube
+cd Projects/c-vulkan/
+l
+rm 192.168.1.108\:+918 
+l src/
+l
+tree
+vulkaninfo
+exit
+Hyprland 
+systemctl poweroff
+nmtui
+exurt
+exit
+nmtui
+exit
+nmtio
+nmcli d w c 0x077000ff
+nmcli d w r && nmcli d w c 0x077000ff
+nmcli d w r && nmcli d w c 0x077000ff
+nmcli d w r && nmcli d w c 0x077000ff
+nmcli d w r && nmcli d w c 0x077000ff
+nmcli d w r && nmcli d w c 0x077000ff
+nmcli d w r && nmcli d w c 0x077000ff
+nmcli d w r && nmcli d w c 0x077000ff
+nmcli d w r && nmcli d w c 0x077000ff
+nmcli d w r && nmcli d w c 0x077000ff
+exit
+vkcube
+cd Projects/c-vulkan/
+k
+l
+rm 192.168.1.108\:+918 
+l
+echo "" > \!\!\!test-vkcude\!\!\!
+l
+cat \!\!\!test-vkcude\!\!\! 
+sudo pacman -Syu glfw-wayland
+sudo pacman -Syu glm
+sudo pacman -Syu shaderc
+glslc
+C
+nvim src/main.c 
+nvim test.cpp
+gcc test.cpp 
+l
+nvim make
+make
+mv make makefile
+make
+make test
+l
+mv test.cpp main.cpp
+make test
+make
+make VulkanTest
+l
+cat makefile 
+nvim makefile 
+make VulkanTest
+make
+g++
+nvim makefile 
+pacman -Q libxi
+pacman -Q libxxf86vm
+sudo pacman -S libxi libxxf86vm
+nvim makefile 
+make VulkanTest 
+l
+cat command.txt 
+cat ma
+cat main.cpp 
+cat makefile 
+make test
+cat makefile 
+CFLAGS = -std=c++17 -O2
+LDFLAGS = -lglfw -lvulkan -ldl -lpthread -lX11 -lXxf86vm -lXrandr -lXi
+VulkanTest: main.cpp
+    g++ $(CFLAGS) -o VulkanTest main.cpp $(LDFLAGS)
+.PHONY: test clean
+test: VulkanTest
+	./VulkanTest
+clean:
+    rm -f VulkanTest
+wl-paste > makefile 
+make test
+make VulkanTest 
+exit
+vktest
+vkcube
+vkcube --help
+vkcube --gpu-number 1
+vkcube --gpu_number 1
+vkcube --gpu_number 0
+vkcube --c 60
+vkcube --c 60
+vkcube --c 144
+vkcube --c 144
+vkcube --c 60
+vkcube --c 1
+vkcube --c 1
+vkcube --c 1
+vkcube --c 1
+exit
+cd Downloads/
+l
+gimp 6\ Nov\ 2024\ at\ 19_29.jpg 
+exit
+nvim Downloads/
+exit
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ff
+nmcli  d w r && nmcli d w c 0x077000ffexir
+exit
+nmtui
+nmtui
+cd /etc/acpi
+l /etc
+nvim /etc
+exit
+asusctl profile -p
+asusctl profile -p
+exit
+nvim .dotfiles/hypr/hyprland.conf 
+evtest
+pacman -T evtest
+sudo pacman -Syu evtest
+evtest
+sudo evtest
+sudo evtest
+sudo evtest
+sudo evtest
+sudo evtest
+sudo evtest
+nvim .dotfiles/hypr/hyprland.conf 
+hyprctl reload
+exit
+evtest 
+suddo evtest 
+sudo evtest 
+sudo evtest 
+sudo evtest 
+sudo evtest 
+sudo evtest 
+exit
+cd .dotfiles/hypr/
+l
+nvim hyprland.conf 
+exit
