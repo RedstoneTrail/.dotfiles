@@ -1,0 +1,7 @@
+theme = Tomorrow Night Bright
+font-family = FiraMono Nerd Font
+font-size = 8
+window-decoration = false
+gtk-adwaita = false
+gtk-titlebar = false
+confirm-close-surface = false

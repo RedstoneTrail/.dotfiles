@@ -47,6 +47,8 @@ require("cfg.writing")
 
 require("lazy").setup("cfg.plugins")
 
+require("cfg.dbee")
+
 vim.opt.spelllang = "en"
 
 vim.opt.mouse = ""
