@@ -35,6 +35,8 @@ vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 
+vim.keymap.set("n", "<C-Tab>", ":tabn")
+
 vim.opt.nu = true
 vim.opt.signcolumn = "yes"
 

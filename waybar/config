@@ -21,8 +21,9 @@
       "warning": 30,
       "critical": 15
     },
-    "format": "{capacity}% {icon}  ",
-    "format-charging": "{capacity}% {icon} 󱐋",
+    "format": "{capacity}%{time} {icon}  ",
+    "format-charging": "{capacity}%{time} {icon} 󱐋",
+    "format-time": " {H}:{m}",
     "format-icons": [
       "",
       "",
