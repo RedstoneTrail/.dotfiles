@@ -1,2 +1,2 @@
 #!/bin/bash
-hyprctl dispatch exec "$@"
+hyprctl dispatch exec -- "$@"
