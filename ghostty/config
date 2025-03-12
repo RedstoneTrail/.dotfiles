@@ -1,6 +1,6 @@
 theme = Tomorrow Night Bright
 font-family = FiraMono Nerd Font
-font-size = 7
+font-size = 9
 window-decoration = false
 gtk-adwaita = false
 gtk-titlebar = false

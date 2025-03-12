@@ -46,13 +46,15 @@ vim.diagnostic.config({
 
 require("cfg.autoformat")
 require("cfg.writing")
+require("cfg.dbee")
 
 require("lazy").setup("cfg.plugins")
-
-require("cfg.dbee")
 
 vim.opt.spelllang = "en"
 
 vim.opt.mouse = ""
 
 vim.cmd("set noshowmode")
+
+vim.cmd("set cursorline")
+vim.cmd("hi CursorLine guibg=#033000")
