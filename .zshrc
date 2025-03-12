@@ -38,13 +38,22 @@ autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 ### End of Zinit's installer chunk
 
-PS1='%F{green}%n%F{cyan}%/%f ]> '
+PS1="%F{green}%n%f|%F{cyan}%~%f]> "
+RPROMPT="[%D{%L:%M:%S}]"
 
-alias ls='ls --color=auto'
-alias grep='grep --color=auto'
-alias l='ls -alh'
+TMOUT=1
+
+TRAPALRM() {
+	zle reset-prompt
+}
+
+alias ls="ls --color=auto"
+alias grep="grep --color=auto"
+alias l="ls -alhp"
 alias open="xdg-open"
 alias bc="bc -lq"
+alias nix="IS_NIX_SHELL=1 nix"
+alias nd="nix develop -c zsh"
 
 export NNN_OPTS="cdHiJQuU"
 export NNN_OPENER="/home/redstonetrail/.dotfiles/scripts/nnn-nuke.sh"
@@ -52,7 +61,11 @@ export NNN_OPENER="/home/redstonetrail/.dotfiles/scripts/nnn-nuke.sh"
 export UNIPICKER_SYMBOLS_FILE=/home/redstonetrail/projects/unipicker/symbols
 export UNIPICKER_COPY_COMMAND=/bin/wl-copy
 
-export PATH=/sbin:/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/sbin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/usr/lib/rustup/bin:/home/redstonetrail/bin
+export MANPAGER="w3m +Man!"
+
+export GNUPGHOME="~/.gnupg"
+
+export PATH=$PATH:/sbin:/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/sbin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/usr/lib/rustup/bin:/home/redstonetrail/bin
 export PAGER=less
 export EDITOR=nvim
 export BROWSER=firefox
@@ -63,10 +76,17 @@ export XKB_DEFAULT_LAYOUT=gb
 export LISTMAX=-1
 setopt no_hist_verify
 
-# ZVM
-export ZVM_INSTALL="$HOME/.zvm/self"
-export PATH="$PATH:$HOME/.zvm/bin"
-export PATH="$PATH:$ZVM_INSTALL/"
+if [ -z $IS_NIX_SHELL ]
+then
+	# ZVM
+	export ZVM_INSTALL="$HOME/.zvm/self"
+	export PATH="$PATH:$HOME/.zvm/bin"
+	export PATH="$PATH:$ZVM_INSTALL/"
+else
+	PS1="%F{blue}nix-shell%f|$PS1"
+fi
+
+PS1="[$PS1"
 
 # Zinit plugins/packages
 zinit light zsh-users/zsh-syntax-highlighting
@@ -76,19 +96,16 @@ zinit ice depth=1
 zinit light jeffreytse/zsh-vi-mode
 # End thereof
 
-# Created by `pipx` on 2024-12-17 09:12:09
-export PATH="$PATH:/home/redstonetrail/.local/bin"
-
 # Fix home and end
 bindkey '^[[1~' beginning-of-line
 bindkey '^[[4~' end-of-line
-bindkey '^B' backward-word
-bindkey '^W' forward-word
 
-if [ -z $DISPLAY ]; then
-	cage -d -- ghostty
-	exit
+# Nix
+if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+   . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
 fi
+export PATH="$PATH:/nix/var/nix/profiles/default/bin"
+# End Nix
 
 if [ -z $LOWEST ] && [ -z $TMUX ]; then
 	LOWEST='y'

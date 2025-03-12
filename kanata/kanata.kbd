@@ -1,0 +1,7 @@
+(defsrc)
+(deflayer default)
+(deflayer placeholder)
+(defcfg concurrent-tap-hold yes)
+(defchordsv2
+	(MetaLeft ShiftLeft F23) ControlRight 200 all-released (placeholder)
+)

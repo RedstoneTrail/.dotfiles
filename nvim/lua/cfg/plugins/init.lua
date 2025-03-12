@@ -11,10 +11,10 @@ return {
 			})
 		end,
 	},
-	{ "ThePrimeagen/vim-be-good", cmd = "VimBeGood" },
+	{ "ThePrimeagen/vim-be-good",  cmd = "VimBeGood" },
 	{ "RedstoneTrail/nvim-tetris", cmd = "Tetris" },
-	{ "tpope/vim-fugitive", cmd = "Git", cond = not vim.g.vscode },
-	{ "mbbill/undotree", cmd = "UndotreeToggle" },
+	{ "tpope/vim-fugitive",        cmd = "Git",           cond = not vim.g.vscode },
+	{ "mbbill/undotree",           cmd = "UndotreeToggle" },
 	{ "2kabhishek/co-author.nvim", cmd = "CoAuthor" },
 	"tpope/vim-commentary",
 	{
@@ -40,7 +40,20 @@ return {
 			require("dbee").install()
 		end,
 		config = function()
-			require("dbee").setup(--[[optional config]])
+			require("dbee").setup( --[[optional config]])
 		end,
 	},
+	{
+		"cosmicboots/unicode_picker.nvim",
+		dependencies = {
+			"uga-rosa/utf8.nvim",
+			"nvim-telescope/telescope.nvim",
+		},
+		config = function()
+			local unicode_picker = require("unicode_picker")
+			unicode_picker.setup()
+			vim.keymap.set("n", "<leader>ui", unicode_picker.unicode_chars,
+				{ buffer = bufnr, desc = "[U]nicode [I]nsert" })
+		end,
+	}
 }
