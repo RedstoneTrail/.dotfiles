@@ -34,9 +34,6 @@ return {
 			"MunifTanjim/nui.nvim",
 		},
 		build = function()
-			-- Install tries to automatically detect the install method.
-			-- if it fails, try calling it with one of these parameters:
-			--    "curl", "wget", "bitsadmin", "go"
 			require("dbee").install()
 		end,
 		config = function()
@@ -55,5 +52,9 @@ return {
 			vim.keymap.set("n", "<leader>ui", unicode_picker.unicode_chars,
 				{ buffer = bufnr, desc = "[U]nicode [I]nsert" })
 		end,
+	},
+	{
+		"nvim-telescope/telescope.nvim", tag = "0.1.8",
+		dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope-fzf-native.nvim" }
 	}
 }

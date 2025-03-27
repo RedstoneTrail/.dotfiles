@@ -54,7 +54,11 @@ vim.opt.spelllang = "en"
 
 vim.opt.mouse = ""
 
-vim.cmd("set noshowmode")
+vim.opt.showmode = false
 
-vim.cmd("set cursorline")
+vim.opt.cursorline = true
 vim.cmd("hi CursorLine guibg=#033000")
+
+vim.opt.list = true
+
+vim.opt.scrolloff = 10

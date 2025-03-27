@@ -4,6 +4,9 @@
   "modules-left": [
     "hyprland/workspaces",
   ],
+  "modules-center": [
+    "mpris",
+  ],
   "modules-right": [
     "tray",
     "pulseaudio#source",
@@ -17,6 +20,7 @@
     "format": "{:%d/%m/%Y %H:%M}"
   },
   "battery": {
+  "interval": 10,
     "states": {
       "warning": 30,
       "critical": 15
@@ -70,5 +74,16 @@
       ]
     },
     "on-click": "pavucontrol"
+  },
+  "mpris": {
+    "format": "{player_icon} {player}: {artist}/{album}/{title} {position}/{length}",
+    "format-paused": "{status_icon} {player}: {artist}/{album}/{title} {position}/{length}",
+    "interval": 1,
+    "player-icons": {
+      "default": " "
+    },
+    "status-icons": {
+      "paused": " "
+    }
   }
 }
