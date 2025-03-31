@@ -45,7 +45,7 @@
     "format-wifi": "{essid} {signalStrength}% 󰖩",
     "format-ethernet": "{ipaddr}/{cidr} ",
     "format-disconnected": "Disconnected 󰖪",
-    "on-click": "alacritty --class nmtui -e nmtui"
+    "on-click": "alacritty --title nmtui -e nmtui"
   },
   "pulseaudio#source": {
     "format": "{format_source} {icon}",
