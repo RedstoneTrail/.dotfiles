@@ -1,28 +1,16 @@
-# The following lines were added by compinstall
-
-zstyle ':completion:*' completer _complete _ignored
-zstyle ':completion:*' list-colors ''
-zstyle ':completion:*' list-prompt '%SAt %p: Hit TAB for more, or the character to insert%s'
-zstyle ':completion:*' matcher-list '' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'r:|[._-]=* r:|=*'
 zstyle ':completion:*' menu select=0
-zstyle ':completion:*' select-prompt '%SScrolling active: current selection at %p%s'
-zstyle ':completion:*' use-compctl false
-zstyle :compinstall filename '/home/redstonetrail/.zshrc'
+zstyle ':completion:*' menu search
+zstyle ':completion:*' completer _expand _complete _match _correct _prefix
 
 autoload -Uz compinit
 compinit
-# End of lines added by compinstall
-# Lines configured by zsh-newuser-install
+
 HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
-setopt beep extendedglob nomatch notify
+setopt beep extendedglob nomatch notify extended_glob
 unsetopt autocd
 bindkey -v
-# End of lines configured by zsh-newuser-install
-
-# set fzf bindings and completion
-source <(fzf --zsh)
 
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
@@ -37,6 +25,14 @@ source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 ### End of Zinit's installer chunk
+
+zinit wait lucid for \
+ atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
+    zdharma-continuum/fast-syntax-highlighting \
+ blockf \
+    zsh-users/zsh-completions \
+ # atload"!_zsh_autosuggest_start" \
+ #    zsh-users/zsh-autosuggestions
 
 PS1="%F{green}%n%f|%F{cyan}%~%f]> "
 RPROMPT="[%D{%L:%M:%S}]"
@@ -54,6 +50,7 @@ alias open="xdg-open"
 alias bc="bc -lq"
 alias nix="IS_NIX_SHELL=1 nix"
 alias nd="nix develop -c zsh"
+alias fs="source /home/redstonetrail/.dotfiles/scripts/fuzzy-search.sh"
 
 export NNN_OPTS="cdHiJQuU"
 export NNN_OPENER="/home/redstonetrail/.dotfiles/scripts/nnn-nuke.sh"
@@ -61,7 +58,7 @@ export NNN_OPENER="/home/redstonetrail/.dotfiles/scripts/nnn-nuke.sh"
 export UNIPICKER_SYMBOLS_FILE=/home/redstonetrail/projects/unipicker/symbols
 export UNIPICKER_COPY_COMMAND=/bin/wl-copy
 
-export MANPAGER="w3m +Man!"
+export MANPAGER="less"
 
 export GNUPGHOME="~/.gnupg"
 
@@ -69,19 +66,18 @@ export PATH=$PATH:/sbin:/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/sbin:/
 export PAGER=less
 export EDITOR=nvim
 export BROWSER=firefox
-export TERMINAL=alacritty
-export XKB_DEFAULT_OPTIONS=ctrl:nocaps
-export XKB_DEFAULT_LAYOUT=gb
+export TERMINAL=$TERM
 
 export LISTMAX=-1
 setopt no_hist_verify
 
+# ZVM
+export ZVM_INSTALL="$HOME/.zvm/self"
+export PATH="$PATH:$HOME/.zvm/bin"
+export PATH="$PATH:$ZVM_INSTALL/"
+
 if [ -z $IS_NIX_SHELL ]
 then
-	# ZVM
-	export ZVM_INSTALL="$HOME/.zvm/self"
-	export PATH="$PATH:$HOME/.zvm/bin"
-	export PATH="$PATH:$ZVM_INSTALL/"
 else
 	PS1="%F{blue}nix-shell%f|$PS1"
 fi
@@ -107,8 +103,13 @@ fi
 export PATH="$PATH:/nix/var/nix/profiles/default/bin"
 # End Nix
 
+# remove the non-directory path entry ~/.nix-profile/bin
+export PATH=$(echo $PATH | tr ':' '\n' | grep -v '.nix-profile/bin' | tr '\n' ':' | rev | cut -b2- | rev)
+
 if [ -z $LOWEST ] && [ -z $TMUX ]; then
 	LOWEST='y'
+
+	export TMUX_TMPDIR=~/tmp/tmux/
 	
 	tmux
 	kill ${${(v)jobstates##*:*:}%=*}
@@ -116,8 +117,4 @@ if [ -z $LOWEST ] && [ -z $TMUX ]; then
 	kill ${${(v)jobstates##*:*:}%=*}
 	sleep .01
 	exit
-else
-	if [ -z $TMUX ]; then
-		tmux attach
-	fi
 fi

@@ -10,5 +10,6 @@
 # 	fi
 # done
 
-UNIPICKER_SYMBOLS_FILE=/home/redstonetrail/projects/unipicker/symbols UNIPICKER_COPY_COMMAND=/bin/wl-copy unipicker > /tmp/unipicker-out.txt
+UNIPICKER_SYMBOLS_FILE=/home/redstonetrail/projects/unipicker/symbols UNIPICKER_COPY_COMMAND=/bin/wl-copy unipicker | cut -f1 -d\n > /tmp/unipicker-out.txt
 cat /tmp/unipicker-out.txt | wl-copy
+
