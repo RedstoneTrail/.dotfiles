@@ -5,7 +5,7 @@
     "hyprland/workspaces",
   ],
   "modules-center": [
-    "mpris",
+    "custom/mpris",
   ],
   "modules-right": [
     "tray",
@@ -75,15 +75,11 @@
     },
     "on-click": "pavucontrol"
   },
-  "mpris": {
-    "format": "{player_icon} {player}: {artist}/{album}/{title} {position}/{length}",
-    "format-paused": "{status_icon} {player}: {artist}/{album}/{title} {position}/{length}",
-    "interval": 1,
-    "player-icons": {
-      "default": " "
-    },
-    "status-icons": {
-      "paused": " "
-    }
+  "custom/mpris": {
+	"return-type": "json",
+	"exec-if": "playerctl metadata",
+	"exec": "zsh ~/.dotfiles/scripts/mpris-module.sh",
+	"restart-interval": 0,
+	"format": "{}",
   }
 }

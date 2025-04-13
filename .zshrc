@@ -1,6 +1,6 @@
-zstyle ':completion:*' menu select=0
-zstyle ':completion:*' menu search
 zstyle ':completion:*' completer _expand _complete _match _correct _prefix
+zstyle ':completion:*' completer _complete _ignored
+zstyle :compinstall filename '~/.zshrc'
 
 autoload -Uz compinit
 compinit
