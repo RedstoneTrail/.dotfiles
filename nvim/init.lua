@@ -38,6 +38,8 @@ vim.keymap.set("n", "N", "Nzzzv")
 vim.keymap.set("n", "<C-Tab>", ":tabn")
 
 vim.opt.nu = true
+vim.opt.rnu = true
+
 vim.opt.signcolumn = "yes"
 
 vim.diagnostic.config({
@@ -58,6 +60,9 @@ vim.opt.showmode = false
 
 vim.opt.cursorline = true
 vim.cmd("hi CursorLine guibg=#033000")
+
+vim.opt.cursorcolumn = true
+vim.cmd("hi CursorColumn guibg=#033000")
 
 vim.opt.list = true
 

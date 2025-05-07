@@ -2,7 +2,7 @@
 #need a sleep here as restart-interval SHOULD be set to 0
 sleep 0.1
 # check that there is actual data to read, overwrite data with nothing and exit otherwise
-if ! playerctl metadata > /dev/null
+if [ -z "$(playerctl metadata)" ]
 then
 	echo
 	exit
@@ -17,17 +17,20 @@ POSITION=$(playerctl metadata -f '{{duration(position)}}')
 LENGTH=$(playerctl metadata -f '{{duration(mpris:length)}}')
 
 # show the symbol according to the status
-if [ $STATUS = "Playing" ]
+if ! [ -z $STATUS ]
 then
-	TEXT="  "
-fi
-if [ $STATUS = "Paused" ]
-then
-	TEXT="  "
-fi
-if [ $STATUS = "Stopped" ]
-then
-	TEXT="⏹  "
+	if [ $STATUS = "Playing" ]
+	then
+		TEXT="  "
+	fi
+	if [ $STATUS = "Paused" ]
+	then
+		TEXT="  "
+	fi
+	if [ $STATUS = "Stopped" ]
+	then
+		TEXT="⏹  "
+	fi
 fi
 
 # show player name if available
@@ -58,7 +61,7 @@ fi
 if [ $TRACK_DATA_COUNT -ge 1 ]
 then
 	# if we know the player (so we have printed it already) add a divider
-	if ! [ -z $PLAYER]
+	if ! [ -z $PLAYER ]
 	then
 		TEXT=$TEXT" | "
 	fi
@@ -104,9 +107,6 @@ SHOW_TIMES=false
 if ! [ -z $POSITION ]; then SHOW_TIMES=true; fi
 if ! [ -z $LENGTH ]; then SHOW_TIMES=true; fi
 
-echo $POSITION
-echo $LENGTH
-
 # add a divider if we have time information to show
 if $SHOW_TIMES
 then
@@ -132,7 +132,5 @@ then
 fi
 
 # format the text to be set to waybar as json
-JSON='{ "text": "'$TEXT'" }'
 
-# send it
-echo $JSON
+echo '{ "text": "'$TEXT'" }' | sed "s/\&/\&amp\;/"

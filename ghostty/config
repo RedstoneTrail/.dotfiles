@@ -1,7 +1,8 @@
-theme = Tomorrow Night Bright
+theme = MaterialDarker
 font-family = FiraMono Nerd Font
 font-size = 9
 window-decoration = false
 gtk-adwaita = false
 gtk-titlebar = false
 confirm-close-surface = false
+cursor-invert-fg-bg = true

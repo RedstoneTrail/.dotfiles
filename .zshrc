@@ -2,13 +2,13 @@ zstyle ':completion:*' completer _expand _complete _match _correct _prefix
 zstyle ':completion:*' completer _complete _ignored
 zstyle :compinstall filename '~/.zshrc'
 
-autoload -Uz compinit
-compinit
+# autoload -Uz compinit
+# compinit
 
 HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
-setopt beep extendedglob nomatch notify extended_glob
+setopt beep nomatch notify extendedglob no_nomatch
 unsetopt autocd
 bindkey -v
 
@@ -31,17 +31,11 @@ zinit wait lucid for \
     zdharma-continuum/fast-syntax-highlighting \
  blockf \
     zsh-users/zsh-completions \
- # atload"!_zsh_autosuggest_start" \
- #    zsh-users/zsh-autosuggestions
+ atload"!_zsh_autosuggest_start" \
+    zsh-users/zsh-autosuggestions
 
 PS1="%F{green}%n%f|%F{cyan}%~%f]> "
 RPROMPT="[%D{%L:%M:%S}]"
-
-TMOUT=1
-
-TRAPALRM() {
-	zle reset-prompt
-}
 
 alias ls="ls --color=auto"
 alias grep="grep --color=auto"
@@ -50,6 +44,8 @@ alias open="xdg-open"
 alias bc="bc -lq"
 alias nix="IS_NIX_SHELL=1 nix"
 alias nd="nix develop -c zsh"
+alias ns="nix shell"
+alias zbr="zig build run"
 alias fs="source /home/redstonetrail/.dotfiles/scripts/fuzzy-search.sh"
 
 export NNN_OPTS="cdHiJQuU"
@@ -87,6 +83,7 @@ PS1="[$PS1"
 # Zinit plugins/packages
 zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-completions
+# zinit light marlonrichert/zsh-autocomplete
 
 zinit ice depth=1
 zinit light jeffreytse/zsh-vi-mode
@@ -104,7 +101,7 @@ export PATH="$PATH:/nix/var/nix/profiles/default/bin"
 # End Nix
 
 # remove the non-directory path entry ~/.nix-profile/bin
-export PATH=$(echo $PATH | tr ':' '\n' | grep -v '.nix-profile/bin' | tr '\n' ':' | rev | cut -b2- | rev)
+export PATH=$(echo $PATH | tr ':' '\n' | grep -v '.nix-profile/bin' | tr '\n' ':' | rev | cut -b2- | rev):/opt/cuda/bin:/opt/cuda/nsight_compute:/opt/cuda/nsight_systems/bin
 
 if [ -z $LOWEST ] && [ -z $TMUX ]; then
 	LOWEST='y'

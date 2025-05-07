@@ -17,8 +17,6 @@ local function on_attach(client, bufnr)
 	nmap("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
 	nmap("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
 	nmap("K", vim.lsp.buf.hover, "Hover Documentation")
-
-	require("inlay-hints").on_attach(client, bufnr)
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -51,7 +49,7 @@ return {
 		config = function()
 			require("neodev").setup()
 
-			require("mason").setup()
+			require("mason").setup({ PATH = "append" })
 			require("mason-lspconfig").setup({
 				ensure_installed = {
 					"rust_analyzer",
@@ -76,15 +74,6 @@ return {
 		cond = not vim.g.vscode,
 		version = "^3",
 		ft = { "rust" },
-	},
-	{
-		"simrat39/inlay-hints.nvim",
-		cond = not vim.g.vscode,
-		config = function()
-			require("inlay-hints").setup({
-				renderer = "inlay-hints/render/eol",
-			})
-		end,
 	},
 	{
 		"nvimtools/none-ls.nvim",
