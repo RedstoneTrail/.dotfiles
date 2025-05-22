@@ -67,3 +67,9 @@ vim.cmd("hi CursorColumn guibg=#033000")
 vim.opt.list = true
 
 vim.opt.scrolloff = 10
+
+require("oil").setup({
+	columns = { "icon", "permissions", "size", "mtime", },
+})
+
+vim.cmd("hi Normal guibg=#212121")

@@ -9,7 +9,6 @@ HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
 setopt beep nomatch notify extendedglob no_nomatch
-unsetopt autocd
 bindkey -v
 
 ### Added by Zinit's installer
@@ -26,14 +25,6 @@ autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 ### End of Zinit's installer chunk
 
-zinit wait lucid for \
- atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
-    zdharma-continuum/fast-syntax-highlighting \
- blockf \
-    zsh-users/zsh-completions \
- atload"!_zsh_autosuggest_start" \
-    zsh-users/zsh-autosuggestions
-
 PS1="%F{green}%n%f|%F{cyan}%~%f]> "
 RPROMPT="[%D{%L:%M:%S}]"
 
@@ -45,8 +36,10 @@ alias bc="bc -lq"
 alias nix="IS_NIX_SHELL=1 nix"
 alias nd="nix develop -c zsh"
 alias ns="nix shell"
+alias nr="nix run"
 alias zbr="zig build run"
 alias fs="source /home/redstonetrail/.dotfiles/scripts/fuzzy-search.sh"
+alias notify-done="hyprctl -i 0 notify 1 10000 0 done"
 
 export NNN_OPTS="cdHiJQuU"
 export NNN_OPENER="/home/redstonetrail/.dotfiles/scripts/nnn-nuke.sh"
@@ -81,9 +74,16 @@ fi
 PS1="[$PS1"
 
 # Zinit plugins/packages
-zinit light zsh-users/zsh-syntax-highlighting
+zinit wait lucid for \
+ atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
+    zdharma-continuum/fast-syntax-highlighting \
+ blockf \
+    zsh-users/zsh-completions \
+ atload"!_zsh_autosuggest_start" \
+    zsh-users/zsh-autosuggestions
+
 zinit light zsh-users/zsh-completions
-# zinit light marlonrichert/zsh-autocomplete
+zinit light zdharma-continuum/fast-syntax-highlighting
 
 zinit ice depth=1
 zinit light jeffreytse/zsh-vi-mode
@@ -108,10 +108,5 @@ if [ -z $LOWEST ] && [ -z $TMUX ]; then
 
 	export TMUX_TMPDIR=~/tmp/tmux/
 	
-	tmux
-	kill ${${(v)jobstates##*:*:}%=*}
-	sleep .01
-	kill ${${(v)jobstates##*:*:}%=*}
-	sleep .01
-	exit
+	exec tmux
 fi

@@ -2,7 +2,7 @@
 #need a sleep here as restart-interval SHOULD be set to 0
 sleep 0.1
 # check that there is actual data to read, overwrite data with nothing and exit otherwise
-if [ -z "$(playerctl metadata)" ]
+if [ -z "$(playerctl metadata 2> /dev/null)" ]
 then
 	echo
 	exit
