@@ -1,5 +1,4 @@
-zstyle ':completion:*' completer _expand _complete _match _correct _prefix
-zstyle ':completion:*' completer _complete _ignored
+zstyle ':completion:*' completer _expand _complete _match _correct _prefix _ignored
 zstyle :compinstall filename '~/.zshrc'
 
 # autoload -Uz compinit
@@ -8,7 +7,7 @@ zstyle :compinstall filename '~/.zshrc'
 HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
-setopt beep nomatch notify extendedglob no_nomatch
+setopt nobeep notify extendedglob nonomatch autolist globcomplete noautoparamslash interactivecomments
 bindkey -v
 
 ### Added by Zinit's installer
@@ -25,9 +24,6 @@ autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 ### End of Zinit's installer chunk
 
-PS1="%F{green}%n%f|%F{cyan}%~%f]> "
-RPROMPT="[%D{%L:%M:%S}]"
-
 alias ls="ls --color=auto"
 alias grep="grep --color=auto"
 alias l="ls -alhp"
@@ -39,7 +35,7 @@ alias ns="nix shell"
 alias nr="nix run"
 alias zbr="zig build run"
 alias fs="source /home/redstonetrail/.dotfiles/scripts/fuzzy-search.sh"
-alias notify-done="hyprctl -i 0 notify 1 10000 0 done"
+alias notify-done="notify-send -u low -a zsh process\ finished"
 
 export NNN_OPTS="cdHiJQuU"
 export NNN_OPENER="/home/redstonetrail/.dotfiles/scripts/nnn-nuke.sh"
@@ -65,6 +61,9 @@ export ZVM_INSTALL="$HOME/.zvm/self"
 export PATH="$PATH:$HOME/.zvm/bin"
 export PATH="$PATH:$ZVM_INSTALL/"
 
+PS1="%F{green}%n%f|%F{cyan}%~%f]> "
+RPROMPT="[%D{%L:%M:%S}]"
+
 if [ -z $IS_NIX_SHELL ]
 then
 else
@@ -74,15 +73,15 @@ fi
 PS1="[$PS1"
 
 # Zinit plugins/packages
-zinit wait lucid for \
- atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
-    zdharma-continuum/fast-syntax-highlighting \
- blockf \
-    zsh-users/zsh-completions \
- atload"!_zsh_autosuggest_start" \
-    zsh-users/zsh-autosuggestions
+# zinit wait lucid for \
+#  atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
+#     zdharma-continuum/fast-syntax-highlighting \
+#  blockf \
+#     zsh-users/zsh-completions \
+#  atload"!_zsh_autosuggest_start" \
+#     zsh-users/zsh-autosuggestions
 
-zinit light zsh-users/zsh-completions
+# zinit light zsh-users/zsh-completions
 zinit light zdharma-continuum/fast-syntax-highlighting
 
 zinit ice depth=1
@@ -108,5 +107,5 @@ if [ -z $LOWEST ] && [ -z $TMUX ]; then
 
 	export TMUX_TMPDIR=~/tmp/tmux/
 	
-	exec tmux
+	# exec tmux
 fi

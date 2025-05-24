@@ -1,0 +1,42 @@
+[global]
+	width					= (169, 640)
+	height					= (0, 100)
+	notification_limit			= 10
+	origin					= top-right
+	offset					= (4, 8)
+	progress_bar				= true
+	progress_bar_horizontal_alignment	= right
+	progress_bar_height			= 16
+	progress_bar_min_width			= 128
+	progress_bar_max_width			= 256
+	progress_bar_frame_width		= 0
+	separator_height			= 0
+	padding					= 4
+	horizontal_padding			= 4
+	text_icon_padding			= 4
+	frame_width				= 0
+	gap_size				= 6
+	sort					= urgency_descending
+	font					= FiraMono Nerd Font Ultra-Light 11
+	line_height				= 0
+	format					= <b>%a/%s</b>\n%b\n%p
+	enable_recursive_icon_lookup		= true
+	timeout					= 60
+
+[urgency_low]
+	background = "#212121"
+	foreground = "#FFFFFF"
+	frame_color = "#A0A0A0"
+		highlight = "#000000", "#F0F0F0"
+
+[urgency_normal]
+	background = "#212121"
+	foreground = "#FFFFFF"
+	frame_color = "#0AA000"
+		highlight = "#000000", "#0FF000"
+
+[urgency_critical]
+	background = "#212121"
+	foreground = "#F00F00"
+	frame_color = "#F00F00"
+		highlight = "#000000", "#FF0000"
