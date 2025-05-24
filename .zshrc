@@ -102,10 +102,10 @@ export PATH="$PATH:/nix/var/nix/profiles/default/bin"
 # remove the non-directory path entry ~/.nix-profile/bin
 export PATH=$(echo $PATH | tr ':' '\n' | grep -v '.nix-profile/bin' | tr '\n' ':' | rev | cut -b2- | rev):/opt/cuda/bin:/opt/cuda/nsight_compute:/opt/cuda/nsight_systems/bin
 
-if [ -z $LOWEST ] && [ -z $TMUX ]; then
+if [ -z $LOWEST ] && [ -z $TMUX ] && [ -z $DISPLAY ]; then
 	LOWEST='y'
 
 	export TMUX_TMPDIR=~/tmp/tmux/
 	
-	# exec tmux
+	exec tmux
 fi
