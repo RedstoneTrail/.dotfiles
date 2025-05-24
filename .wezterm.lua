@@ -1,5 +1,16 @@
-local wezterm         = require("wezterm")
-local config          = wezterm.config_builder()
+local wezterm = require("wezterm")
+local config  = wezterm.config_builder()
+
+-- pane switching function from github
+local function switch_in_direction(dir)
+	return function(window, pane)
+		local tab = window:active_tab()
+		local next_pane = tab:get_pane_direction(dir)
+		if next_pane then
+			tab.swap_active_with_index(next_pane, true)
+		end
+	end
+end
 
 -- colourscheme (based on the vga ansi colour set)
 local colourscheme    = {
@@ -295,6 +306,67 @@ config.keys              = {
 		key = "Escape",
 		mods = "LEADER",
 		action = wezterm.action.ActivateCopyMode,
+	},
+	{
+		key = "h",
+		mods = "CTRL|META",
+		action = wezterm.action_callback(switch_in_direction("Left")),
+	},
+	{
+		key = "j",
+		mods = "CTRL|META",
+		action = wezterm.action_callback(switch_in_direction("Down")),
+	},
+	{
+		key = "k",
+		mods = "CTRL|META",
+		action = wezterm.action_callback(switch_in_direction("Up")),
+	},
+	{
+		key = "l",
+		mods = "CTRL|META",
+		action = wezterm.action_callback(switch_in_direction("Right")),
+	},
+}
+
+config.key_tables        = {
+	copy_mode = {
+		{
+			key = "/",
+			mods = "",
+			action = wezterm.action.CopyMode("EditPattern"),
+		},
+		{
+			key = "j",
+			mods = "SHIFT",
+			action = wezterm.action.Multiple({
+				wezterm.action.CopyMode("MoveToViewportBottom"),
+				wezterm.action.CopyMode("MoveDown"),
+			}),
+		},
+		{
+			key = "k",
+			mods = "SHIFT",
+			action = wezterm.action.Multiple({
+				wezterm.action.CopyMode("MoveToViewportTop"),
+				wezterm.action.CopyMode("MoveUp"),
+			}),
+		},
+		{
+			key = "j",
+			mods = "",
+			action = wezterm.action.CopyMode("MoveDown"),
+		},
+		{
+			key = "k",
+			mods = "",
+			action = wezterm.action.CopyMode("MoveUp"),
+		},
+		{
+			key = "q",
+			mods = "",
+			action = wezterm.action.CopyMode("Close"),
+		},
 	},
 }
 
