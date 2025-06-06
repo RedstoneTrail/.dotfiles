@@ -13,4 +13,4 @@ else
 	paplay ~/.dotfiles/dunst/notification-sound.mp3 & sleep 0.1
 fi
 
-paplay ~/.dotfiles/dunst/notification-sound.mp3
+paplay ~/.dotfiles/dunst/notification-sound.mp3 &

@@ -7,7 +7,7 @@ zstyle :compinstall filename '~/.zshrc'
 HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
-setopt nobeep notify extendedglob nonomatch autolist globcomplete noautoparamslash interactivecomments
+setopt nobeep notify extendedglob nonomatch autolist globcomplete noautoparamslash interactivecomments globdots
 bindkey -v
 
 ### Added by Zinit's installer
@@ -25,16 +25,28 @@ autoload -Uz _zinit
 ### End of Zinit's installer chunk
 
 alias ls="ls --color=auto"
-alias grep="grep --color=auto"
 alias l="ls -alhp"
+
+alias grep="grep --color=auto"
+
 alias open="xdg-open"
+
 alias bc="bc -lq"
+
 alias nix="IS_NIX_SHELL=1 nix"
 alias nd="nix develop -c zsh"
 alias ns="nix shell"
 alias nr="nix run"
+
+alias torsocks="IS_TOR_SHELL=1 torsocks"
+alias tss="torsocks --shell &> /dev/null"
+alias ts="torsocks"
+
 alias zbr="zig build run"
+alias zb="zig build"
+
 alias fs="source /home/redstonetrail/.dotfiles/scripts/fuzzy-search.sh"
+
 alias notify-done="notify-send -u low -a zsh process\ finished"
 
 export NNN_OPTS="cdHiJQuU"
@@ -47,11 +59,12 @@ export MANPAGER="less"
 
 export GNUPGHOME="~/.gnupg"
 
-export PATH=$PATH:/sbin:/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/sbin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/usr/lib/rustup/bin:/home/redstonetrail/bin
+export PATH=$PATH:/sbin:/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/sbin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/usr/lib/rustup/bin:/home/redstonetrail/bin:$(realpath /home/redstonetrail/.nix-profile/bin)
 export PAGER=less
 export EDITOR=nvim
 export BROWSER=firefox
 export TERMINAL=$TERM
+export SHELL=zsh
 
 export LISTMAX=-1
 setopt no_hist_verify
@@ -61,13 +74,19 @@ export ZVM_INSTALL="$HOME/.zvm/self"
 export PATH="$PATH:$HOME/.zvm/bin"
 export PATH="$PATH:$ZVM_INSTALL/"
 
-PS1="%F{green}%n%f|%F{cyan}%~%f]> "
+PS1="%F{2}%n%f|%F{6}%~%f]> "
 RPROMPT="[%D{%L:%M:%S}]"
 
 if [ -z $IS_NIX_SHELL ]
 then
 else
-	PS1="%F{blue}nix-shell%f|$PS1"
+	PS1="%F{4}nix-shell%f|$PS1"
+fi
+
+if [ -z $IS_TOR_SHELL ]
+then
+else
+	PS1="%F{13}tor-shell%f|$PS1"
 fi
 
 PS1="[$PS1"
@@ -81,7 +100,8 @@ PS1="[$PS1"
 #  atload"!_zsh_autosuggest_start" \
 #     zsh-users/zsh-autosuggestions
 
-# zinit light zsh-users/zsh-completions
+zinit light zsh-users/zsh-autosuggestions
+zinit light zsh-users/zsh-completions
 zinit light zdharma-continuum/fast-syntax-highlighting
 
 zinit ice depth=1
@@ -102,7 +122,7 @@ export PATH="$PATH:/nix/var/nix/profiles/default/bin"
 # remove the non-directory path entry ~/.nix-profile/bin
 export PATH=$(echo $PATH | tr ':' '\n' | grep -v '.nix-profile/bin' | tr '\n' ':' | rev | cut -b2- | rev):/opt/cuda/bin:/opt/cuda/nsight_compute:/opt/cuda/nsight_systems/bin
 
-if [ -z $LOWEST ] && [ -z $TMUX ] && [ -z $DISPLAY ]; then
+if [ -z $LOWEST ] && [ -z $TMUX ] && [ "$TERM" != "xterm-256color" ]; then
 	LOWEST='y'
 
 	export TMUX_TMPDIR=~/tmp/tmux/

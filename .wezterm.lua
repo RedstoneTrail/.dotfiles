@@ -3,7 +3,7 @@ local config  = wezterm.config_builder()
 
 -- pane switching function from github
 local function switch_in_direction(dir)
-	return function(window, pane)
+	return function(window)
 		local tab = window:active_tab()
 		local next_pane = tab:get_pane_direction(dir)
 		if next_pane then
@@ -13,28 +13,52 @@ local function switch_in_direction(dir)
 end
 
 -- colourscheme (based on the vga ansi colour set)
+-- local colourscheme    = {
+-- 	dark = {
+-- 		black   = "#000000",
+-- 		red     = "#AA0000",
+-- 		green   = "#00AA00",
+-- 		yellow  = "#AA5500",
+-- 		blue    = "#0000AA",
+-- 		magenta = "#AA00AA",
+-- 		cyan    = "#00AAAA",
+-- 		white   = "#AAAAAA",
+-- 	},
+-- 	bright = {
+-- 		black   = "#555555",
+-- 		red     = "#FF5555",
+-- 		green   = "#55FF55",
+-- 		yellow  = "#FFFF55",
+-- 		blue    = "#5555FF",
+-- 		magenta = "#FF55FF",
+-- 		cyan    = "#55FFFF",
+-- 		white   = "#FFFFFF",
+-- 	},
+-- }
+
 local colourscheme    = {
 	dark = {
 		black   = "#000000",
-		red     = "#AA0000",
-		green   = "#00AA00",
-		yellow  = "#AA5500",
-		blue    = "#0000AA",
-		magenta = "#AA00AA",
-		cyan    = "#00AAAA",
-		white   = "#AAAAAA",
+		red     = "#FF0000",
+		green   = "#00FF00",
+		yellow  = "#FF5500",
+		blue    = "#8888FF",
+		magenta = "#FF00FF",
+		cyan    = "#00DDDD",
+		white   = "#FFFFFF",
 	},
 	bright = {
 		black   = "#555555",
 		red     = "#FF5555",
 		green   = "#55FF55",
 		yellow  = "#FFFF55",
-		blue    = "#5555FF",
+		blue    = "#7BE7EE",
 		magenta = "#FF55FF",
 		cyan    = "#55FFFF",
 		white   = "#FFFFFF",
 	},
 }
+
 local bg_grey         = "#212121"
 
 -- config.font           = wezterm.font "FiraMono Nerd Font"
@@ -185,10 +209,11 @@ wezterm.on("update-right-status", function(window, pane)
 end)
 
 wezterm.on("bell", function(window, pane)
-	os.execute("notify-send -u low -a wezterm \"a bell was rung by " .. pane:get_title() .. "\"")
+	os.execute("notify-send -u low -a wezterm \"a bell was rung by tty " ..
+		pane:get_tty_name() .. "\" \"time: " .. os.time() .. "\"")
 end)
 
-config.visual_bell       = {
+config.visual_bell              = {
 	fade_in_duration_ms = 150,
 	fade_in_function = "EaseInOut",
 	fade_out_duration_ms = 150,
@@ -196,21 +221,21 @@ config.visual_bell       = {
 }
 
 -- not available in stable yet
--- config.window_content_alignment = {
--- 	horizontal = "Center",
--- 	vertical = "Center",
--- }
+config.window_content_alignment = {
+	horizontal = "Center",
+	vertical = "Center",
+}
 
-config.use_fancy_tab_bar = false
-config.tab_bar_at_bottom = true
+config.use_fancy_tab_bar        = false
+config.tab_bar_at_bottom        = true
 
-config.leader            = {
+config.leader                   = {
 	key = "a",
 	mods = "CTRL",
 	timeout_milliseconds = 1000,
 }
 
-config.keys              = {
+config.keys                     = {
 	{
 		key = "|",
 		mods = "LEADER|SHIFT",
@@ -308,6 +333,13 @@ config.keys              = {
 		action = wezterm.action.ActivateCopyMode,
 	},
 	{
+		key = "Tab",
+		mods = "META",
+		action = wezterm.action.PaneSelect({
+			mode = "SwapWithActiveKeepFocus",
+		}),
+	},
+	{
 		key = "h",
 		mods = "CTRL|META",
 		action = wezterm.action_callback(switch_in_direction("Left")),
@@ -327,9 +359,14 @@ config.keys              = {
 		mods = "CTRL|META",
 		action = wezterm.action_callback(switch_in_direction("Right")),
 	},
+	{
+		key = "p",
+		mods = "LEADER",
+		action = wezterm.action.PasteFrom("Clipboard"),
+	},
 }
 
-config.key_tables        = {
+config.key_tables               = {
 	copy_mode = {
 		{
 			key = "/",
@@ -363,9 +400,86 @@ config.key_tables        = {
 			action = wezterm.action.CopyMode("MoveUp"),
 		},
 		{
+			key = "h",
+			mods = "",
+			action = wezterm.action.CopyMode("MoveLeft"),
+		},
+		{
+			key = "l",
+			mods = "",
+			action = wezterm.action.CopyMode("MoveRight"),
+		},
+		{
 			key = "q",
 			mods = "",
-			action = wezterm.action.CopyMode("Close"),
+			action = wezterm.action.Multiple({
+				wezterm.action.CopyMode("MoveToScrollbackBottom"),
+				wezterm.action.CopyMode("Close"),
+			}),
+		},
+		{
+			key = "Escape",
+			mods = "",
+			action = wezterm.action.Multiple({
+				wezterm.action.CopyMode("MoveToScrollbackBottom"),
+				wezterm.action.CopyMode("Close"),
+			}),
+		},
+		{
+			key = "v",
+			mods = "",
+			action = wezterm.action.CopyMode({ SetSelectionMode = "Cell" }),
+		},
+		{
+			key = "v",
+			mods = "CTRL",
+			action = wezterm.action.CopyMode({ SetSelectionMode = "Block" }),
+		},
+		{
+			key = "V",
+			mods = "",
+			action = wezterm.action.CopyMode({ SetSelectionMode = "Line" }),
+		},
+		{
+			key = "V",
+			mods = "SHIFT",
+			action = wezterm.action.CopyMode({ SetSelectionMode = "Line" }),
+		},
+		{
+			key = "G",
+			mods = "",
+			action = wezterm.action.CopyMode("MoveToScrollbackBottom"),
+		},
+		{
+			key = "G",
+			mods = "SHIFT",
+			action = wezterm.action.CopyMode("MoveToScrollbackBottom"),
+		},
+		{
+			key = "g",
+			mods = "",
+			action = wezterm.action.CopyMode("MoveToScrollbackTop"),
+		},
+		{
+			key = "z",
+			mods = "",
+			action = wezterm.action.CopyMode("MoveToViewportMiddle"),
+		},
+		{
+			key = "Enter",
+			mods = "",
+			action = wezterm.action.CopyMode("MoveToStartOfNextLine"),
+		},
+		{
+			key = "y",
+			mods = "",
+			action = wezterm.action.Multiple({
+				wezterm.action.CopyTo("ClipboardAndPrimarySelection"),
+				wezterm.action.CopyMode("ClearSelectionMode"),
+				wezterm.action.CopyMode("MoveToViewportBottom"),
+				wezterm.action.CopyMode("MoveDown"),
+				wezterm.action.CopyMode("Close"),
+			}),
 		},
 	},
 }
@@ -456,11 +570,11 @@ config.colors = {
 	quick_select_match_bg = { Color = colourscheme.dark.blue },
 	quick_select_match_fg = { Color = colourscheme.dark.black },
 
-	-- 	input_selector_label_bg = { AnsiColor = "Black" },
-	-- 	input_selector_label_fg = { Color = "#ffffff" },
+	input_selector_label_bg = { AnsiColor = "Black" },
+	input_selector_label_fg = { Color = "#ffffff" },
 
-	-- 	launcher_label_bg = { AnsiColor = "Black" },
-	-- 	launcher_label_fg = { Color = "#ffffff" },
+	launcher_label_bg = { AnsiColor = "Black" },
+	launcher_label_fg = { Color = "#ffffff" },
 }
 
 config.inactive_pane_hsb = {

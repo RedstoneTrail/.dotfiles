@@ -63,6 +63,9 @@ return {
 		--@module "oil"
 		--@type oil.SetupOpts
 		dependencies = { { "echasnovski/mini.icons", opts = {} } },
+		keys = {
+			{ "-", "<cmd>Oil<cr>", desc = "[F]ile [T]ree" },
+		},
 		lazy = false,
 	}
 }

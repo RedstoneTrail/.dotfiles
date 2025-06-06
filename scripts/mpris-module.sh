@@ -131,6 +131,10 @@ then
 	TEXT=$TEXT$LENGTH
 fi
 
+# escape characters that will break the json
+TEXT=$(echo $TEXT | sed 's/\\/\\\\/g')
+TEXT=$(echo $TEXT | sed "s/\"/\\\"/g")
+
 # format the text to be set to waybar as json
 
 echo '{ "text": "'$TEXT'" }' | sed "s/\&/\&amp\;/"
