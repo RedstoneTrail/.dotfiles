@@ -8,7 +8,6 @@ HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
 setopt nobeep notify extendedglob nonomatch autolist globcomplete noautoparamslash interactivecomments globdots
-bindkey -v
 
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
@@ -35,11 +34,11 @@ alias bc="bc -lq"
 
 alias nix="IS_NIX_SHELL=1 nix"
 alias nd="nix develop -c zsh"
-alias ns="nix shell"
-alias nr="nix run"
+alias ns="NIXPKGS_ALLOW_UNFREE=1 nix shell --impure"
+alias nr="NIXPKGS_ALLOW_UNFREE=1 nix run --impure"
 
 alias torsocks="IS_TOR_SHELL=1 torsocks"
-alias tss="torsocks --shell &> /dev/null"
+alias tss="torsocks --shell"
 alias ts="torsocks"
 
 alias zbr="zig build run"
@@ -106,6 +105,7 @@ zinit light zdharma-continuum/fast-syntax-highlighting
 
 zinit ice depth=1
 zinit light jeffreytse/zsh-vi-mode
+bindkey -v
 # End thereof
 
 # Fix home and end
