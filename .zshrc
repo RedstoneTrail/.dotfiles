@@ -54,12 +54,11 @@ export NNN_OPENER="/home/redstonetrail/.dotfiles/scripts/nnn-nuke.sh"
 export UNIPICKER_SYMBOLS_FILE=/home/redstonetrail/projects/unipicker/symbols
 export UNIPICKER_COPY_COMMAND=/bin/wl-copy
 
-export MANPAGER="less"
-
 export GNUPGHOME="~/.gnupg"
 
 export PATH=$PATH:/sbin:/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/sbin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/usr/lib/rustup/bin:/home/redstonetrail/bin:$(realpath /home/redstonetrail/.nix-profile/bin)
-export PAGER=less
+export PAGER=~/.dotfiles/scripts/nvimpager.sh
+export MANPAGER=~/.dotfiles/scripts/nvimpager.sh
 export EDITOR=nvim
 export BROWSER=firefox
 export TERMINAL=$TERM

@@ -66,7 +66,7 @@ vim.cmd("hi CursorColumn guibg=#033000")
 
 vim.opt.list = true
 
-vim.opt.scrolloff = 10
+vim.opt.scrolloff = 20
 
 require("oil").setup({
 	columns = { "icon", "permissions", "size", "mtime", },
@@ -75,3 +75,8 @@ require("oil").setup({
 vim.cmd("hi Normal guibg=#212121")
 
 vim.keymap.set("n", "<leader>t", ":terminal\n")
+
+vim.api.nvim_create_user_command("XdgOpen", function(opts)
+	local filepath = require("plenary.path").new(opts.fargs[1]):expand()
+	vim.fn.system({ "hyprctl", "keyword", "exec", "xdg-open", filepath })
+end, { nargs = 1 })

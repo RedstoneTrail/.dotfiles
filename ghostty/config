@@ -1,4 +1,4 @@
-theme = MaterialDarker
+theme = custom-theme
 font-family = FiraMono Nerd Font
 font-size = 9
 window-decoration = false
