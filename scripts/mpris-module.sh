@@ -9,12 +9,12 @@ then
 fi
 
 STATUS=$(playerctl status)
-PLAYER=$(playerctl metadata -f '{{playerName}}')
-ARTIST=$(playerctl metadata -f '{{artist}}')
-ALBUM=$(playerctl metadata -f '{{album}}')
-TITLE=$(playerctl metadata -f '{{title}}')
-POSITION=$(playerctl metadata -f '{{duration(position)}}')
-LENGTH=$(playerctl metadata -f '{{duration(mpris:length)}}')
+PLAYER=$(playerctl metadata -f '{{playerName}}' | sed 's/"/\\"/g')
+ARTIST=$(playerctl metadata -f '{{artist}}' | sed 's/"/\\"/g')
+ALBUM=$(playerctl metadata -f '{{album}}' | sed 's/"/\\"/g')
+TITLE=$(playerctl metadata -f '{{title}}' | sed 's/"/\\"/g')
+POSITION=$(playerctl metadata -f '{{duration(position)}}' | sed 's/"/\\"/g')
+LENGTH=$(playerctl metadata -f '{{duration(mpris:length)}}' | sed 's/"/\\"/g')
 
 # show the symbol according to the status
 if ! [ -z $STATUS ]
