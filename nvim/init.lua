@@ -73,6 +73,8 @@ require("oil").setup({
 })
 
 vim.cmd("hi Normal guibg=#212121")
+vim.cmd("hi NormalFloat guibg=#212121")
+vim.opt.termguicolors = true
 
 vim.keymap.set("n", "<leader>t", ":terminal\n")
 

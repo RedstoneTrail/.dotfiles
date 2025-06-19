@@ -6,15 +6,15 @@ vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, { desc = "Type [D]
 vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "[R]e[n]ame" })
 vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "[C]ode [A]ction" })
 
-vim.keymap.set("n", "[d", function() vim.diagnostic.jump({ count = 1, float = true }) end,
+vim.keymap.set("n", "]d", function() vim.diagnostic.jump({ count = 1, float = true }) end,
 	{ desc = "Goto Next [D]iagnostic" })
-vim.keymap.set("n", "]d", function() vim.diagnostic.jump({ count = -1, float = true }) end,
+vim.keymap.set("n", "[d", function() vim.diagnostic.jump({ count = -1, float = true }) end,
 	{ desc = "Goto Previous [D]iagnostic" })
 
-vim.keymap.set("n", "<leader>ds", require("telescope.builtin").lsp_document_symbols, { desc = "[D]ocument [S]ymbols"})
+vim.keymap.set("n", "<leader>ds", require("telescope.builtin").lsp_document_symbols, { desc = "[D]ocument [S]ymbols" })
 vim.keymap.set("n", "<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols,
-	{ desc = "[W]orkspace [S]ymbols"})
-vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Hover Documentation"})
+	{ desc = "[W]orkspace [S]ymbols" })
+vim.keymap.set("n", "K", function() vim.lsp.buf.hover({ border = "rounded" }) end, { desc = "Hover Documentation" })
 vim.keymap.set("n", "<leader>ih", ":InlayHintsToggle<CR>", { desc = "LSP: Toggle [I]nlay [H]ints" })
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -34,6 +34,7 @@ vim.g.rustaceanvim = {
 	},
 }
 
+
 return {
 	{
 		"neovim/nvim-lspconfig",
@@ -42,9 +43,7 @@ return {
 			"williamboman/mason-lspconfig.nvim",
 			"hrsh7th/cmp-nvim-lsp",
 		},
-		cond = not vim.g.vscode,
 		config = function()
-
 			require("mason").setup({ PATH = "append" })
 			require("mason-lspconfig").setup({
 				automatic_enable = true,

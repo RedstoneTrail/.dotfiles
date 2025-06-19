@@ -5,7 +5,7 @@
 shopt -s nullglob globstar
 set -o pipefail
 # if ! { exec 0>&3; } 1>/dev/null 2>&1; then
-#   exec 3>/dev/null # If file descriptor 3 is unused in parent shell, output to /dev/null
+  exec 3>/dev/null # If file descriptor 3 is unused in parent shell, output to /dev/null
 # fi
 # shellcheck disable=SC2154
 trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
@@ -298,7 +298,7 @@ describe | describe-desktop | describe-command | entries | list-entries | list-c
   ;;
 esac
 # just put this info into stderr, not fd 3
-echo "Starting launcher instance with the following providers:" "${!PROVIDERS[@]}" >&2
+echo "Starting launcher instance with the following providers:" "${!PROVIDERS[@]}" >&3
 
 FZFPIPE=$(mktemp -u)
 mkfifo "$FZFPIPE"

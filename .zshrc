@@ -1,3 +1,6 @@
+# fix hyprctl
+which hyprctl &> /dev/null && export HYPRLAND_INSTANCE_SIGNATURE=$(hyprctl -j instances | jq -r '.[0].instance')
+
 zstyle ':completion:*' completer _expand _complete _match _correct _prefix _ignored
 zstyle :compinstall filename '~/.zshrc'
 
@@ -24,7 +27,7 @@ autoload -Uz _zinit
 ### End of Zinit's installer chunk
 
 alias ls="ls --color=auto"
-alias l="ls -alhp"
+alias  l="ls -alhp"
 
 alias grep="grep --color=auto"
 
@@ -32,21 +35,22 @@ alias open="xdg-open"
 
 alias bc="bc -lq"
 
-alias nix="IS_NIX_SHELL=1 nix"
-alias nd="nix develop -c zsh"
-alias ns="NIXPKGS_ALLOW_UNFREE=1 nix shell --impure"
-alias nr="NIXPKGS_ALLOW_UNFREE=1 nix run --impure"
+alias  nix="IS_NIX_SHELL=1 nix"
+alias   nd="nix develop -c zsh"
+alias tsnd="torsocks nix develop"
+alias   ns="NIXPKGS_ALLOW_UNFREE=1 nix shell --impure"
+alias tsns="torsocks nix shell"
+alias   nr="NIXPKGS_ALLOW_UNFREE=1 nix run --impure"
+alias tsnr="torsocks nix run"
 
 alias torsocks="IS_TOR_SHELL=1 torsocks"
-alias tss="torsocks --shell"
-alias ts="torsocks"
+alias      tss="torsocks --shell"
+alias       ts="torsocks"
 
 alias zbr="zig build run"
-alias zb="zig build"
+alias  zb="zig build"
 
 alias fs="source /home/redstonetrail/.dotfiles/scripts/fuzzy-search.sh"
-
-alias notify-done="notify-send -u low -a zsh process\ finished"
 
 export NNN_OPTS="cdHiJQuU"
 export NNN_OPENER="/home/redstonetrail/.dotfiles/scripts/nnn-nuke.sh"
