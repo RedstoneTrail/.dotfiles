@@ -79,7 +79,7 @@ return {
 				window = { show_documentation = false },
 			},
 			completion = {
-				ghost_text = { enabled = true },
+				-- ghost_text = { enabled = true },
 				documentation = { window = { border = "single" } },
 				menu = { auto_show = false, border = "single" },
 			},

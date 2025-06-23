@@ -1,4 +1,6 @@
 theme = custom-theme
+scrollback-limit = 0
+window-padding-balance = true
 font-family = FiraMono Nerd Font
 font-size = 9
 window-decoration = false

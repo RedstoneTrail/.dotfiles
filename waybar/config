@@ -79,7 +79,7 @@
   "custom/mpris": {
   	"return-type": "json",
 	"exec-if": "playerctl metadata",
-	"exec": "zsh ~/.dotfiles/scripts/mpris-module.sh",
+	"exec": "zsh ~/.dotfiles/scripts/mpris-module",
 	"restart-interval": 0,
 	"format": "{}",
   }

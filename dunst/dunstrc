@@ -2,8 +2,8 @@
 	width					= (169, 640)
 	height					= (0, 100)
 	notification_limit			= 10
-	origin					= top-right
-	offset					= (4, 8)
+	origin					= bottom-left
+	offset					= (4, 4)
 	progress_bar				= true
 	progress_bar_horizontal_alignment	= right
 	progress_bar_height			= 16
@@ -43,4 +43,4 @@
 
 [play_sound]
 	summary = "*"
-	script = ~/.dotfiles/scripts/play-notification-sound.sh
+	script = ~/.dotfiles/scripts/play-notification-sound
