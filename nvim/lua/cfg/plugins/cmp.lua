@@ -23,7 +23,7 @@ return {
 				sources = {
 					{ name = "path" },
 					{ name = "nvim_lsp" },
-					{ name = "buffer", keyword_length = 3 },
+					{ name = "buffer",  keyword_length = 3 },
 					{ name = "luasnip", keyword_length = 2 },
 				},
 				window = {
@@ -48,16 +48,13 @@ return {
 				}),
 			})
 		end,
-		cond = not vim.g.vscode,
 		event = { "InsertEnter", "CmdlineEnter" },
 	},
 	{
 		"L3MON4D3/LuaSnip",
 		version = "v2.*",
-		cond = not vim.g.vscode,
 		config = function()
 			local luasnip = require("luasnip")
-			require("luasnip.loaders.from_vscode").lazy_load()
 			luasnip.config.setup()
 
 			vim.keymap.set({ "i", "s" }, "<C-L>", function()

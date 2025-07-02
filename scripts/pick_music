@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+export FILES=$(nnn -p - | sed 's/$/\/* /g' | tr '\n' ' ')
+
+vlc -I ncurses $FILES

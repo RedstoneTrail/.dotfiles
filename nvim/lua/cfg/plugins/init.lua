@@ -13,7 +13,7 @@ return {
 	},
 	{ "ThePrimeagen/vim-be-good",  cmd = "VimBeGood" },
 	{ "RedstoneTrail/nvim-tetris", cmd = "Tetris" },
-	{ "tpope/vim-fugitive",        cmd = "Git",           cond = not vim.g.vscode },
+	{ "tpope/vim-fugitive",        cmd = "Git" },
 	{ "mbbill/undotree",           cmd = "UndotreeToggle" },
 	{ "2kabhishek/co-author.nvim", cmd = "CoAuthor" },
 	"tpope/vim-commentary",
@@ -67,6 +67,9 @@ return {
 			{ "-", "<cmd>Oil<cr>", desc = "[F]ile [T]ree" },
 		},
 		lazy = false,
+		opts = {
+			columns = { "icon", "permissions", "size", "mtime", },
+		},
 	},
 	{
 		"saghen/blink.cmp",
@@ -111,5 +114,11 @@ return {
 				},
 			},
 		},
+	},
+	{
+		'chomosuke/typst-preview.nvim',
+		lazy = false,
+		version = '1.*',
+		opts = {},
 	},
 }

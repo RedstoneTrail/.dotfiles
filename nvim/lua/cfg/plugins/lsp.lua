@@ -67,19 +67,18 @@ return {
 	},
 	{
 		"mrcjkb/rustaceanvim",
-		cond = not vim.g.vscode,
 		version = "^3",
 		ft = { "rust" },
 	},
 	{
 		"nvimtools/none-ls.nvim",
-		cond = not vim.g.vscode,
 		config = function()
 			local null_ls = require("null-ls")
 
 			null_ls.setup({
 				sources = {
 					null_ls.builtins.formatting.stylua,
+					null_ls.builtins.formatting.prettier,
 				},
 			})
 		end,

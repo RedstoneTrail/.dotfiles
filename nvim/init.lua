@@ -32,8 +32,8 @@ vim.keymap.set("n", "<C-l>", "<C-w>l")
 
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
-vim.keymap.set("n", "n", "nzzzv")
-vim.keymap.set("n", "N", "Nzzzv")
+vim.keymap.set("n", "n", "nzz")
+vim.keymap.set("n", "N", "Nzz")
 
 vim.keymap.set("n", "<C-Tab>", ":tabn")
 
@@ -68,10 +68,6 @@ vim.opt.list = true
 
 vim.opt.scrolloff = 20
 
-require("oil").setup({
-	columns = { "icon", "permissions", "size", "mtime", },
-})
-
 vim.cmd("hi Normal guibg=#212121")
 vim.cmd("hi NormalFloat guibg=#212121")
 vim.opt.termguicolors = true
@@ -82,3 +78,6 @@ vim.api.nvim_create_user_command("XdgOpen", function(opts)
 	local filepath = require("plenary.path").new(opts.fargs[1]):expand()
 	vim.fn.system({ "hyprctl", "keyword", "exec", "xdg-open", filepath })
 end, { nargs = 1 })
+
+
+vim.keymap.set("x", "<leader>md", ":!prettier --parser markdown<CR>", { desc = "Format [M]ark[d]own Range" })

@@ -35,13 +35,19 @@ alias open="xdg-open"
 
 alias bc="bc -lq"
 
-alias  nix="IS_NIX_SHELL=1 nix"
-alias   nd="nix develop -c zsh"
-alias tsnd="torsocks nix develop"
-alias   ns="NIXPKGS_ALLOW_UNFREE=1 nix shell --impure"
-alias tsns="torsocks nix shell"
-alias   nr="NIXPKGS_ALLOW_UNFREE=1 nix run --impure"
-alias tsnr="torsocks nix run"
+alias   nix="IS_NIX_SHELL=1 nix"
+alias    nd="nix develop -c zsh"
+alias  tsnd="torsocks nix develop"
+alias    ns="NIXPKGS_ALLOW_UNFREE=1 nix shell --impure"
+alias  tsns="torsocks nix shell"
+alias    nr="NIXPKGS_ALLOW_UNFREE=1 nix run --impure"
+alias  tsnr="torsocks nix run"
+alias   nfu="nix flake update"
+alias tsnfu="torsocks nix flake update"
+
+alias  m="make"
+alias mt="make test"
+alias mb="make build"
 
 alias torsocks="IS_TOR_SHELL=1 torsocks"
 alias      tss="torsocks --shell"
@@ -57,7 +63,7 @@ export NNN_OPENER="/home/redstonetrail/.dotfiles/scripts/nnn-nuke.sh"
 
 export GNUPGHOME="~/.gnupg"
 
-export PATH=$PATH:/sbin:/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/sbin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/usr/lib/rustup/bin:/home/redstonetrail/bin:$(realpath /home/redstonetrail/.nix-profile/bin)
+export PATH=$PATH:/sbin:/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/sbin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/usr/lib/rustup/bin:/home/redstonetrail/bin:/home/redstonetrail/.dotfiles/scripts:$(realpath /home/redstonetrail/.nix-profile/bin)
 export PAGER=less
 export MANPAGER=less
 export EDITOR=nvim

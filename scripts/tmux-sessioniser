@@ -2,14 +2,23 @@
 
 PATH=$PATH:$HOME/.fzf/bin
 
+FZF_CMD="fzf"
+[[ -z $DISABLE_POPUP ]] && FZF_CMD="fzf-tmux -p 80%,80% --"
+
 if [[ $# -eq 1 ]]; then
 	selected=$1
 else
 	paths() {
-		fd -ad1 -td . ~
-		fd -Had1 -td . ~/projects
+		fd -a -td . ~ | rev | cut -b2- | rev
+		# fd -ad1 -td . ~
+		# [ -d ~/Documents ] && fd -ad1 -td . ~/Documents
+		# [ -d ~/Music ] && fd -ad1 -td . ~/Music
+		# [ -d ~/projects ] && fd -Had1 -td . ~/projects
+		# [ -d ~/projects/scratch ] && fd -Had1 -td . ~/projects/scratch
+		# [ -d ~/school/* ] && fd -Had1 -td . ~/school/*
+		# [ -d ~/school/computer-science/projects/ ] && fd -Had1 -td . ~/school/computer-science/projects/
 	}
-	selected=$(paths | fzf-tmux -p 80%,80% -- --preview '
+	selected=$(paths | $FZF_CMD --preview '
 		selected_name=$(basename {1} | tr . _)
 		if tmux has-session -t=$selected_name 2> /dev/null; then
 			echo -e "\033[32msession running\033[0m"
@@ -17,7 +26,7 @@ else
 		else
 			cd {1}
 			git -C . rev-parse 2>/dev/null && git log --oneline --color | head -n3
-			rg --files | tree --fromfile
+			eza --icons --git --tree --color=always
 		fi
 	')
 fi
@@ -39,3 +48,5 @@ if ! tmux has-session -t=$selected_name 2> /dev/null; then
 fi
 
 tmux switch-client -t $selected_name
+
+echo $selected_name
