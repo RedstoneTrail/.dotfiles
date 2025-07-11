@@ -22,7 +22,6 @@
 		packages.${system}.default = pkgs.symlinkJoin {
 			name = "package-list";
 			paths = [
-				pkgs.vim
 			];
 		};
 	};
