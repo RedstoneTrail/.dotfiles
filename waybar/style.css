@@ -51,7 +51,7 @@ window#waybar {
 #workspaces button.active,
 #workspaces button.focused,
 #workspaces button.hover {
-  background-color: #077000;
+  background-color: #00aa00;
   color: #000000;
   border-radius: 5px;
 }
