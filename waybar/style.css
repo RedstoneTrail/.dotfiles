@@ -1,10 +1,11 @@
 * {
-	font-family: "FiraMono Nerd Font";
+  font-family: "FiraMono Nerd Font";
 }
 
 window#waybar {
-	background: transparent;
-	color: #FFFFFF;
+  background: transparent;
+  color: #ffffff;
+  border-radius: 5px;
 }
 
 #clock,
@@ -25,29 +26,32 @@ window#waybar {
 #idle_inhibitor,
 #scratchpad,
 #mpd {
-	background: #212121;
-	margin: 4px;
-	padding: 0.2em 1em;
+  background: #212121;
+  margin: 4px;
+  padding: 0.2em 1em;
+  border-radius: 5px;
 }
 
 #workspaces {
-	background: #212121;
-	margin: 4px;
+  background: #212121;
+  margin: 4px;
+  border-radius: 5px;
 }
 
 #workspaces button {
-	background: #212121;
-	color: #FFFFFF;
-	border: none;
-	box-shadow: none;
-	text-shadow: none;
-	padding: 0.2em 0.4em;
-	border-radius: 0px;
+  background: #212121;
+  color: #ffffff;
+  border: none;
+  box-shadow: none;
+  text-shadow: none;
+  padding: 0.2em 0.4em;
+  border-radius: 5px;
 }
 
 #workspaces button.active,
 #workspaces button.focused,
 #workspaces button.hover {
-	background-color: #077000;
-	color: #000000;
+  background-color: #077000;
+  color: #000000;
+  border-radius: 5px;
 }

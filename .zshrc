@@ -69,7 +69,7 @@ export MANPAGER=less
 export EDITOR=nvim
 export BROWSER=firefox
 export TERMINAL=$TERM
-export SHELL=zsh
+export SHELL=/bin/zsh
 
 export LISTMAX=-1
 setopt no_hist_verify
