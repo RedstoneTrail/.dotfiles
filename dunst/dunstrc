@@ -17,7 +17,7 @@
 	horizontal_padding			= 4
 	text_icon_padding			= 4
 	icon_corner_radius			= 5
-	frame_width				= 1
+	frame_width				= 2
 	gap_size				= 6
 	sort					= urgency_descending
 	font					= FiraMono Nerd Font Ultra-Light 11
