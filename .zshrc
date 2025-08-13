@@ -63,7 +63,6 @@ export NNN_OPENER="/home/redstonetrail/.dotfiles/scripts/nnn-nuke.sh"
 
 export GNUPGHOME="~/.gnupg"
 
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/
 export PATH=$PATH:/sbin:/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/sbin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/usr/lib/rustup/bin:/home/redstonetrail/bin:/home/redstonetrail/.dotfiles/scripts:$(realpath /home/redstonetrail/.nix-profile/bin)
 export PAGER=less
 export MANPAGER=less
