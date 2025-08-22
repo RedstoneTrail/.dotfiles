@@ -10,6 +10,7 @@ if [[ $# -eq 1 ]]; then
 else
 	paths() {
 		fd -a -td . ~ | rev | cut -b2- | rev
+		realpath ~
 		# fd -ad1 -td . ~
 		# [ -d ~/Documents ] && fd -ad1 -td . ~/Documents
 		# [ -d ~/Music ] && fd -ad1 -td . ~/Music
