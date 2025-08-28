@@ -9,8 +9,8 @@ if [[ $# -eq 1 ]]; then
 	selected=$1
 else
 	paths() {
-		fd -a -td . ~ | rev | cut -b2- | rev
 		realpath ~
+		fd -a -td . ~ | rev | cut -b2- | rev
 		# fd -ad1 -td . ~
 		# [ -d ~/Documents ] && fd -ad1 -td . ~/Documents
 		# [ -d ~/Music ] && fd -ad1 -td . ~/Music

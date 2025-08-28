@@ -8,3 +8,4 @@ gtk-adwaita = false
 gtk-titlebar = false
 confirm-close-surface = false
 cursor-invert-fg-bg = true
+background-opacity = 1

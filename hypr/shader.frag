@@ -54,15 +54,15 @@ void main() {
     //     pixColor.xyz = 1.0 - pixColor.xyz;
     // }
 
-    vec4 avg = vec4(0.0, 0.0, 0.0, 0.0);
+    // vec4 avg = vec4(0.0, 0.0, 0.0, 0.0);
 
-    for (float i = -3.0; i <= 3.0; i++) {
-        for (float j = -3.0; i <= 3.0; i++) {
-            avg += texture(tex, vec2(v_texcoord.x + i / screen_size.x, v_texcoord.y + j / screen_size.y));
-        }
-    }
+    // for (float i = -2.0; i <= 2.0; i++) {
+    //     for (float j = -2.0; j <= 2.0; j++) {
+    //         avg += texture(tex, vec2(v_texcoord.x + (i / screen_size.x), v_texcoord.y + (j / screen_size.y)));
+    //     }
+    // }
 
-    // pixColor.xyzw = avg.xyzw / 7.0;
+    // pixColor.xyzw = avg.xyzw / 25.0;
 
     fragColor = pixColor;
 }
