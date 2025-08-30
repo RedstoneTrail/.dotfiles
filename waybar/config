@@ -6,6 +6,7 @@
     "hyprland/workspaces",
   ],
   "modules-center": [
+    "custom/mpris",
   ],
   "modules-right": [
     "tray",
@@ -80,7 +81,7 @@
   	"return-type": "json",
 	"exec-if": "playerctl metadata",
 	"exec": "zsh ~/.dotfiles/scripts/mpris-module",
-	"hyde-empty-text": true,
+	"hide-empty-text": true,
 	"restart-interval": 0,
 	"format": "{}",
   }
