@@ -1,16 +1,25 @@
 #!/bin/env zsh
 
+play_cmd () {
+	paplay --volume=49152 ~/.dotfiles/dunst/notification-sound.mp3
+}
+
+sleep_cmd () {
+	sleep 0.25
+}
+
+
 if [ -z $(echo $@ | rev | cut -f1 -d\  | rev | grep CRITICAL) ]
 then
 else
-	paplay ~/.dotfiles/dunst/notification-sound.mp3 & sleep 0.25
-	paplay ~/.dotfiles/dunst/notification-sound.mp3 & sleep 0.25
+	play_cmd & sleep_cmd
+	play_cmd & sleep_cmd
 fi
 
 if [ -z $(echo $@ | rev | cut -f1 -d\  | rev | grep NORMAL) ]
 then
 else
-	paplay ~/.dotfiles/dunst/notification-sound.mp3 & sleep 0.25
+	play_cmd & sleep_cmd
 fi
 
-paplay ~/.dotfiles/dunst/notification-sound.mp3 &
+play_cmd &
