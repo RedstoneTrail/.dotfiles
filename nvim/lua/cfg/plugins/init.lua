@@ -68,7 +68,8 @@ return {
 		},
 		lazy = false,
 		opts = {
-			columns = { "icon", "permissions", "size", "mtime", },
+			columns = {},
+			-- columns = { "icon", "permissions", "size", "mtime", },
 		},
 	},
 	{

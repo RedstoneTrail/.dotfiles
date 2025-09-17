@@ -3,6 +3,9 @@
   "height": 30,
   "spacing": 4,
   "modules-left": [
+    "cpu",
+    "temperature",
+    "memory",
     "hyprland/workspaces",
   ],
   "modules-center": [
@@ -17,6 +20,21 @@
     "battery",
     "clock"
   ],
+  "cpu": {
+    "interval": 1,
+    "format": "{usage}%",
+  },
+  "temperature": {
+    "interval": 1,
+    "format": "{temperatureC}°C",
+    "format-critical": "{temperatureC}°C",
+    "critical-threshold": 80,
+    "thermal-zone": 9,
+  },
+  "memory": {
+    "interval": 1,
+    "format": "{percentage}%/{swapPercentage}%",
+  },
   "clock": {
     "format": "{:%d/%m/%Y %H:%M}"
   },
@@ -50,15 +68,9 @@
     "on-click": "alacritty --title impala -e impala"
   },
   "pulseaudio#source": {
-    "format": "{format_source} {icon}",
-    "format-muted": "{format_source} 󰝟",
-    "format-icons": {
-      "default": [
-        "󰕿",
-        "󰖀",
-        "󰕾"
-      ]
-    }
+    "format": "{format_source}",
+    "format-source": "{volume}% ",
+    "format-source-muted": "{volume}%  ",
   },
   "pulseaudio#sink": {
     "format": "{volume}% {icon}",

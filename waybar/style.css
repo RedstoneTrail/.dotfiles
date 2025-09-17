@@ -32,6 +32,10 @@ window#waybar {
   border-radius: 5px;
 }
 
+#temperature.critical {
+  background: #660000;
+}
+
 #workspaces {
   background: #212121;
   margin: 4px;
