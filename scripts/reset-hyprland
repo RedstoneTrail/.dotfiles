@@ -1,0 +1,7 @@
+#! /usr/bin/env sh
+
+hyprctl reload
+pkill waybar
+pkill dunst
+waybar & disown
+dunst --startup_notification & disown
