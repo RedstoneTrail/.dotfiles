@@ -68,8 +68,8 @@ vim.opt.list = true
 
 vim.opt.scrolloff = 20
 
-vim.cmd("hi Normal guibg=#212121")
-vim.cmd("hi NormalFloat guibg=#212121")
+vim.cmd("hi Normal guibg=default")
+vim.cmd("hi NormalFloat guibg=default")
 vim.opt.termguicolors = true
 
 vim.keymap.set("n", "<leader>t", ":terminal\n")

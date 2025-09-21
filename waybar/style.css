@@ -6,8 +6,8 @@
 window#waybar {
   background: rgba(33, 33, 33, 0.5);
   color: #ffffff;
+  border-radius: 0;
   border-bottom: 3px solid #077000;
-  margin: 5px;
 }
 
 tooltip {
