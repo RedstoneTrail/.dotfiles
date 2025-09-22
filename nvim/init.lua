@@ -59,10 +59,10 @@ vim.opt.mouse = ""
 vim.opt.showmode = false
 
 vim.opt.cursorline = true
-vim.cmd("hi CursorLine guibg=#033000")
+vim.cmd("hi CursorLine guibg=#077000")
 
 vim.opt.cursorcolumn = true
-vim.cmd("hi CursorColumn guibg=#033000")
+vim.cmd("hi CursorColumn guibg=#077000")
 
 vim.opt.list = true
 
