@@ -1,0 +1,19 @@
+#!/usr/bin/env sh
+
+sources() {
+	man -k . | sed 's/^/MAN - /'
+# 	# `tldr -u` to update source
+	tldr -ql | sed 's/^/TLDR - /'
+	echo 'API - wttr.in/:help'
+	echo 'API - cheat.sh/:help'
+}
+
+sources | fzf --bind "enter:become(
+	if echo {} | grep -q 'MAN'; then
+		echo {} | sed 's/MAN - //' | awk '{ gsub(/[()]/,\"\",\$2); print \$2 \" \" \$1 }' | xargs man
+	elif echo {} | grep -q 'TLDR'; then
+		echo {} | sed 's/TLDR - //' | xargs tldr | nvim '+Man!'
+	elif echo \"{}\" | grep -q 'API'; then
+		echo {} | sed 's/API - //' | xargs curl -s | nvim '+Man!'
+	fi
+	)"

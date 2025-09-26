@@ -88,8 +88,9 @@ return {
 				menu = { auto_show = false, border = "single" },
 			},
 			keymap = {
-				["<C-y>"] = {},
-				["<S-Tab>"] = {},
+				["<C-k>"] = false,
+				["<C-y>"] = false,
+				["<S-Tab>"] = false,
 				["<Tab>"] = {
 					function(cmp)
 						if cmp.snippet_active() then
