@@ -30,6 +30,7 @@
     openssh
     github-cli
     tealdeer
+    iproute2
   ];
 
   system.stateVersion = "24.05";
