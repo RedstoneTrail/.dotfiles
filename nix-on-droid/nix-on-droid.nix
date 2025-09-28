@@ -31,6 +31,7 @@
     github-cli
     tealdeer
     iproute2
+    bash
   ];
 
   system.stateVersion = "24.05";
@@ -57,12 +58,13 @@
     termux-wake-lock.enable = true;
     termux-wake-unlock.enable = true;
     xdg-open.enable = true;
+    am.enable =true;
   };
 
   terminal = {
     colors = {
       background = "#212121";
     };
-    font = "/storage/emulated/0/Download/firamono-nerd-font/FiraMonoNerdFontMono-Regular.otf";
+    font = "${pkgs.nerdfonts.override {fonts = ["FiraMono"];}}/share/fonts/opentype/NerdFonts/FiraMonoNerdFontMono-Regular.otf";
   };
 }
