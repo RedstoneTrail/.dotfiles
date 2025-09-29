@@ -2,6 +2,8 @@
 
 {
   environment.packages = with pkgs; [
+    curl
+    wget
     tmux
     htop-vim
     iputils
