@@ -63,7 +63,7 @@
 
   terminal = {
     colors = {
-      background = "#212121";
+      background = "#000000";
     };
     font = "${pkgs.nerdfonts.override {fonts = ["FiraMono"];}}/share/fonts/opentype/NerdFonts/FiraMonoNerdFontMono-Regular.otf";
   };
