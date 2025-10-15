@@ -24,9 +24,12 @@ return {
 
 		local custom_theme = {
 			normal = {
-				a = { fg = colours.bwhite, bg = colours.black },
+				a = { fg = colours.bwhite, bg = colours.bblack },
 				b = { fg = colours.white, bg = colours.black },
 				c = { fg = colours.white, bg = colours.black },
+				x = { fg = colours.white, bg = colours.black },
+				y = { fg = colours.white, bg = colours.black },
+				z = { fg = colours.bwhite, bg = colours.bblack },
 			},
 
 			insert = { a = { fg = colours.bwhite, bg = colours.green } },
@@ -39,27 +42,27 @@ return {
 			options = {
 				icons_enabled = false,
 				theme = custom_theme,
-				component_separators = "",
+				component_separators = { left = "/", right = "/" },
 				section_separators = "",
 			},
 			sections = {
 				lualine_a = { "mode" },
-				lualine_b = { "filename", "branch" },
+				lualine_b = { "filename", "branch", "diagnostics" },
+				lualine_c = {},
+				lualine_x = {},
+				lualine_y = { "encoding", "filetype", "filesize", "progress" },
+				lualine_z = { "location" },
+			},
+			inactive_sections = {
+				lualine_a = { "mode" },
+				lualine_b = { "filename", "branch", "diagnostics" },
 				lualine_c = {},
 				lualine_x = {},
 				lualine_y = { "encoding", "filetype", "progress" },
 				lualine_z = { "location" },
 			},
-			inactive_sections = {
-				lualine_a = { "filename" },
-				lualine_b = {},
-				lualine_c = {},
-				lualine_x = {},
-				lualine_y = {},
-				lualine_z = { "location" },
-			},
 			tabline = {},
-			extensions = {},
+			extensions = { "oil" },
 		})
 	end,
 }

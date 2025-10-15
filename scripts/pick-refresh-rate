@@ -1,0 +1,16 @@
+#!/usr/bin/env sh
+
+# script to pick between refresh rates based on boot option
+
+if grep 'module_blacklist=nouveau' /proc/cmdline
+then
+	# here, the nvidia drivers are not mentioned in the cmdline, so they are not blacklisted
+	# i want a high refresh rate, as power draw is not a concern in this situation
+	echo picking 165Hz mode
+	hyprctl keyword monitor eDP-1,2560x1600@165,auto,1
+else
+	# here, the nvidia drivers are mentioned in the cmdline, so they must be blacklisted
+	# pick a refresh rate to reduce power draw
+	echo picking 60Hz mode
+	hyprctl keyword monitor eDP-1,2560x1600@60,auto,1
+fi

@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+
+hyprctl dispatch workspace name:waydroid
+
+if waydroid status | grep -q STOPPED; then
+	hyprctl dispatch exec waydroid session start
+	notify-send 'Starting waydroid session'
+	while ! waydroid status | grep -q RUNNING; do
+		sleep 0.5
+		notify-send "$(waydroid status)"
+	done
+	hyprctl dispatch exec waydroid show-full-ui
+fi

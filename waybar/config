@@ -28,7 +28,7 @@
     "interval": 1,
     "format": "{temperatureC}°C",
     "format-critical": "{temperatureC}°C",
-    "critical-threshold": 80,
+    "critical-threshold": 90,
     "hwmon-path": "/tmp/cpu-temp",
   },
   "memory": {
@@ -91,10 +91,10 @@
   },
   "custom/mpris": {
   	"return-type": "json",
-	"exec-if": "playerctl metadata",
+	"exec-if": "playerctl metadata 2>/dev/null",
 	"exec": "zsh ~/.dotfiles/scripts/mpris-module",
 	"hide-empty-text": true,
-	"restart-interval": 0,
+	"interval": 5,
 	"format": "{}",
   }
 }

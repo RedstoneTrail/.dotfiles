@@ -67,6 +67,7 @@ vim.cmd("hi CursorColumn guibg=#077000")
 vim.opt.list = true
 
 vim.opt.scrolloff = 20
+vim.opt.sidescrolloff = 20
 
 vim.cmd("hi Normal guibg=default")
 vim.cmd("hi NormalFloat guibg=default")

@@ -1,6 +1,6 @@
 [font]
 normal = { family = "FiraMono Nerd Font", style = "Medium" }
-size = 15
+size = 12
 
 [colors.primary]
 background = '#000000'
@@ -27,5 +27,5 @@ cyan = '#55FFFF'
 white = '#FFFFFF'
 
 [window]
-opacity = 0.5
+opacity = 1
 dynamic_padding = true

@@ -1,11 +1,14 @@
-# fix hyprctl
-which hyprctl &> /dev/null && export HYPRLAND_INSTANCE_SIGNATURE=$(hyprctl -j instances | jq -r '.[0].instance')
+# fix hyprctl, only if hyprland is running
+if pgrep Hyprland >/dev/null
+then
+	which hyprctl &> /dev/null && export HYPRLAND_INSTANCE_SIGNATURE=$(hyprctl -j instances | jq -r '.[0].instance')
+fi
 
 zstyle ':completion:*' completer _expand _complete _match _correct _prefix _ignored
 zstyle :compinstall filename '~/.zshrc'
 
-# autoload -Uz compinit
-# compinit
+autoload -Uz compinit
+compinit
 
 HISTFILE=~/.histfile
 HISTSIZE=10000
@@ -26,8 +29,8 @@ autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 ### End of Zinit's installer chunk
 
-alias ls="ls --color=auto"
-alias  l="ls -alhp"
+alias ls="ls --color=auto -ahp"
+alias  l="ls -l"
 
 alias grep="grep --color=auto"
 
@@ -37,13 +40,13 @@ alias bc="bc -lq"
 
 alias   nix="IS_NIX_SHELL=1 nix"
 alias    nd="nix develop -c zsh"
-alias  tsnd="torsocks nix develop"
+alias  tsnd="env torsocks nix develop -c zsh"
 alias    ns="NIXPKGS_ALLOW_UNFREE=1 nix shell --impure"
-alias  tsns="torsocks nix shell"
+alias  tsns="NIXPKGS_ALLOW_UNFREE=1 env torsocks nix shell"
 alias    nr="NIXPKGS_ALLOW_UNFREE=1 nix run --impure"
-alias  tsnr="torsocks nix run"
+alias  tsnr="NIXPKGS_ALLOW_UNFREE=1 env torsocks nix run"
 alias   nfu="nix flake update"
-alias tsnfu="torsocks nix flake update"
+alias tsnfu="env torsocks nix flake update"
 
 alias  m="make"
 alias mt="make test"
@@ -128,10 +131,31 @@ export PATH="$PATH:/nix/var/nix/profiles/default/bin"
 # remove the non-directory path entry ~/.nix-profile/bin
 export PATH=$(echo $PATH | tr ':' '\n' | grep -v '.nix-profile/bin' | tr '\n' ':' | rev | cut -b2- | rev):/opt/cuda/bin:/opt/cuda/nsight_compute:/opt/cuda/nsight_systems/bin
 
-if [ -z $LOWEST ] && [ -z $TMUX ] && [ "$TERM" != "xterm-256color" ]; then
-	LOWEST='y'
-
-	export TMUX_TMPDIR=~/tmp/tmux/
-	
+if [ -z $TMUX ] && [ $TERM != "linux" ]
+then
 	exec tmux
 fi
+
+if [ -z $TMUX ] && [ $TERM == "linux" ]
+then
+	echo 'Enter a tmux session? (y)'
+	read -k 1 want_tmux
+	echo
+
+	if [ -z $want_tmux ]
+	then
+		want_tmux='n'
+	fi
+
+	if [ $want_tmux == 'y' ]
+	then
+		echo 'Entering tmux session'
+		exec tmux
+	fi
+
+	echo 'Not entering a tmux session'
+fi
+
+# if [ -z $TMUX ] && [ "$TERM" != "xterm-256color" ]; then
+# 	exec tmux
+# fi

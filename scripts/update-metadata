@@ -7,7 +7,7 @@ do
 
 		for song in *.mp3
 		do
-			id3v2 -t $song -a $artist -A $album -T $(echo $song | cut -d\- -f1)/$(ls -1 | grep -c .\*) $song
+			id3v2 -t $song -a $artist -A $album -T $(( $(echo $song | cut -d\- -f1 | bc) + 1 ))/$(ls -1 *.mp3 | grep -c .\*) $song
 		done
 		cd ..
 	done

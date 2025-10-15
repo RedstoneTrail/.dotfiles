@@ -1,0 +1,24 @@
+#!/usr/bin/env sh
+
+METADATA=$(playerctl metadata)
+
+OUTFILE=/tmp/album-image
+
+if [ ! -z $1 ]
+then
+	OUTFILE="$1"
+fi
+
+if [ "$(echo $METADATA | grep artUrl || echo "no data")" == "no data" ]
+then
+	exit
+fi
+
+DATA=$(echo $METADATA | grep artUrl | sed 's/.*data:image\///')
+
+FORMAT=$(echo $DATA | tr ';' '\n' | head -n 1)
+DATA=$(echo $DATA | sed 's/'$FORMAT';base64,//')
+
+echo $DATA | base64 -d - > $OUTFILE.$FORMAT
+
+echo $OUTFILE.$FORMAT
