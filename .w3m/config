@@ -1,7 +1,7 @@
 tabstop 8
 indent_incr 4
-pixel_per_char 8
-pixel_per_line 8
+pixel_per_char 12
+pixel_per_line 25
 frame 0
 target_self 0
 open_tab_blank 0
@@ -27,9 +27,9 @@ display_image 1
 pseudo_inlines 1
 auto_image 1
 max_load_image 4
-ext_image_viewer 1
+ext_image_viewer 0
 image_scale 100
-inline_img_protocol 0
+inline_img_protocol 3
 imgdisplay w3mimgdisplay
 image_map_list 1
 fold_line 0
@@ -38,14 +38,14 @@ show_srch_str 1
 label_topline 0
 nextpage_topline 0
 color 1
-high-intensity 1
+high-intensity 0
 basic_color terminal
 anchor_color blue
 image_color green
 form_color red
 mark_color cyan
 bg_color terminal
-active_style 1
+active_style 0
 active_color cyan
 visited_anchor 0
 visited_color magenta
@@ -60,7 +60,7 @@ emacs_like_lineedit 0
 space_autocomplete 0
 vi_prec_num 1
 mark_all_pages 0
-wrap_search 1
+wrap_search 0
 ignorecase_search 1
 use_mouse 1
 reverse_mouse 0
@@ -80,7 +80,7 @@ tmp_dir
 mime_types ~/.mime.types, /usr/etc/mime.types
 mailcap ~/.w3m/mailcap, /usr/etc/w3m/mailcap
 urimethodmap ~/.w3m/urimethodmap, /usr/etc/w3m/urimethodmap
-editor /usr/bin/vim
+editor /usr/bin/nvim
 mailto_options 1
 mailer /usr/bin/mail
 extbrowser /usr/bin/firefox

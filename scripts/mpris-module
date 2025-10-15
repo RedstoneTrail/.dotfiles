@@ -1,4 +1,4 @@
-#! /bin/zsh
+#!/usr/bin/env sh
 # check that there is actual data to read, overwrite data with nothing and exit otherwise
 if [ -z "$(playerctl metadata 2> /dev/null)" ]
 then

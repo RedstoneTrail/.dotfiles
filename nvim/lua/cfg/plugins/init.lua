@@ -70,6 +70,17 @@ return {
 		opts = {
 			columns = {},
 			-- columns = { "icon", "permissions", "size", "mtime", },
+			keymaps = {
+				["<C-p>"] = { "actions.preview", opts = { vertical = true, split = "botright" }, },
+			},
+			watch_for_changes = true,
+			view_options = {
+				show_hidden = true,
+				case_insensitive = true,
+			},
+			float = {
+				preview_split = "left",
+			},
 		},
 	},
 	{
@@ -91,17 +102,18 @@ return {
 				["<C-k>"] = false,
 				["<C-y>"] = false,
 				["<S-Tab>"] = false,
-				["<Tab>"] = {
-					function(cmp)
-						if cmp.snippet_active() then
-							return cmp.accept()
-						else
-							return cmp.select_and_accept()
-						end
-					end,
-					"snippet_forward",
-					"fallback",
-				},
+				["<Tab>"] = false,
+				-- ["<Tab>"] = {
+				-- 	function(cmp)
+				-- 		if cmp.snippet_active() then
+				-- 			return cmp.accept()
+				-- 		else
+				-- 			return cmp.select_and_accept()
+				-- 		end
+				-- 	end,
+				-- 	"snippet_forward",
+				-- 	"fallback",
+				-- },
 			},
 			-- snippets = { preset = "luasnip" },
 			sources = {

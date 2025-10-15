@@ -1,9 +1,7 @@
-# .dotfiles
+my dotfiles
+includes configurations for many things
 
-A collection of configurations for various tools, mostly stolen
-
-## Symlinks
-
-To use this repo, I have made 5 million symlinks between .config and .dotfiles so that programs can find their configs.
-
-also frick nvidia, your drivers suck
+has an installation helper tool, run the following
+'''bash
+sh /path/to/repo/install.sh /path/to/repo
+'''

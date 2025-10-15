@@ -2,4 +2,3 @@
 hyprpm reload
 sleep 1
 hyprctl dispatch exec 'alacritty -o font.size=8 --class wallpaper --title wallpaper -e /home/redstonetrail/projects/zmatrix/zig-out/bin/zmatrix -i -d 400'
-# hyprctl dispatch exec 'ghostty --class="wallpaper" --title="wallpaper" --background="#000000" --font-size=8 --background-opacity=1 -e /home/redstonetrail/projects/zmatrix/zig-out/bin/zmatrix -i -d 400'

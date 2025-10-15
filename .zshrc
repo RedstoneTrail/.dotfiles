@@ -59,14 +59,14 @@ alias       ts="torsocks"
 alias zbr="zig build run"
 alias  zb="zig build"
 
-alias fs="source /home/redstonetrail/.dotfiles/scripts/fuzzy-search.sh"
+alias vim=nvim
 
 export NNN_OPTS="cdHiJQuU"
-export NNN_OPENER="/home/redstonetrail/.dotfiles/scripts/nnn-nuke.sh"
+export NNN_OPENER="$HOME/.dotfiles/scripts/nnn-nuke.sh"
 
 export GNUPGHOME="~/.gnupg"
 
-export PATH=$PATH:/sbin:/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/sbin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/usr/lib/rustup/bin:/home/redstonetrail/bin:/home/redstonetrail/.dotfiles/scripts:$(realpath /home/redstonetrail/.nix-profile/bin):/home/redstonetrail/.cargo/bin/
+export PATH=$PATH:/sbin:/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/sbin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/usr/lib/rustup/bin:$HOME/bin:$HOME/.dotfiles/scripts:$(realpath $HOME/.nix-profile/bin):$HOME/.cargo/bin/
 export PAGER=less
 export MANPAGER="nvim \+Man\!"
 export EDITOR=nvim
@@ -99,15 +99,6 @@ fi
 
 PS1="[$PS1"
 
-# Zinit plugins/packages
-# zinit wait lucid for \
-#  atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
-#     zdharma-continuum/fast-syntax-highlighting \
-#  blockf \
-#     zsh-users/zsh-completions \
-#  atload"!_zsh_autosuggest_start" \
-#     zsh-users/zsh-autosuggestions
-
 zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-completions
 zinit light zdharma-continuum/fast-syntax-highlighting
@@ -115,7 +106,6 @@ zinit light zdharma-continuum/fast-syntax-highlighting
 zinit ice depth=1
 zinit light jeffreytse/zsh-vi-mode
 bindkey -v
-# End thereof
 
 # Fix home and end
 bindkey '^[[1~' beginning-of-line
@@ -129,13 +119,15 @@ export PATH="$PATH:/nix/var/nix/profiles/default/bin"
 # End Nix
 
 # remove the non-directory path entry ~/.nix-profile/bin
-export PATH=$(echo $PATH | tr ':' '\n' | grep -v '.nix-profile/bin' | tr '\n' ':' | rev | cut -b2- | rev):/opt/cuda/bin:/opt/cuda/nsight_compute:/opt/cuda/nsight_systems/bin
+export PATH=$(echo $PATH | tr ':' '\n' | grep -v '.nix-profile/bin' | tr '\n' ':' | rev | cut -b2- | rev)
 
+# start tmux session if not on vt
 if [ -z $TMUX ] && [ $TERM != "linux" ]
 then
 	exec tmux
 fi
 
+# ask for tmux session when on vt
 if [ -z $TMUX ] && [ $TERM == "linux" ]
 then
 	echo 'Enter a tmux session? (y)'
@@ -155,7 +147,3 @@ then
 
 	echo 'Not entering a tmux session'
 fi
-
-# if [ -z $TMUX ] && [ "$TERM" != "xterm-256color" ]; then
-# 	exec tmux
-# fi

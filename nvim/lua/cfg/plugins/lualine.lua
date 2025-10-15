@@ -54,11 +54,11 @@ return {
 				lualine_z = { "location" },
 			},
 			inactive_sections = {
-				lualine_a = { "mode" },
+				lualine_a = {},
 				lualine_b = { "filename", "branch", "diagnostics" },
 				lualine_c = {},
 				lualine_x = {},
-				lualine_y = { "encoding", "filetype", "progress" },
+				lualine_y = { "encoding", "filetype", "filesize", "progress" },
 				lualine_z = { "location" },
 			},
 			tabline = {},

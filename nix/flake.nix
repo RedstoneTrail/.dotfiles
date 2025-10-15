@@ -22,6 +22,10 @@
 		packages.${system}.default = pkgs.symlinkJoin {
 			name = "package-list";
 			paths = [
+				pkgs.zsh
+				pkgs.neovim
+				pkgs.git
+				pkgs.openssh
 			];
 		};
 	};
