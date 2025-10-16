@@ -39,7 +39,7 @@ install_link $DOTFILES_DIR/tmux/tmux.conf $HOME/.tmux.conf
 mkdir -p ~/.w3m
 install_link $DOTFILES_DIR/.w3m/config $HOME/.w3m/config
 
-if [ "$(whoami)" == "nix-on-droid" ] && [ "$(hostname)" == "localhost" ]
+if [ "$(whoami)" = "nix-on-droid" ] && [ "$(hostname)" = "localhost" ]
 then
 	NIX_ON_DROID="true"
 	INSTALL_TYPE="limited"
