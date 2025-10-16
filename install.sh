@@ -1,7 +1,5 @@
 #!/usr/bin/env sh
 
-set -o posix
-
 install_link () {
 	# arg 1 is source directory
 	# arg 2 is destination
