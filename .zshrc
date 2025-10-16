@@ -122,24 +122,24 @@ export PATH="$PATH:/nix/var/nix/profiles/default/bin"
 export PATH=$(echo $PATH | tr ':' '\n' | grep -v '.nix-profile/bin' | tr '\n' ':' | rev | cut -b2- | rev)
 
 # start tmux session if not on vt
-if [ -z $TMUX ] && [ $TERM != "linux" ]
+if [ -z "$TMUX" ] && [ "$TERM" != "linux" ] && [ -z "$TERMUX_VERSION" ]
 then
 	exec tmux
 fi
 
 # ask for tmux session when on vt
-if [ -z $TMUX ] && [ $TERM == "linux" ]
+if [ -z "$TMUX" ] && [ "$TERM" == "linux" ] || [ ! -z "$TERMUX_VERSION" ]
 then
 	echo 'Enter a tmux session? (y)'
 	read -k 1 want_tmux
 	echo
 
-	if [ -z $want_tmux ]
+	if [ -z "$want_tmux" ]
 	then
 		want_tmux='n'
 	fi
 
-	if [ $want_tmux == 'y' ]
+	if [ "$want_tmux" == 'y' ]
 	then
 		echo 'Entering tmux session'
 		exec tmux
