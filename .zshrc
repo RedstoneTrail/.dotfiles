@@ -127,7 +127,7 @@ then
 	exec tmux
 fi
 
-# ask for tmux session when on vt
+# ask for tmux session when on vt or in termux
 if [ "$TERM" == "linux" ] || [ ! -z "$TERMUX_VERSION" ] && [ -z "$TMUX" ]
 then
 	echo 'Enter a tmux session? (y)'

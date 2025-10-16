@@ -8,10 +8,8 @@ return {
 					"json",
 					"markdown",
 					"query",
-					"rust",
 					"toml",
 					"vim",
-					"zig",
 				},
 
 				highlight = {
