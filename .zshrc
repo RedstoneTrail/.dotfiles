@@ -13,7 +13,7 @@ compinit
 HISTFILE=~/.histfile
 HISTSIZE=10000
 SAVEHIST=10000
-setopt nobeep notify extendedglob nonomatch autolist globcomplete noautoparamslash globdots
+setopt nobeep notify extendedglob nonomatch autolist globcomplete noautoparamslash globdots rematchpcre
 
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
