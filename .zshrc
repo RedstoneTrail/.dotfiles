@@ -128,7 +128,7 @@ then
 fi
 
 # ask for tmux session when on vt
-if [ -z "$TMUX" ] && [ "$TERM" == "linux" ] || [ ! -z "$TERMUX_VERSION" ]
+if [ "$TERM" == "linux" ] || [ ! -z "$TERMUX_VERSION" ] && [ -z "$TMUX" ]
 then
 	echo 'Enter a tmux session? (y)'
 	read -k 1 want_tmux
