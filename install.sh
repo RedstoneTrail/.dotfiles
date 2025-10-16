@@ -9,9 +9,9 @@ install_link () {
 		printf "\tfile already present at $(realpath $2), skipping\n"
 		return
 	fi
+
 	printf "\tlinking $(realpath $1) into $(realpath $2)\n"
-	# rm -rf "$2"
-	# ln -s $(realpath "$1") $(realpath "$2")
+	ln -s $(realpath "$1") $(realpath "$2")
 }
 
 if [ -z "$1" ]
