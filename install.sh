@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 
+set -o posix
+
 install_link () {
 	# arg 1 is source directory
 	# arg 2 is destination
@@ -37,9 +39,10 @@ install_link $DOTFILES_DIR/tmux/tmux.conf $HOME/.tmux.conf
 mkdir -p ~/.w3m
 install_link $DOTFILES_DIR/.w3m/config $HOME/.w3m/config
 
-if [ $(whoami) == "nix-on-droid" ] && [ $(hostname) == "localhost" ]
+if [ "$(whoami)" == "nix-on-droid" ] && [ "$(hostname)" == "localhost" ]
 then
 	NIX_ON_DROID="true"
+	INSTALL_TYPE="limited"
 else
 	NIX_ON_DROID="false"
 fi
@@ -53,18 +56,16 @@ else
 	install_link $DOTFILES_DIR/.zshrc $HOME/.zshrc
 fi
 
-if [ $NIX_ON_DROID == "false" ]
+if [ "$NIX_ON_DROID" == "false" ]
 then
-	printf "\nfull installation or limited installation? (full/limited)\n\t> "
+	printf "\n"'full installation or limited installation? (full/limited)'"\n\t> "
 	read INSTALL_TYPE
 
 	while [ "$INSTALL_TYPE" != "full" ] && [ "$INSTALL_TYPE" != "limited" ]
 	do
-		printf "\n\t\"full\" for a full installation, installs all config\n\t\"limited\" for a limited installation, only installs config for apps and cli stuff\n\t(case-sensitive)\n\t> "
+		printf "\n\t\"full\""' for a full installation, installs all config'"\n\t"'"limited" for a limited installation, only installs config for apps and cli stuff'"\n\t"'(case-sensitive)'"\n\t> "
 		read INSTALL_TYPE
 	done
-else
-	INSTALL_TYPE="limited"
 fi
 
 if [ "$INSTALL_TYPE" == "full" ]
@@ -87,7 +88,7 @@ then
 			printf "\tnix profile not installed\n"
 			while [ "$WANT_NIX_PROFILE" != "Y" ] && [ "$WANT_NIX_PROFILE" != "N" ]
 			do
-				printf "\tdo you want the nix profile installed? (Y/N) (case-sensitive)\n\t> "
+				printf "\tdo you want the nix profile installed? "'(Y/N) (case-sensitive)'"\n\t> "
 				read WANT_NIX_PROFILE
 			done
 
@@ -137,14 +138,17 @@ then
 			FINAL_NOTES="${FINAL_NOTES}\tinstall wanted packages\n"
 		fi
 	fi
-else
+fi
+
+if [ "$INSTALL_TYPE" == "full" ]
+then
 	printf "\nno nix detected, you'll have to do packages for yourself\n"
 	FINAL_NOTES="${FINAL_NOTES}\tinstall wanted packages\n"
 fi
 
 if [ "$INSTALL_TYPE" == "limited" ] && [ "$NIX_ON_DROID" == "false" ] && ! which nix >/dev/null
 then
-	printf "\nrecommending a nix installation (single user or global)\n"
+	printf "\nrecommending a nix installation "'(single user or global)'"\n"
 fi
 
 printf "\ninstallation finished\n"
