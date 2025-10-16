@@ -66,7 +66,7 @@ then
 	done
 fi
 
-if [ "$INSTALL_TYPE" == "full" ]
+if [ "$INSTALL_TYPE" = "full" ]
 then
 	printf "\ndoing full config installation\n"
 	install_link $DOTFILES_DIR/dunst $CONFIG_DIR/dunst
@@ -76,12 +76,12 @@ then
 	install_link $DOTFILES_DIR/waybar $CONFIG_DIR/waybar
 fi
 
-if [ "$INSTALL_TYPE" == "limited" ] && [ "$NIX_ON_DROID" == "false" ] && which nix >/dev/null
+if [ "$INSTALL_TYPE" = "limited" ] && [ "$NIX_ON_DROID" = "false" ] && which nix >/dev/null
 then
 	printf "\ndetected nix installation\n"
 	if which jq >/dev/null
 	then
-		if [ "$(nix profile list --json | jq -r '.elements.nix')" == "null" ]
+		if [ "$(nix profile list --json | jq -r '.elements.nix')" = "null" ]
 		then
 			printf "\tnix profile not installed\n"
 			while [ "$WANT_NIX_PROFILE" != "Y" ] && [ "$WANT_NIX_PROFILE" != "N" ]
@@ -90,7 +90,7 @@ then
 				read WANT_NIX_PROFILE
 			done
 
-			if [ "$WANT_NIX_PROFILE" == "Y" ]
+			if [ "$WANT_NIX_PROFILE" = "Y" ]
 			then
 				printf "\tok, installing nix profile\n\n"
 				nix profile install $DOTFILES_DIR/nix
@@ -108,9 +108,9 @@ then
 			read USE_GREP_CHECK
 		done
 
-		if [ "$USE_GREP_CHECK" == "Y" ]
+		if [ "$USE_GREP_CHECK" = "Y" ]
 		then
-			if [ "$(nix profile list --json | jq -r '.elements.nix')" == "null" ]
+			if [ "$(nix profile list --json | jq -r '.elements.nix')" = "null" ]
 			then
 				printf "\tnix profile not installed\n"
 				while [ "$WANT_NIX_PROFILE" != "Y" ] && [ "$WANT_NIX_PROFILE" != "N" ]
@@ -119,7 +119,7 @@ then
 					read WANT_NIX_PROFILE
 				done
 
-				if [ "$WANT_NIX_PROFILE" == "Y" ]
+				if [ "$WANT_NIX_PROFILE" = "Y" ]
 				then
 					printf "\tok, installing nix profile\n\n"
 					nix profile install $DOTFILES_DIR/nix
@@ -138,13 +138,13 @@ then
 	fi
 fi
 
-if [ "$INSTALL_TYPE" == "full" ]
+if [ "$INSTALL_TYPE" = "full" ]
 then
 	printf "\nno nix detected, you'll have to do packages for yourself\n"
 	FINAL_NOTES="${FINAL_NOTES}\tinstall wanted packages\n"
 fi
 
-if [ "$INSTALL_TYPE" == "limited" ] && [ "$NIX_ON_DROID" == "false" ] && ! which nix >/dev/null
+if [ "$INSTALL_TYPE" = "limited" ] && [ "$NIX_ON_DROID" = "false" ] && ! which nix >/dev/null
 then
 	printf "\nrecommending a nix installation "'(single user or global)'"\n"
 fi
