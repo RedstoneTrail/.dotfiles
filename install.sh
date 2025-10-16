@@ -45,7 +45,7 @@ else
 	NIX_ON_DROID="false"
 fi
 
-if [ "$NIX_ON_DROID" == "true" ]
+if [ "$NIX_ON_DROID" = "true" ]
 then
 	printf "\ndetected nix-on-droid, installing related config\n"
 	install_link $DOTFILES_DIR/nix-on-droid $CONFIG_DIR/nix-on-droid
@@ -54,7 +54,7 @@ else
 	install_link $DOTFILES_DIR/.zshrc $HOME/.zshrc
 fi
 
-if [ "$NIX_ON_DROID" == "false" ]
+if [ "$NIX_ON_DROID" = "false" ]
 then
 	printf "\n"'full installation or limited installation? (full/limited)'"\n\t> "
 	read INSTALL_TYPE
