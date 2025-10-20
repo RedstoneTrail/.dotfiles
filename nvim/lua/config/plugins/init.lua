@@ -1,9 +1,11 @@
 local hostname = vim.uv.os_gethostname()
 local unipicker_config = {}
 
-if hostname == "karl" then
-	os.execute('notify-send "' .. hostname .. '"')
+local unipicker_enabled_hosts = {
+	["karl"] = true,
+}
 
+if unipicker_enabled_hosts[hostname] then
 	unipicker_config = {
 		"cosmicboots/unicode_picker.nvim",
 		dependencies = {
