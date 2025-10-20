@@ -11,52 +11,33 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-vim.g.mapleader = " "
-vim.opt.clipboard = "unnamedplus"
-vim.opt.updatetime = 50
-
-vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
-vim.keymap.set("x", "<leader>p", [["_dP]])
-vim.keymap.set("t", "<ESC>", "<C-\\><C-n>")
-
-vim.filetype.add({
-	extension = {
-		wgsl = "wgsl",
-	},
+vim.diagnostic.config({
+	virtual_text = true,
 })
+
+vim.g.mapleader = " "
 
 vim.keymap.set("n", "<C-h>", "<C-w>h")
 vim.keymap.set("n", "<C-j>", "<C-w>j")
 vim.keymap.set("n", "<C-k>", "<C-w>k")
 vim.keymap.set("n", "<C-l>", "<C-w>l")
 
-vim.keymap.set("n", "<C-u>", "<C-u>zz")
-vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "n", "nzz")
 vim.keymap.set("n", "N", "Nzz")
 
-vim.keymap.set("n", "<C-Tab>", ":tabn")
-
 vim.opt.nu = true
 vim.opt.rnu = true
-
 vim.opt.signcolumn = "yes"
 
-vim.diagnostic.config({
-	virtual_text = true,
-})
+vim.opt.showmode = false
 
-require("cfg.autoformat")
-require("cfg.writing")
-require("cfg.dbee")
-
-require("lazy").setup("cfg.plugins")
+vim.opt.clipboard = "unnamedplus"
 
 vim.opt.spelllang = "en"
 
 vim.opt.mouse = ""
 
-vim.opt.showmode = false
+vim.opt.wrap = false
 
 vim.opt.cursorline = true
 vim.cmd("hi CursorLine guibg=#077000")
@@ -64,21 +45,13 @@ vim.cmd("hi CursorLine guibg=#077000")
 vim.opt.cursorcolumn = true
 vim.cmd("hi CursorColumn guibg=#077000")
 
-vim.opt.list = true
-
 vim.opt.scrolloff = 20
 vim.opt.sidescrolloff = 20
+
+vim.opt.list = true
 
 vim.cmd("hi Normal guibg=default")
 vim.cmd("hi NormalFloat guibg=default")
 vim.opt.termguicolors = true
 
-vim.keymap.set("n", "<leader>t", ":terminal\n")
-
-vim.api.nvim_create_user_command("XdgOpen", function(opts)
-	local filepath = require("plenary.path").new(opts.fargs[1]):expand()
-	vim.fn.system({ "hyprctl", "keyword", "exec", "xdg-open", filepath })
-end, { nargs = 1 })
-
-
-vim.keymap.set("x", "<leader>md", ":!prettier --parser markdown<CR>", { desc = "Format [M]ark[d]own Range" })
+require("lazy").setup("config.plugins")

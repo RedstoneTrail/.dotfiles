@@ -11,6 +11,7 @@ install_link () {
 	fi
 
 	printf "\tlinking $(realpath $1) into $(realpath $2)\n"
+	rm -f $(realpath "$2")
 	ln -s $(realpath "$1") $(realpath "$2")
 }
 
@@ -138,9 +139,9 @@ then
 	fi
 fi
 
-if [ "$INSTALL_TYPE" = "full" ]
+if [ "$INSTALL_TYPE" = "full" ] && ! which nixos &>/dev/null
 then
-	printf "\nno nix detected, you'll have to do packages for yourself\n"
+	printf "\nno nixos detected, you'll have to do packages for yourself\n"
 	FINAL_NOTES="${FINAL_NOTES}\tinstall wanted packages\n"
 fi
 

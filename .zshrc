@@ -34,7 +34,11 @@ alias  l="ls -l"
 
 alias grep="grep --color=auto"
 
+alias fm="fzfman"
+
 alias open="xdg-open"
+
+alias notify="notify-send -a zsh done"
 
 alias bc="bc -lq"
 
