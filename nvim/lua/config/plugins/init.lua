@@ -1,30 +1,3 @@
-local hostname = vim.uv.os_gethostname()
-local unipicker_config = {}
-
-local unipicker_enabled_hosts = {
-	["karl"] = true,
-}
-
-if unipicker_enabled_hosts[hostname] then
-	unipicker_config = {
-		"cosmicboots/unicode_picker.nvim",
-		dependencies = {
-			"uga-rosa/utf8.nvim",
-			"nvim-telescope/telescope.nvim",
-		},
-		config = function()
-			local unicode_picker = require("unicode_picker")
-			unicode_picker.setup()
-			vim.keymap.set(
-				"n",
-				"<leader>ui",
-				unicode_picker.unicode_chars,
-				{ buffer = bufnr, desc = "[U]nicode [I]nsert" }
-			)
-		end,
-	}
-end
-
 return {
 	"tpope/vim-commentary",
 	{ "mbbill/undotree", cmd = "UndotreeToggle" },
@@ -185,5 +158,21 @@ return {
 		ft = "lua",
 		opts = {},
 	},
-	unipicker_config,
+	{
+		"cosmicboots/unicode_picker.nvim",
+		dependencies = {
+			"uga-rosa/utf8.nvim",
+			"nvim-telescope/telescope.nvim",
+		},
+		config = function()
+			local unicode_picker = require("unicode_picker")
+			unicode_picker.setup()
+			vim.keymap.set(
+				"n",
+				"<leader>ui",
+				unicode_picker.unicode_chars,
+				{ buffer = bufnr, desc = "[U]nicode [I]nsert" }
+			)
+		end,
+	},
 }
