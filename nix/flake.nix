@@ -28,6 +28,8 @@
           pkgs.git
           pkgs.openssh
           pkgs.nixfmt-rfc-style
+	  pkgs.stylua
+	  pkgs.lua-language-server
         ];
       };
     };
