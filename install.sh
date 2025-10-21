@@ -94,7 +94,7 @@ then
 			if [ "$WANT_NIX_PROFILE" = "Y" ]
 			then
 				printf "\tok, installing nix profile\n\n"
-				nix profile install $DOTFILES_DIR/nix
+				nix profile add $(realpath $DOTFILES_DIR/nix) --impure
 			else
 				printf "\tok, skipping\n"
 				FINAL_NOTES="${FINAL_NOTES}\tinstall wanted packages\n"
@@ -123,7 +123,7 @@ then
 				if [ "$WANT_NIX_PROFILE" = "Y" ]
 				then
 					printf "\tok, installing nix profile\n\n"
-					nix profile install $DOTFILES_DIR/nix
+					nix profile add $(realpath $DOTFILES_DIR/nix) --impure
 				else
 					printf "\tok, skipping\n"
 					FINAL_NOTES="${FINAL_NOTES}\tinstall wanted packages\n"

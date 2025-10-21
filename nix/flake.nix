@@ -1,5 +1,5 @@
 {
-   description = "System config flake";
+  description = "System config flake";
 
   inputs = {
     nixpkgs = {
@@ -13,9 +13,9 @@
       nixpkgs,
     }:
     let
-      system = "x86_64-linux";
+      system = builtins.currentSystem;
       pkgs = import nixpkgs {
-        system = "x86_64-linux";
+        system = system;
         config.allowUnfree = true;
       };
     in
@@ -27,6 +27,7 @@
           pkgs.neovim
           pkgs.git
           pkgs.openssh
+          pkgs.nixfmt-rfc-style
         ];
       };
     };
