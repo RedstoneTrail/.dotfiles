@@ -161,18 +161,19 @@ return {
 	{
 		"cosmicboots/unicode_picker.nvim",
 		dependencies = {
-			"uga-rosa/utf8.nvim",
+			-- "uga-rosa/utf8.nvim",
 			"nvim-telescope/telescope.nvim",
 		},
-		config = function()
-			local unicode_picker = require("unicode_picker")
-			unicode_picker.setup()
-			vim.keymap.set(
-				"n",
-				"<leader>ui",
-				unicode_picker.unicode_chars,
-				{ buffer = bufnr, desc = "[U]nicode [I]nsert" }
-			)
-		end,
+		config = true,
+		-- config = function()
+		-- 	local unicode_picker = require("unicode_picker")
+		-- 	unicode_picker.setup()
+		-- 	vim.keymap.set(
+		-- 		"n",
+		-- 		"<leader>ui",
+		-- 		unicode_picker.unicode_chars,
+		-- 		{ buffer = bufnr, desc = "[U]nicode [I]nsert" }
+		-- 	)
+		-- end,
 	},
 }

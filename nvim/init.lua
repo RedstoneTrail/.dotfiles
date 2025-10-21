@@ -56,4 +56,6 @@ vim.cmd("hi Normal guibg=default")
 vim.cmd("hi NormalFloat guibg=default")
 vim.opt.termguicolors = true
 
+set("n", "<leader>ui", ":Telescope unicode_picker\n")
+
 require("lazy").setup("config.plugins")
