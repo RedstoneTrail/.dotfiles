@@ -57,18 +57,28 @@ return {
 		opts = {
 			signature = {
 				enabled = true,
-				window = { show_documentation = false },
+				window = { show_documentation = true },
 			},
 			completion = {
-				-- ghost_text = { enabled = true },
-				documentation = { window = { border = "single" } },
-				menu = { auto_show = false, border = "single" },
+				documentation = { window = { border = "bold" } },
+				menu = { auto_show = true, border = "bold" },
 			},
 			keymap = {
 				["<C-k>"] = false,
 				["<C-y>"] = false,
 				["<S-Tab>"] = false,
-				["<Tab>"] = false,
+				-- ["<Tab>"] = false,
+				["<Tab>"] = {
+					function(cmp)
+						if cmp.snippet_active() then
+							return cmp.accept()
+						else
+							return cmp.select_and_accept()
+						end
+					end,
+					"snippet_forward",
+					"fallback",
+				},
 			},
 			sources = {
 				default = { "lazydev", "lsp", "path", "snippets", "buffer" },

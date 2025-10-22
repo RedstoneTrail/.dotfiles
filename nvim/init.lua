@@ -54,7 +54,19 @@ vim.opt.list = true
 
 vim.cmd("hi Normal guibg=default")
 vim.cmd("hi NormalFloat guibg=default")
+vim.cmd("hi Pmenu guibg=#000000")
+vim.cmd("hi BlinkCmpMenuBorder guifg=#00aa00")
+vim.cmd("hi BlinkCmpDocBorder guifg=#005500")
+vim.cmd("hi BlinkCmpMenuSelection guibg=#424242")
+vim.cmd("hi FloatBorder guifg=#00aa00")
 vim.opt.termguicolors = true
+
+vim.diagnostic.config({
+	float = {
+		border = "bold",
+	},
+})
+vim.o.winborder = "bold"
 
 set("n", "<leader>ui", ":Telescope unicode_picker\n")
 
