@@ -1,3 +1,19 @@
+local function unipicker_setup()
+	if vim.uv.os_gethostname() == "karl" then
+		return {
+
+			"cosmicboots/unicode_picker.nvim",
+			dependencies = {
+				-- "uga-rosa/utf8.nvim",
+				"nvim-telescope/telescope.nvim",
+			},
+			config = true,
+		}
+	else
+		return {}
+	end
+end
+
 return {
 	"tpope/vim-commentary",
 	{ "mbbill/undotree", cmd = "UndotreeToggle" },
@@ -168,22 +184,5 @@ return {
 		ft = "lua",
 		opts = {},
 	},
-	{
-		"cosmicboots/unicode_picker.nvim",
-		dependencies = {
-			-- "uga-rosa/utf8.nvim",
-			"nvim-telescope/telescope.nvim",
-		},
-		config = true,
-		-- config = function()
-		-- 	local unicode_picker = require("unicode_picker")
-		-- 	unicode_picker.setup()
-		-- 	vim.keymap.set(
-		-- 		"n",
-		-- 		"<leader>ui",
-		-- 		unicode_picker.unicode_chars,
-		-- 		{ buffer = bufnr, desc = "[U]nicode [I]nsert" }
-		-- 	)
-		-- end,
-	},
+	unipicker_setup(),
 }
