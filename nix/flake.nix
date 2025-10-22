@@ -30,6 +30,10 @@
           pkgs.nixfmt-rfc-style
 	  pkgs.stylua
 	  pkgs.lua-language-server
+	  pkgs.luarocks
+	  pkgs.tmux
+	  pkgs.lua5_1
+	  pkgs.gcc
         ];
       };
     };
