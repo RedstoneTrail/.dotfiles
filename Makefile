@@ -3,7 +3,7 @@
 install: install-home install-config
 	# installing nix if present
 	if [ "$(shell hostname)" == "localhost" ] && [ "$(shell whoami)" == "nix-on-droid" ]; then make install-nix-on-droid; fi
-	if [ ! -z "$(shell which nix)" ]; then make install-nix; fi
+	if [ ! -z "$(shell command -v nix)" ]; then make install-nix; fi
 
 install-home:
 	mkdir -p ~/.abook
