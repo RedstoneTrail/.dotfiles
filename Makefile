@@ -2,8 +2,8 @@
 
 install: install-home install-config
 	# installing nix if present
-	if [ ! -z "$(shell which nix)" ]; then make install-nix; fi
 	if [ "$(shell hostname)" == "localhost" ] && [ "$(shell whoami)" == "nix-on-droid" ]; then make install-nix-on-droid; fi
+	if [ ! -z "$(shell which nix)" ]; then make install-nix; fi
 
 install-home:
 	mkdir -p ~/.abook
@@ -63,5 +63,5 @@ install-nix:
 	nix profile list --json | grep '.dotfiles?nix' && nix profile upgrade --all --impure || nix profile install ./nix --impure --priority 4
 
 install-nix-on-droid:
-	# on nix-on-droid install its config
+	# on nix-on-droid, install its config
 	nix-on-droid switch --flake ~/.dotfiles/nix-on-droid/
