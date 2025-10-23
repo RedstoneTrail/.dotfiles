@@ -59,8 +59,8 @@ install-config:
 	ln -s $(realpath zathura) ~/.config/zathura
 
 install-nix:
-	# nix is present, install profile
-	nix profile install ./nix --impure --priority 4
+	# nix is present, install profile, unless its already installed, then update it
+	if [ "$(shell nix profile list --json | jq -r '.elements.nix')" == "null" ]; then nix profile install ./nix --impure --priority 4; else nix profile upgrade --all --impure; fi
 
 install-nix-on-droid:
 	# on nix-on-droid install its config
