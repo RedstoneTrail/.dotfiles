@@ -64,6 +64,4 @@ install-nix:
 
 install-nix-on-droid:
 	# on nix-on-droid install its config
-	rm -rf ~/.config/nix-on-droid
-	ln -s $(realpath nix-on-droid) ~/.config/nix-on-droid
-	nix-on-droid switch --flake ~/.config/nix-on-droid/
+	nix-on-droid switch --flake ~/.dotfiles/nix-on-droid/
