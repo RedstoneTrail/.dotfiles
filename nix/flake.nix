@@ -39,6 +39,7 @@
 	  pkgs.abook
 	  pkgs.catimg
 	  pkgs.gnumake
+	  pkgs.jq
         ];
       };
     };
