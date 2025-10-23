@@ -83,7 +83,6 @@ return {
 				["<C-k>"] = false,
 				["<C-y>"] = false,
 				["<S-Tab>"] = false,
-				-- ["<Tab>"] = false,
 				["<Tab>"] = {
 					function(cmp)
 						if cmp.snippet_active() then
@@ -92,7 +91,6 @@ return {
 							return cmp.select_and_accept()
 						end
 					end,
-					"snippet_forward",
 					"fallback",
 				},
 			},

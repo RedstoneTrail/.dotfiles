@@ -34,6 +34,10 @@
 	  pkgs.tmux
 	  pkgs.lua5_1
 	  pkgs.gcc
+	  pkgs.aerc
+	  pkgs.pass
+	  pkgs.abook
+	  pkgs.catimg
         ];
       };
     };

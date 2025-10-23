@@ -1,0 +1,7 @@
+field address_lines = Address, list
+field birthday = Birthday, date
+
+view CONTACT = name, email, nick
+view ADDRESS = address_lines, city, zip, country
+view PHONE = phone, workphone, mobile
+view OTHER = url, birthday

@@ -1,0 +1,21 @@
+*_default.bg = default
+*_default.fg = default
+
+*.selected.bg = #00aa00
+*.selected.fg = #000000
+
+border.bg = #000000
+border.fg = #ffffff
+
+completion*.bg = #212121
+
+msglist_unread.fg = #dddd00
+msglist_marked.bg = #077000
+msglist_result.bg = #FFD787
+msglist_result.fg = #000000
+
+part_mimetype.fg = #ffffff
+
+msglist_pill.bg = #ffffff
+
+tab.underline = true
