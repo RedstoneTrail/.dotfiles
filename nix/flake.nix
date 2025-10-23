@@ -38,6 +38,7 @@
 	  pkgs.pass
 	  pkgs.abook
 	  pkgs.catimg
+	  pkgs.gnumake
         ];
       };
     };
