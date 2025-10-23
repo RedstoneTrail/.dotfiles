@@ -60,7 +60,7 @@ install-config:
 
 install-nix:
 	# nix is present, install profile, unless its already installed, then update it
-	nix profile list --json | grep '.dotfiles?nix' && nix profile upgrade --all --impure || nix profile install ./nix --impure --priority 4
+	nix profile list --json | grep '.dotfiles?dir=nix' && nix profile upgrade --all --impure || nix profile install ./nix --impure --priority 4
 
 install-nix-on-droid:
 	# on nix-on-droid, install its config
