@@ -5,3 +5,5 @@ has an installation helper tool, run the following
 '''bash
 sh /path/to/repo/install.sh /path/to/repo
 '''
+
+will switch to nixos soonish
