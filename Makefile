@@ -1,11 +1,11 @@
-.PHONY: install
+.PHONY: install nix home config nix-on-droid
 
-install: install-home install-config
+install: home config
 	# installing nix if present
-	if [ "$(shell hostname)" == "localhost" ] && [ "$(shell whoami)" == "nix-on-droid" ]; then make install-nix-on-droid; fi
-	if [ ! -z "$(shell command -v nix)" ]; then make install-nix; fi
+	if [ "$(shell hostname)" == "localhost" ] && [ "$(shell whoami)" == "nix-on-droid" ]; then make nix-on-droid; fi
+	if [ ! -z "$(shell command -v nix)" ]; then make nix; fi
 
-install-home:
+home:
 	mkdir -p ~/.abook
 	rm -rf ~/.abook/abookrc
 	ln -s $(realpath abookrc) ~/.abook/abookrc
@@ -20,7 +20,7 @@ install-home:
 	rm -f ~/.zshrc
 	ln -s $(realpath .zshrc) ~/.zshrc
 
-install-config:
+config:
 	rm -rf ~/.config/aerc
 	ln -s $(realpath aerc) ~/.config/aerc
 	chmod 600 ~/.config/aerc/accounts.conf
@@ -52,16 +52,19 @@ install-config:
 	rm -f ~/.tmux.conf
 	ln -s $(realpath tmux.conf) ~/.tmux.conf
 
+	rm -rf ~/.config/tridactyl
+	ln -s $(realpath tridactyl) ~/.config/tridactyl
+
 	rm -rf ~/.config/waybar
 	ln -s $(realpath waybar) ~/.config/waybar
 
 	rm -rf ~/.config/zathura
 	ln -s $(realpath zathura) ~/.config/zathura
 
-install-nix:
+nix:
 	# nix is present, install profile, unless its already installed, then update it
 	nix profile list --json | grep '.dotfiles?dir=nix' && nix profile upgrade --all --impure || nix profile install ./nix --impure --priority 4
 
-install-nix-on-droid:
+nix-on-droid:
 	# on nix-on-droid, install its config
 	nix-on-droid switch --flake ~/.dotfiles/nix-on-droid/

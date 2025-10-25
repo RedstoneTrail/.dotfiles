@@ -1,0 +1,17 @@
+" General Settings
+set update.lastchecktime 1761300365697
+set configversion 2.0
+set smoothscroll true
+
+sanitize tridactyllocal tridactylsync
+
+" For syntax highlighting see https://github.com/tridactyl/vim-tridactyl
+" vim: set filetype=tridactyl
+
+set searchurls.np https://search.nixos.org/packages?query=%s
+set searchurls.no https://search.nixos.org/options?query=%s
+
+set searchurls.zd https://ziglang.org/documentation/master/
+set searchurls.zs https://ziglang.org/documentation/master/std/#%s
+
+unbind <C-f>

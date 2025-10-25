@@ -6,7 +6,6 @@
     "cpu",
     "temperature",
     "memory",
-    "custom/fan",
     "hyprland/workspaces",
   ],
   "modules-center": [
@@ -97,10 +96,5 @@
 	"hide-empty-text": true,
 	"interval": 5,
 	"format": "{}",
-  },
-  "custom/fan": {
-  	"return-type": "text",
-	"exec": "sensors | grep fan1 | sed \"s/fan1: *//\"",
-	"interval": 1,
   }
 }

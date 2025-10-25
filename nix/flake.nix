@@ -40,6 +40,7 @@
 	  pkgs.catimg
 	  pkgs.gnumake
 	  pkgs.jq
+	  pkgs.nerd-fonts.fira-mono
         ];
       };
     };

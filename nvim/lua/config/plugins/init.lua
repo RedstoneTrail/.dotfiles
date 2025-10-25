@@ -183,4 +183,5 @@ return {
 		opts = {},
 	},
 	unipicker_setup(),
+	"tridactyl/vim-tridactyl",
 }

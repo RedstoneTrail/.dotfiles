@@ -15,5 +15,6 @@
   "typst-preview.nvim": { "branch": "master", "commit": "1603d37bb44ed2efa0b4378d1dfedc087b4f2141" },
   "undotree": { "branch": "master", "commit": "0f1c9816975b5d7f87d5003a19c53c6fd2ff6f7f" },
   "unicode_picker.nvim": { "branch": "master", "commit": "40217b228e1ce38a1ffa2fd3e8288f5bd6c0d485" },
-  "vim-commentary": { "branch": "master", "commit": "64a654ef4a20db1727938338310209b6a63f60c9" }
+  "vim-commentary": { "branch": "master", "commit": "64a654ef4a20db1727938338310209b6a63f60c9" },
+  "vim-tridactyl": { "branch": "master", "commit": "fdd069bde3a34c786abed4601b6d59a065590ad9" }
 }
