@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+
+# is actually just yanked from alan
+rg Path= <~/.mozilla/firefox/profiles.ini | cut -f2 -d= | while read profile; do
+	chrome=~/.mozilla/firefox/$profile/chrome
+	if [ -L $chrome ] && [ "$(realpath "$chrome")" = $(realpath ./firefox/chrome) ]; then
+		$verbose && echo Already linked: $chrome
+	elif [ -e $chrome ]; then
+		echo "Error (already exists): $chrome -> $(realpath $chrome)"
+	else
+		echo Linking: $chrome
+		ln -s -T "$(realpath ./firefox/chrome)" $chrome
+	fi
+done

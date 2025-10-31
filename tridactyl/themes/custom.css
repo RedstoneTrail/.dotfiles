@@ -1,0 +1,56 @@
+:root {
+  --fg: #ffffff;
+  --fg2: #00aa00;
+  --bg: #000000;
+  --bg2: #077000;
+  --comment: #00aa00;
+  --focused-fg: #000000;
+  --focused-bg: #00aa00;
+
+  --font: "FiraCode Nerd Font Mono", monospace;
+
+  --tridactyl-fg: var(--fg);
+  --tridactyl-bg: var(--bg);
+  --tridactyl-url-fg: var(--fg2);
+  --tridactyl-url-bg: var(--bg);
+  --tridactyl-highlight-box-bg: var(--bg2);
+  --tridactyl-highlight-box-fg: var(--fg);
+  --tridactyl-of-fg: var(--fg);
+  --tridactyl-of-bg: var(--bg2);
+  --tridactyl-cmdl-fg: var(--fg);
+
+  --tridactyl-cmdl-font-family: var(--font);
+  --tridactyl-cmplt-font-family: var(--font);
+  --tridactyl-hintspan-font-family: var(--font);
+
+  --tridactyl-hintspan-fg: var(--fg) !important;
+  --tridactyl-hintspan-bg: var(--bg2) !important;
+
+  --tridactyl-hint-active-fg: var(--fg);
+  --tridactyl-hint-active-bg: var(--bg2);
+  --tridactyl-hint-active-outline: var(--bg);
+  --tridactyl-hint-bg: var(--bg);
+  --tridactyl-hint-outline: var(--bg2);
+  --tridactyl-hintspan-border-width: 3px;
+  --tridactyl-cmplt-border-top: none;
+
+  --tridactyl-cmdl-line-height: 1.5;
+
+  --tridactyl-status-border: 2px solid var(--bg2);
+  --tridactyl-status-border-radius: 0;
+}
+
+:root #completions .focused,
+:root #completions .focused .url {
+  background: var(--focused-bg);
+  color: var(--focused-fg);
+  font-weight: bold;
+}
+
+:root .TridactylOwnNamespace {
+  background: var(--bg);
+}
+
+#completions .sectionHeader {
+  background: unset;
+}

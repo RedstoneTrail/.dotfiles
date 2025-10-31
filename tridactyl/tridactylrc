@@ -15,3 +15,5 @@ set searchurls.zd https://ziglang.org/documentation/master/
 set searchurls.zs https://ziglang.org/documentation/master/std/#%s
 
 unbind <C-f>
+
+colourscheme custom

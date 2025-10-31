@@ -20,6 +20,8 @@ home:
 	rm -f ~/.zshrc
 	ln -s $(realpath .zshrc) ~/.zshrc
 
+	./scripts/install-firefox
+
 config:
 	rm -rf ~/.config/aerc
 	ln -s $(realpath aerc) ~/.config/aerc

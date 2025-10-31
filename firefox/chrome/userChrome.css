@@ -1,0 +1,57 @@
+:root {
+  /* my colours */
+  --bg: #000000;
+  --fg: #ffffff;
+}
+
+#nav-bar {
+  background-color: var(--bg) !important;
+  color: var(--fg) !important;
+  border: none !important;
+  box-shadow: none !important;
+  height: min-content;
+  padding: 0em !important;
+}
+
+toolbarspring {
+  display: none;
+}
+
+.toolbarbutton-icon,
+#page-action-buttons,
+#identity-icon,
+#tracking-protection-icon {
+  color: var(--fg) !important;
+}
+
+#nav-bar .urlbar-input-box * {
+  color: var(--fg) !important;
+}
+
+#star-button-box {
+  display: none;
+}
+
+#urlbar-container #urlbar-background {
+  background-color: var(--bg) !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+#navigator-toolbox {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+#TabsToolbar {
+  visibility: collapse;
+}
+
+#PanelUI-button {
+  display: none;
+}
+
+statuspanel[type="overLink"],
+#statuspanel[type="overLink"] {
+  display: none !important;
+}
