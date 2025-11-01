@@ -1,9 +1,10 @@
-.PHONY: install nix home config nix-on-droid
+.PHONY: install nix home config nix-on-droid nixos
 
 install: home config
 	# installing nix if present
 	if [ "$(shell hostname)" == "localhost" ] && [ "$(shell whoami)" == "nix-on-droid" ]; then make nix-on-droid; fi
-	if [ ! -z "$(shell command -v nix)" ]; then make nix; fi
+	if [ ! -z "$(shell command -v nix)" && -z "$(shell command -v nixos-rebuild)" ]; then make nix; fi
+	if [ ! -z "$(shell command -v nixos-rebuild)" ]; then make nixos; fi
 
 home:
 	mkdir -p ~/.abook
@@ -70,3 +71,15 @@ nix:
 nix-on-droid:
 	# on nix-on-droid, install its config
 	nix-on-droid switch --flake ~/.dotfiles/nix-on-droid/
+
+nixos:
+	git add .
+	sudo nixos-rebuild switch --flake ./nixos
+
+clean:
+	df -h / &> /tmp/usage-before
+	sudo nix-env -p /nix/var/nix/profiles/system --delete-generations +3
+	sudo nix store gc
+	sudo nix store optimise
+	df -h / &> /tmp/usage-after
+	cat /tmp/usage-before /tmp/usage-after

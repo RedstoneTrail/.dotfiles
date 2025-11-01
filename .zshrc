@@ -70,13 +70,12 @@ export NNN_OPENER="$HOME/.dotfiles/scripts/nnn-nuke.sh"
 
 export GNUPGHOME="~/.gnupg"
 
-export PATH=$(realpath $HOME/.nix-profile/bin):$PATH:/sbin:/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/sbin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/usr/lib/rustup/bin:$HOME/bin:$HOME/.dotfiles/scripts:$HOME/.cargo/bin/
+export PATH=$PATH:/sbin:/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/sbin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/usr/lib/rustup/bin:$HOME/bin:$HOME/.dotfiles/scripts:$HOME/.cargo/bin/
 export PAGER=less
 export MANPAGER="nvim \+Man\!"
 export EDITOR=nvim
 export BROWSER=firefox
 export TERMINAL=$TERM
-export SHELL=/bin/zsh
 
 export LISTMAX=-1
 setopt no_hist_verify

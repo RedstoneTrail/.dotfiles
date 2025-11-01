@@ -1,4 +1,4 @@
-#!/bin/env zsh
+#!/usr/bin/env zsh
 
 MEDIA_STATUS=$(playerctl status 2>/dev/null || echo "not playing")
 

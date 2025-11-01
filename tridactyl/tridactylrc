@@ -17,3 +17,5 @@ set searchurls.zs https://ziglang.org/documentation/master/std/#%s
 unbind <C-f>
 
 colourscheme custom
+
+set newtab file:///home/redstonetrail/.dotfiles/firefox/newtab.html

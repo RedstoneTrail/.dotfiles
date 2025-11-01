@@ -29,7 +29,6 @@
     "format": "{temperatureC}°C",
     "format-critical": "{temperatureC}°C",
     "critical-threshold": 90,
-    "hwmon-path": "/tmp/cpu-temp",
   },
   "memory": {
     "interval": 1,
