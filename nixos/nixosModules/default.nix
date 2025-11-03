@@ -16,6 +16,7 @@
     ./boot.nix
     ./cli.nix
     ./firefox.nix
+    ./school.nix
     ./steam.nix
     ./vt.nix
     ./wm.nix

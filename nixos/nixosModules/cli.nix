@@ -15,7 +15,7 @@
     gh
     git
     gnumake
-    gnupg
+    # gnupg
     htop-vim
     impala
     jq
@@ -26,4 +26,9 @@
     tmux
     wget
   ];
+
+  programs.gnupg.agent = {
+    enable = true;
+    pinentryPackage = pkgs.pinentry-gnome3;
+  };
 }

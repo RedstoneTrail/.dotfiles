@@ -14,9 +14,10 @@
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
       modules = [
         ./configuration.nix
-        ./nixosModules/default.nix
 	./karl/hardware-configuration.nix
+	./karl/intel.nix
 	./karl/nvidia.nix
+        ./nixosModules/default.nix
       ];
     };
   };

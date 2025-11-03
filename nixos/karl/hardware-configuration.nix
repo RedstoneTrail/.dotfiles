@@ -11,6 +11,8 @@
     ];
 
   config = {
+    hardware.graphics.enable = true;
+
     boot = {
       initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usbhid" ];
       initrd.kernelModules = [ ];
@@ -42,6 +44,7 @@
     # gpu info packages
     environment.systemPackages = with pkgs; [
       clinfo
+      pocl
       nvtopPackages.full
     ];
   };
