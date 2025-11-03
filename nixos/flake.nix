@@ -16,6 +16,7 @@
         ./configuration.nix
         ./nixosModules/default.nix
 	./karl/hardware-configuration.nix
+	./karl/nvidia.nix
       ];
     };
   };

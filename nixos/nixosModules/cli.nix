@@ -12,8 +12,10 @@
     aerc
     brightnessctl
     catimg
+    gh
     git
     gnumake
+    gnupg
     htop-vim
     impala
     jq
