@@ -1,12 +1,12 @@
 {
-  pkgs,
-  ...
+	pkgs,
+	...
 }:
 {
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+	boot.loader.systemd-boot.enable = true;
+	boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+	boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  boot.tmp.cleanOnBoot = true;
+	boot.tmp.cleanOnBoot = true;
 }

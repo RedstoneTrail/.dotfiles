@@ -1,9 +1,9 @@
 {
-  pkgs,
-  ...
+	pkgs,
+	...
 }:
 {
-  environment.systemPackages = with pkgs; [
-    intel-compute-runtime
-  ];
+	environment.systemPackages = with pkgs; [
+		intel-compute-runtime
+	];
 }

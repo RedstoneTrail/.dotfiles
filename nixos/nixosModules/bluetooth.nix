@@ -1,13 +1,19 @@
 {
+  config,
+  pkgs,
   ...
 }:
 {
-  environment.systemPackages = pkgs.bluetui
+  config = {
+    environment.systemPackages = [
+      pkgs.bluetui
+    ];
 
-  services.blueman.enable = true;
+    services.blueman.enable = true;
 
-  hardware.bluetooth = {
-    enabled = true;
-    powerOnBoot = false;
+    hardware.bluetooth = {
+      enable = true;
+      powerOnBoot = false;
+    };
   };
 }

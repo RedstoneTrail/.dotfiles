@@ -15,7 +15,6 @@
     gh
     git
     gnumake
-    # gnupg
     htop-vim
     impala
     jq
@@ -25,6 +24,10 @@
     ripgrep
     tmux
     wget
+    nixfmt-rfc-style
+    nixd
+    texlab
+    fd
   ];
 
   programs.gnupg.agent = {

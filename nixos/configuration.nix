@@ -9,9 +9,14 @@
 
   i18n.defaultLocale = "en_US.UTF-8";
 
+  networking.hostName = "karl";
   users.users.redstonetrail = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ];
+    extraGroups = [
+      "wheel"
+      "network"
+      "networkmanager"
+    ];
     packages = with pkgs; [
     ];
     shell = pkgs.zsh;
@@ -21,8 +26,8 @@
   # started in user sessions.
   # programs.mtr.enable = true;
   # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
+  #	 enable = true;
+  #	 enableSSHSupport = true;
   # };
 
   services.openssh.enable = true;

@@ -74,7 +74,13 @@ local lsps = {
 	{
 		"nixd",
 		opts = {
-			cmd = { "nixfmt" },
+			settings = {
+				nixd = {
+					formatting = {
+						command = { "nixfmt" },
+					},
+				},
+			},
 		},
 	},
 	{
