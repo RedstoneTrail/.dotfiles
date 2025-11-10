@@ -14,7 +14,7 @@
               cursor-theme = "catppuccin-frappe-green-cursors";
               application-prefer-dark-theme = true;
               color-scheme = "prefer-dark";
-              gtk-theme = "Catppuccin-GTK-Green-Dark-Frappe";
+              gtk-theme = "Materia-dark";
             };
           };
           lockAll = true;
@@ -47,6 +47,7 @@
       pulse.enable = true;
       alsa.enable = true;
     };
+    udisks2.enable = true;
   };
 
   fonts.packages = with pkgs; [
@@ -56,10 +57,14 @@
 
   environment.systemPackages = with pkgs; [
     alacritty
+    catppuccin-cursors.frappeGreen
     dunst
     fuzzel
     grim
     hyprlock
+    hyprpolkitagent
+    libnotify
+    materia-theme
     pipewire
     pulseaudio
     pulsemixer
@@ -68,8 +73,5 @@
     wireplumber
     wl-clipboard
     xwayland
-    catppuccin-cursors.frappeGreen
-    hyprpolkitagent
-    materia-theme
   ];
 }

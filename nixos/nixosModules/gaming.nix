@@ -1,7 +1,5 @@
 {
   pkgs,
-  lib,
-  config,
   ...
 }:
 {
@@ -16,6 +14,7 @@
     environment.systemPackages = with pkgs; [
       mangohud
       lutris
+      prismlauncher
     ];
   };
 }

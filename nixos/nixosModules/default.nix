@@ -18,23 +18,11 @@
     ./firefox.nix
     ./gaming.nix
     ./networking.nix
+    ./nixosSupport.nix
     ./school.nix
     ./tor.nix
     ./virtualisation.nix
     ./vt.nix
     ./wm.nix
   ];
-
-  config.specialisation = {
-    # default state is integrated graphics only
-    # this specialisation provides dedicated graphics support
-    hybrid-graphics = {
-      inheritParentConfig = true;
-      configuration = {
-        imports = [
-          ../karl/nvidia.nix
-        ];
-      };
-    };
-  };
 }

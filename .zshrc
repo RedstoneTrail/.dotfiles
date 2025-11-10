@@ -1,7 +1,8 @@
 # fix hyprctl, only if hyprland is running
 if pgrep Hyprland >/dev/null
 then
-	which hyprctl &> /dev/null && export HYPRLAND_INSTANCE_SIGNATURE=$(hyprctl -j instances | jq -r '.[0].instance')
+	# check if hyprland is running before doing the fix
+	command -v hyprctl &> /dev/null && export HYPRLAND_INSTANCE_SIGNATURE=$(hyprctl -j instances | jq -r '.[0].instance')
 fi
 
 zstyle ':completion:*' completer _expand _complete _match _correct _prefix _ignored
@@ -31,6 +32,8 @@ autoload -Uz _zinit
 
 alias ls="ls --color=auto -ahp"
 alias  l="ls -l"
+
+alias lsusb="cyme --lsusb"
 
 alias grep="grep --color=auto"
 

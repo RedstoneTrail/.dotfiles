@@ -65,21 +65,33 @@ config:
 	ln -s $(realpath zathura) ~/.config/zathura
 
 nix:
-	# nix is present, install profile, unless its already installed, then update it
 	nix profile list --json | grep '.dotfiles?dir=nix' && nix profile upgrade --all --impure || nix profile install ./nix --impure --priority 4
 
 nix-on-droid:
-	# on nix-on-droid, install its config
 	nix-on-droid switch --flake ~/.dotfiles/nix-on-droid/
+
+SPECIALISATION:=$(shell cat /etc/redstonetrail/specialisation)
+
+SPECIALISATION_FLAGS:=
+ifeq ($(SPECIALISATION), default)
+	SPECIALISATION_FLAGS:=
+else
+	SPECIALISATION_FLAGS:=-c "$(shell cat /etc/redstonetrail/specialisation)"
+endif
 
 nixos:
 	git add .
-	sudo nixos-rebuild switch --flake ./nixos
+	@echo building for $(SPECIALISATION) with \"$(SPECIALISATION_FLAGS)\"
+	sudo nixos-rebuild switch --flake ./nixos $(SPECIALISATION_FLAGS)
+
+# if [ "$(shell cat /etc/redstonetrail/specialisation)" == "integrated-graphics" ]; then sudo nixos-rebuild switch --flake ./nixos; fi
+# if [ "$(shell cat /etc/redstonetrail/specialisation)" == "hybrid-graphics" ]; then sudo nixos-rebuild switch --flake ./nixos -c "hybrid-graphics"; fi
 
 clean:
 	df -h / &> /tmp/usage-before
 	sudo nix-env -p /nix/var/nix/profiles/system --delete-generations +3
 	sudo nix store gc
 	sudo nix store optimise
+	make nixos
 	df -h / &> /tmp/usage-after
 	cat /tmp/usage-before /tmp/usage-after

@@ -1,5 +1,4 @@
 {
-  pkgs,
   ...
 }:
 {
@@ -13,10 +12,6 @@
     open = true;
     nvidiaSettings = false;
   };
-
-  environment.systemPackages = [
-    pkgs.nvtopPackages.full
-  ];
 
   # so much cuda
   allowed-unfree-packages = [

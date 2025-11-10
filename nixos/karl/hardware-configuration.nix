@@ -44,13 +44,16 @@
     ];
 
     networking.useDHCP = lib.mkDefault true;
-    # networking.interfaces.wlp0s20f3.useDHCP = lib.mkDefault true;
 
     nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
     hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
     # enable powertop
-    powerManagement.powertop.enable = true;
+    powerManagement.powertop = {
+      enable = true;
+      # disable all usb power management
+      postStart = ''for i in /sys/bus/usb/devices/*/power/control; do /bin/sh -c "echo on > $i"; done'';
+    };
 
     # always blacklist nouveau
     boot.blacklistedKernelModules = [ "nouveau" ];
@@ -61,8 +64,5 @@
       clinfo
       pocl
     ];
-
-    system.nixos.tags =
-      if (config.specialisation != { }) then [ "hybrid-graphics" ] else [ "integrated-graphics" ];
   };
 }
