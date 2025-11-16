@@ -9,12 +9,25 @@
       "steam-unwrapped"
     ];
 
-    programs.steam.enable = true;
-
     environment.systemPackages = with pkgs; [
-      mangohud
       lutris
+      mangohud
       prismlauncher
+      vkquake
     ];
+
+    programs = {
+      steam.enable = true;
+      java.enable = true;
+      gamemode = {
+        enable = true;
+        settings = {
+          custom = {
+            start = "${pkgs.libnotify}/bin/notify-send -a gamemoded start";
+            end = "${pkgs.libnotify}/bin/notify-send -a gamemoded end";
+          };
+        };
+      };
+    };
   };
 }

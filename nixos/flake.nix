@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     mountui = {
       url = "github:AlanRandon/mountui";
@@ -14,6 +15,7 @@
       self,
       nixpkgs,
       nixpkgs-unstable,
+      nixos-hardware,
       mountui,
       ...
     }:

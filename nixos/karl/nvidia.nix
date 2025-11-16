@@ -6,12 +6,24 @@
 
   hardware.nvidia = {
     modesetting.enable = true;
-    powerManagement.enable = true;
-    # powerManagement.offload = true;
-    # powerManagement.finegrained = true;
+    powerManagement = {
+      enable = true;
+      finegrained = true;
+    };
     open = true;
     nvidiaSettings = false;
+    prime = {
+      intelBusId = "PCI:0:2:0";
+      nvidiaBusId = "PCI:1:0:0";
+      offload = {
+        enable = true;
+        enableOffloadCmd = true;
+      };
+    };
   };
+
+  # enable cuda support for programs that provide it - currently broken as of 18:54 10/11/2025
+  # nixpkgs.config.cudaSupport = true;
 
   # so much cuda
   allowed-unfree-packages = [
@@ -38,5 +50,6 @@
     "libnpp"
     "libnvjitlink"
     "nvidia-x11"
+    "cudnn"
   ];
 }

@@ -1,6 +1,5 @@
 {
   pkgs,
-  config,
   ...
 }:
 {
@@ -53,6 +52,7 @@
         in
         {
           "browser.startup.homepage" = value "file:///home/redstonetrail/.dotfiles/firefox/newtab.html";
+          "browser.newtab.url" = value "file:///home/redstonetrail/.dotfiles/firefox/newtab.html";
           "browser.newtabpage.enabled" = value false;
           "toolkit.legacyUserProfileCustomizations.stylesheets" = value true;
           "browser.toolbars.bookmarks.visibility" = value "never";

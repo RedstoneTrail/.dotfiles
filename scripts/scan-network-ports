@@ -1,0 +1,34 @@
+#!/usr/bin/env sh
+
+WORK_DIR=/tmp/scan-results
+rm -rf $WORK_DIR
+mkdir -p $WORK_DIR
+echo putting results in $WORK_DIR
+
+echo need sudo for arp-scan
+sudo echo got it, scanning with arp-scan now...
+ADDRS=$(sudo arp-scan --interface=wlan0 --localnet | grep '.*\..*\..*\..*:.*:.*:.*:.*:.*' | sed 's/\t.*//' | tr '\n' ' ')
+
+JOBS=$(echo $ADDRS | tr ' ' '\n' | wc -l)
+
+echo arp-scan finished, starting nmap for each ip address
+echo there are $JOBS ip addressess to scan
+
+for i in $ADDRS
+do
+	nmap -Pn $i > $WORK_DIR/$i &
+done
+
+CURRENT_JOBS=$JOBS
+while [ ! $CURRENT_JOBS -eq 0 ]
+do
+	CURRENT_JOBS=$(jobs | wc -l)
+	if [ "$CURRENT_JOBS" != "$JOBS" ]
+	then
+		echo scans in progress: $CURRENT_JOBS
+		JOBS=$CURRENT_JOBS
+	fi
+	sleep 0.5
+done
+
+echo all scans done

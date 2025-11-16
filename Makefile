@@ -84,14 +84,16 @@ nixos:
 	@echo building for $(SPECIALISATION) with \"$(SPECIALISATION_FLAGS)\"
 	sudo nixos-rebuild switch --flake ./nixos $(SPECIALISATION_FLAGS)
 
-# if [ "$(shell cat /etc/redstonetrail/specialisation)" == "integrated-graphics" ]; then sudo nixos-rebuild switch --flake ./nixos; fi
-# if [ "$(shell cat /etc/redstonetrail/specialisation)" == "hybrid-graphics" ]; then sudo nixos-rebuild switch --flake ./nixos -c "hybrid-graphics"; fi
-
-clean:
+clean-store:
 	df -h / &> /tmp/usage-before
-	sudo nix-env -p /nix/var/nix/profiles/system --delete-generations +3
 	sudo nix store gc
 	sudo nix store optimise
+	df -h / &> /tmp/usage-after
+	cat /tmp/usage-before /tmp/usage-after
+
+clean-generations:
+	df -h / &> /tmp/usage-before
+	sudo nix-env -p /nix/var/nix/profiles/system --delete-generations +3
 	make nixos
 	df -h / &> /tmp/usage-after
 	cat /tmp/usage-before /tmp/usage-after

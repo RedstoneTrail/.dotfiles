@@ -45,23 +45,24 @@ alias notify="notify-send -a zsh done"
 
 alias bc="bc -lq"
 
+alias proxychains4="proxychains4 -q"
+alias pc="IS_TOR_SHELL=1 proxychains4"
+
 alias   nix="IS_NIX_SHELL=1 nix"
 alias    nd="nix develop -c zsh"
-alias  tsnd="env torsocks nix develop -c zsh"
+alias  pcnd="env proxychains4 nix develop -c zsh"
 alias    ns="NIXPKGS_ALLOW_UNFREE=1 nix shell --impure"
-alias  tsns="NIXPKGS_ALLOW_UNFREE=1 env torsocks nix shell"
+alias  pcns="NIXPKGS_ALLOW_UNFREE=1 env proxychains4 nix shell"
 alias    nr="NIXPKGS_ALLOW_UNFREE=1 nix run --impure"
-alias  tsnr="NIXPKGS_ALLOW_UNFREE=1 env torsocks nix run"
+alias  pcnr="NIXPKGS_ALLOW_UNFREE=1 env proxychains4 nix run"
 alias   nfu="nix flake update"
-alias tsnfu="env torsocks nix flake update"
+alias pcnfu="env proxychains4 nix flake update"
+
+alias httplz="python -m http.server"
 
 alias  m="make"
 alias mt="make test"
 alias mb="make build"
-
-alias torsocks="IS_TOR_SHELL=1 torsocks"
-alias      tss="torsocks --shell"
-alias       ts="torsocks"
 
 alias zbr="zig build run"
 alias  zb="zig build"
@@ -112,6 +113,24 @@ zinit light zdharma-continuum/fast-syntax-highlighting
 zinit ice depth=1
 zinit light jeffreytse/zsh-vi-mode
 bindkey -v
+
+# zinit wait lucid for \
+# 	pick"zsh/fzf-zsh-completion.sh" \
+# 		lincheney/fzf-tab-completion \
+# 		OMZP::git \
+
+# ZSH_AUTOSUGGEST_IGNORE_WIDGETS=(fzf_completion)
+
+# zvm_after_init() {
+# 	# zvm_define_widget autosuggest-accept
+# 	# zvm_bindkey viins '^I' autosuggest-accept
+# 	# zvm_define_widget fzf_completion 
+# 	# zvm_bindkey viins '^ ' fzf_completion
+# }
+
+zinit light joshskidmore/zsh-fzf-history-search
+command -v fzf &> /dev/null && source <(fzf --zsh)
+
 
 # Fix home and end
 bindkey '^[[1~' beginning-of-line

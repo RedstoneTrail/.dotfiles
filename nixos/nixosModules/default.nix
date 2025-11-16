@@ -21,6 +21,7 @@
     ./nixosSupport.nix
     ./school.nix
     ./tor.nix
+    ./torrent.nix
     ./virtualisation.nix
     ./vt.nix
     ./wm.nix
