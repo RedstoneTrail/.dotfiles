@@ -10,6 +10,7 @@
         # temporarily comment the line below when setting up secure boot
         secureBoot.enable = true;
         package = pkgs.unstable.limine;
+        maxGenerations = 10;
         style = {
           wallpapers = [
             "/home/redstonetrail/.dotfiles/wallpapers/wallpaper.png"

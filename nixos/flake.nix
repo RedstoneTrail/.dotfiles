@@ -51,6 +51,7 @@
           ./karl/hardware-configuration.nix
           ./karl/intel.nix
           ./karl/specialisations.nix
+          ./karl/boot.nix
         ];
       };
     };

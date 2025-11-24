@@ -12,8 +12,8 @@
     pkg: builtins.elem (lib.getName pkg) config.allowed-unfree-packages;
 
   imports = [
+    ./android.nix
     ./bluetooth.nix
-    ./boot.nix
     ./cli.nix
     ./firefox.nix
     ./gaming.nix

@@ -18,4 +18,5 @@ unbind <C-f>
 
 colourscheme custom
 
-set newtab file:///home/redstonetrail/.dotfiles/firefox/newtab.html
+" set newtab file:///home/redstonetrail/.dotfiles/firefox/newtab.html
+set editorcmd alacritty -e "vim %f '+normal!%lGzv%c|'"

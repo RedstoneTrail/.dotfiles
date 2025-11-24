@@ -45,18 +45,18 @@ alias notify="notify-send -a zsh done"
 
 alias bc="bc -lq"
 
-alias proxychains4="proxychains4 -q"
-alias pc="IS_TOR_SHELL=1 proxychains4"
+alias proxychains4="env proxychains4 -q"
+alias pc="IS_TOR_SHELL=1 env proxychains4 -q"
 
 alias   nix="IS_NIX_SHELL=1 nix"
 alias    nd="nix develop -c zsh"
-alias  pcnd="env proxychains4 nix develop -c zsh"
+alias  pcnd="env proxychains4 -q nix develop -c zsh"
 alias    ns="NIXPKGS_ALLOW_UNFREE=1 nix shell --impure"
-alias  pcns="NIXPKGS_ALLOW_UNFREE=1 env proxychains4 nix shell"
+alias  pcns="NIXPKGS_ALLOW_UNFREE=1 env proxychains4 -q nix shell --impure"
 alias    nr="NIXPKGS_ALLOW_UNFREE=1 nix run --impure"
-alias  pcnr="NIXPKGS_ALLOW_UNFREE=1 env proxychains4 nix run"
+alias  pcnr="NIXPKGS_ALLOW_UNFREE=1 env proxychains4 -q nix run --impure"
 alias   nfu="nix flake update"
-alias pcnfu="env proxychains4 nix flake update"
+alias pcnfu="env proxychains4 -q nix flake update"
 
 alias httplz="python -m http.server"
 

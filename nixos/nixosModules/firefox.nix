@@ -6,8 +6,8 @@
   programs.firefox = {
     enable = true;
     languagePacks = [
-      "en-GB"
       "en-US"
+      "en-GB"
     ];
     nativeMessagingHosts.packages = with pkgs; [ tridactyl-native ];
     policies = {
@@ -21,12 +21,16 @@
         schemes = {
           mailto = {
             action = "useHelperApp";
-            ask = true;
+            ask = false;
             handlers = [
               {
-                name = "Gmail";
-                uriTemplate = "https://mail.google.com/mail/?extsrc=mailto&url=%s";
+                name = "aerc";
+                path = "~/.dotfiles/scripts/send-mail";
               }
+              # {
+              #   name = "Gmail";
+              #   uriTemplate = "https://mail.google.com/mail/?extsrc=mailto&url=%s";
+              # }
             ];
           };
         };

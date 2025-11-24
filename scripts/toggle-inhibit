@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+
+INHIBITOR_FILE=/tmp/inhibitor
+
+if [ -e $INHIBITOR_FILE ]
+then
+	kill $(cat $INHIBITOR_FILE)
+	rm $INHIBITOR_FILE
+else
+	systemd-inhibit --what=shutdown:sleep:idle:handle-power-key:handle-suspend-key:handle-hibernate-key:handle-lid-switch --why="fn+k was pressed" --who="$(whoami)" sleep 1000000000 & echo $! > $INHIBITOR_FILE; disown
+fi

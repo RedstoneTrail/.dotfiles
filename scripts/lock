@@ -1,7 +1,9 @@
+#!/usr/bin/env sh
+
 if pactl get-sink-mute @DEFAULT_SINK@ | grep no; then
 	playerctl pause
 	pactl set-sink-mute @DEFAULT_SINK@ true
-	if [ "$1" == "lid" && grep -v 'nvidia_drm.fbdev=1' /proc/cmdline ];
+	if [ "$1" == "lid" ];
 	then
 		systemctl sleep
 		hyprlock

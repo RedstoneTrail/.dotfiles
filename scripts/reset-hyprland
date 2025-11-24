@@ -1,6 +1,7 @@
 #! /usr/bin/env sh
 
 hyprctl reload
+echo 165 > /tmp/refresh-rate
 pkill waybar
 pkill dunst
 waybar & disown

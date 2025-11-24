@@ -167,4 +167,9 @@ return {
 		opts = {},
 	},
 	"tridactyl/vim-tridactyl",
+	{
+		"mrcjkb/rustaceanvim",
+		version = "^6",
+		lazy = false,
+	},
 }

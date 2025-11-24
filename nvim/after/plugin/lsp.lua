@@ -57,6 +57,33 @@ null_ls.setup({
 	},
 })
 
+vim.g.rustaceanvim = {
+	inlay_hints = {
+		highlight = "NonText",
+	},
+	tools = {
+		inlay_hints = {
+			auto = false,
+		},
+	},
+	server = {
+		handlers = {
+			-- errors without
+			["experimental/serverStatus"] = function() end,
+		},
+		capabilities = capabilities,
+		settings = {
+			["rust-analyzer"] = {
+				semanticHighlighting = {
+					strings = {
+						enable = false,
+					},
+				},
+			},
+		},
+	},
+}
+
 ---@type (string | {[1]: string, opts: vim.lsp.Config})[]
 local lsps = {
 	"zls",

@@ -4,9 +4,13 @@
 	"spacing": 4,
 	"modules-left": [
 		"cpu",
-		"temperature",
+		"custom/temperature",
 		"memory",
+		"custom/separator",
 		"hyprland/workspaces",
+		"custom/separator",
+		"custom/refresh-rate",
+		"custom/inhibitor",
 	],
 	"modules-center": [
 		"custom/mpris",
@@ -15,9 +19,13 @@
 		"tray",
 		"pulseaudio#source",
 		"pulseaudio#sink",
+		"custom/separator",
 		"network",
+		"custom/separator",
 		"backlight",
+		"custom/separator",
 		"battery",
+		"custom/separator",
 		"clock"
 	],
 	"cpu": {
@@ -38,12 +46,11 @@
 		"format": "{:%d/%m/%Y %H:%M}"
 	},
 	"battery": {
-	"interval": 10,
 		"states": {
 			"warning": 30,
 			"critical": 15
 		},
-		"interval": 10,
+		"interval": 5,
 		"format": "{capacity}%{time}  {icon}  {power}W",
 		"format-charging": "{capacity}%{time} 󱐋{icon}  {power}W",
 		"format-time": " {H}:{m}",
@@ -69,7 +76,7 @@
 	"pulseaudio#source": {
 		"format": "{format_source}",
 		"format-source": "{volume}% ",
-		"format-source-muted": "{volume}%  ",
+		"format-source-muted": "{volume}% ",
 	},
 	"pulseaudio#sink": {
 		"format": "{volume}% {icon}",
@@ -90,10 +97,31 @@
 	},
 	"custom/mpris": {
 		"return-type": "json",
-	"exec-if": "playerctl metadata 2>/dev/null",
-	"exec": "nice -n 19 ~/.dotfiles/scripts/mpris-module",
-	"hide-empty-text": true,
-	"interval": 5,
-	"format": "{}",
-	}
+		"exec-if": "playerctl metadata 2>/dev/null",
+		"exec": "nice -n 19 ~/.dotfiles/scripts/mpris-module",
+		"hide-empty-text": true,
+		"interval": 5,
+		"format": "{}",
+	},
+	"custom/temperature": {
+		"return-type": "text",
+		"interval": 1,
+		"exec": "sensors -j | jq -r '.\"coretemp-isa-0000\".\"Package id 0\".\"temp1_input\"' | sed 's/\\..*//'",
+		"format": "{}°C",
+	},
+	"custom/inhibitor": {
+		"return-type": "text",
+		"interval": 1,
+		"exec": "cat /tmp/inhibitor",
+		"format": "|  ",
+	},
+	"custom/refresh-rate": {
+		"return-type": "text",
+		"interval": 1,
+		"exec": "cat /tmp/refresh-rate",
+		"format": " {}Hz ",
+	},
+	"custom/separator": {
+		"format": "|",
+	},
 }

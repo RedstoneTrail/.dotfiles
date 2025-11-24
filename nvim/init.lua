@@ -70,4 +70,24 @@ vim.o.winborder = "bold"
 
 set("n", "<leader>ui", ":Telescope unicode_picker\n")
 
+_G.coauthorfunc = function(findstart, base)
+	-- :h complete-functions
+	if findstart == 1 then
+		return 0
+	end
+
+	local co_authors = vim.fn.systemlist('git -c log.showSignature=false log --format="%aN <%aE>" | sort -u')
+
+	local items = {}
+	for _, co_author in pairs(co_authors) do
+		if co_author:lower():find(base) then
+			table.insert(items, ("Co-authored-by: %s"):format(co_author))
+		end
+	end
+
+	return items
+end
+
+vim.keymap.set("i", "<C-x><C-a>", "<cmd>set completefunc=v:lua.coauthorfunc<CR><C-x><C-u>")
+
 require("lazy").setup("config.plugins")

@@ -72,6 +72,7 @@
     waybar
     wireplumber
     wl-clipboard
+    xrandr
     xwayland
   ];
 }
