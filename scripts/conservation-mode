@@ -1,0 +1,27 @@
+#!/usr/bin/env sh
+
+FILE=$(fd conservation_mode /sys)
+
+if [ -z "$FILE" ]
+then
+	print 'conservation_mode not supported by system'
+	exit
+fi
+
+if [ "$1" = "toggle" ]
+then
+	export FILE=$FILE
+	sudo -E sh -c 'echo $[ ! $(cat $FILE) ] > $FILE'
+	printf "conservation_mode toggled to $(cat $FILE)\n"
+elif [ "$1" = "0" ] || [ "$1" = "1" ]
+then
+	export FILE=$FILE
+	export STATE=$1
+	sudo -E sh -c 'echo $STATE > $FILE'
+	printf "conservation_mode set to $1\n"
+elif [ "$1" = "show" ]
+then
+	printf "conservation_mode is set to $(cat $FILE)\n"
+else
+	printf 'usage:\n\ttoggle\ttoggle state\n\t0 or 1\tset state to off or on accordingly\n\tshow\tshow current state of conservation_mode\n'
+fi

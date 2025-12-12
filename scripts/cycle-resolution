@@ -1,16 +1,16 @@
 #!/usr/bin/env sh
 
-if xrandr | grep 164
+if grep 165 /tmp/refresh-rate
 then
 	hyprctl keyword monitor \
 		$(hyprctl monitors -j | jq -r '.[0]."name"'),\
-		$(hyprctl monitors -j | jq -r '.[0]."availableModes".[1]'),\
+		$(hyprctl monitors -j | jq -r '.[0]."width"')x$(hyprctl monitors -j | jq -r '.[0]."height"')@60,\
 		auto,1
 	echo 60 > /tmp/refresh-rate
 else
 	hyprctl keyword monitor \
 		$(hyprctl monitors -j | jq -r '.[0]."name"'),\
-		$(hyprctl monitors -j | jq -r '.[0]."availableModes".[0]'),\
+		$(hyprctl monitors -j | jq -r '.[0]."width"')x$(hyprctl monitors -j | jq -r '.[0]."height"')@165,\
 		auto,1
 	echo 165 > /tmp/refresh-rate
 fi

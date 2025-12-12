@@ -57,8 +57,6 @@
     # enable powertop
     powerManagement.powertop = {
       enable = true;
-      # disable all usb power management
-      postStart = ''for i in /sys/bus/usb/devices/*/power/control; do /bin/sh -c "echo on > $i"; done'';
     };
 
     # gpu info packages

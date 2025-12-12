@@ -15,6 +15,15 @@ bool between(float val, float minimum, float maximum) {
     return false;
 }
 
+vec4 vecpow(vec4 x, float y) {
+	return vec4(
+		pow(x.x, y),
+		pow(x.y, y),
+		pow(x.z, y),
+		pow(x.w, y)
+	);
+}
+
 // bool cross_check(vec2 pos, float border_width, float prong_length, vec2 centre) {
 //     vec2 rast_pos = pos.xy * screen_size.xy;
 //     vec2 rast_centre = centre.xy * screen_size.xy;
@@ -72,6 +81,8 @@ void main() {
     // }
 
     // pixColor.xyzw = avg.xyzw / 25.0;
+
+    // pixColor = vecpow(pixColor, 0.7);
 
     fragColor = pixColor;
 }

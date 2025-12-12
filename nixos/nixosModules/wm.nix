@@ -60,12 +60,14 @@
     catppuccin-cursors.frappeGreen
     dunst
     fuzzel
+    gimp3
     grim
     hyprlock
     hyprpolkitagent
     libnotify
     materia-theme
     pipewire
+    poweralertd
     pulseaudio
     pulsemixer
     slurp

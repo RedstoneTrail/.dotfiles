@@ -10,6 +10,7 @@
   i18n.defaultLocale = "en_US.UTF-8";
 
   networking.hostName = "karl";
+
   users.users.redstonetrail = {
     isNormalUser = true;
     extraGroups = [
@@ -17,6 +18,7 @@
       "network"
       "networkmanager"
     ];
+    initialHashedPassword = "$y$j9T$G2B0eQRQsBc7mN.ihxfKU.$N9zi8NT1GsjcHIeABfeukXZXUu.04.SmiwF14NuQX68";
     shell = pkgs.zsh;
   };
 

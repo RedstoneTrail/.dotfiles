@@ -90,6 +90,7 @@ local lsps = {
 	"lua_ls",
 	"texlab",
 	"buf_ls",
+	"glsl_analyzer",
 	{
 		"tinymist",
 		opts = {

@@ -14,6 +14,7 @@
         style = {
           wallpapers = [
             "/home/redstonetrail/.dotfiles/wallpapers/wallpaper.png"
+            "/home/redstonetrail/.dotfiles/wallpapers/wallpaper2.png"
           ];
           interface = {
             branding = "joe's based nixos config";

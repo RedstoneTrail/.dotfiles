@@ -14,9 +14,13 @@ set searchurls.no https://search.nixos.org/options?query=%s
 set searchurls.zd https://ziglang.org/documentation/master/
 set searchurls.zs https://ziglang.org/documentation/master/std/#%s
 
+set searchurls.cl https://classroom.google.com/u/1/
+
+set searchurls.rd https://docs.rs/%s
+
 unbind <C-f>
 
 colourscheme custom
 
 " set newtab file:///home/redstonetrail/.dotfiles/firefox/newtab.html
-set editorcmd alacritty -e "vim %f '+normal!%lGzv%c|'"
+set editorcmd alacritty -e nvim %f '+normal!%lGzv%c|'

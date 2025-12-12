@@ -39,6 +39,7 @@
     custom.mountui
     fd
     ffmpeg-full
+    file
     fzf
     jq
     (mpv.override {
@@ -67,10 +68,18 @@
     gh
     git
 
-    # translators
+    # development
     gnumake
-    python3
+    (python3.withPackages (pyton-pkgs: [
+      python3Packages.pygobject3
+      python3Packages.requests
+    ]))
     typst
+
+    # gtk
+    gtk4
+    gtk3
+    gtk2
 
     # monitoring
     htop-vim

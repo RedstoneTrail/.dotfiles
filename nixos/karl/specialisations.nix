@@ -31,6 +31,13 @@
           '';
     };
 
+    # disable all usb power management if in hybrid-graphics specialisation
+    powerManagement.powertop.postStart =
+      if (config.specialisation != { }) then
+        ''''
+      else
+        ''for i in /sys/bus/usb/devices/*/power/control; do /bin/sh -c "echo on > $i"; done'';
+
     environment.systemPackages =
       if (config.specialisation != { }) then
         [

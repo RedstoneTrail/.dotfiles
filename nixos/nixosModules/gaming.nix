@@ -10,6 +10,7 @@
     ];
 
     environment.systemPackages = with pkgs; [
+      gamescope
       lutris
       mangohud
       prismlauncher

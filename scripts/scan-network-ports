@@ -7,7 +7,7 @@ echo putting results in $WORK_DIR
 
 echo need sudo for arp-scan
 sudo echo got it, scanning with arp-scan now...
-ADDRS=$(sudo arp-scan --interface=wlan0 --localnet | grep '.*\..*\..*\..*:.*:.*:.*:.*:.*' | sed 's/\t.*//' | tr '\n' ' ')
+ADDRS=$(sudo arp-scan --interface=wlan0 --localnet -M 100 | grep '.*\..*\..*\..*:.*:.*:.*:.*:.*' | sed 's/\t.*//' | tr '\n' ' ')
 
 JOBS=$(echo $ADDRS | tr ' ' '\n' | wc -l)
 

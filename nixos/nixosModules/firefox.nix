@@ -12,6 +12,16 @@
     nativeMessagingHosts.packages = with pkgs; [ tridactyl-native ];
     policies = {
       DisablePocket = true;
+      DisableTelemetry = true;
+      SearchEngines = {
+        Default = "Mojeek";
+        Add = [
+          {
+            Name = "Mojeek";
+            URLTemplate = "https://www.mojeek.com/search?q={searchTerms}";
+          }
+        ];
+      };
       Handlers = {
         extensions = {
           pdf = {
@@ -27,10 +37,6 @@
                 name = "aerc";
                 path = "~/.dotfiles/scripts/send-mail";
               }
-              # {
-              #   name = "Gmail";
-              #   uriTemplate = "https://mail.google.com/mail/?extsrc=mailto&url=%s";
-              # }
             ];
           };
         };
@@ -44,6 +50,10 @@
         # Tridactyl
         "tridactyl.vim@cmcaine.co.uk" = {
           install_url = "https://addons.mozilla.org/firefox/downloads/latest/tridactyl_vim/latest.xpi";
+          installation_mode = "force_installed";
+        };
+        "greenstorm@vimfordocs.org" = {
+          install_url = "https://addons.mozilla.org/firefox/downloads/file/4619794/vim_for_docs-2.2.xpi";
           installation_mode = "force_installed";
         };
       };
