@@ -1,0 +1,31 @@
+#!/usr/bin/env sh
+
+ARGS=$(echo $@ | sed "s/$1//")
+
+export IS_NIX_SHELL=1
+export NIXPKGS_ALLOW_UNFREE=1
+
+case $1 in
+	shell )
+		if echo $ARGS | grep "\-c" &>/dev/null
+		then
+			nix shell --impure $ARGS
+		else
+			nix shell --impure $ARGS -c zsh
+		fi;;
+	proxychains-shell )
+		if echo $ARGS | grep "\-c" &>/dev/null
+		then
+			proxychains4 -q nix shell --impure $ARGS;;
+		else
+			proxychains4 -q nix shell --impure $ARGS -c zsh;;
+		fi;;
+	run )
+		nix run --impure $ARGS;;
+	proxychains-run )
+		proxychains4 -q nix run --impure $ARGS;;
+	develop )
+		nix develop --impure;;
+	proxychains-develop )
+		proxychains4 -q nix develop --impure;;
+esac

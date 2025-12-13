@@ -48,15 +48,24 @@ alias bc="bc -lq"
 alias proxychains4="env proxychains4 -q"
 alias pc="IS_TOR_SHELL=1 env proxychains4 -q"
 
-alias   nix="IS_NIX_SHELL=1 nix"
-alias    nd="nix develop -c zsh"
-alias  pcnd="env proxychains4 -q nix develop -c zsh"
-alias    ns="NIXPKGS_ALLOW_UNFREE=1 nix shell --impure -c zsh"
-alias  pcns="NIXPKGS_ALLOW_UNFREE=1 env proxychains4 -q nix shell --impure -c zsh"
-alias    nr="NIXPKGS_ALLOW_UNFREE=1 nix run --impure"
-alias  pcnr="NIXPKGS_ALLOW_UNFREE=1 env proxychains4 -q nix run --impure"
+# alias   nix="IS_NIX_SHELL=1 nix"
+# alias    nd="nix develop -c zsh"
+# alias  pcnd="env proxychains4 -q nix develop -c zsh"
+# alias    ns="nix shell -c zsh"
+# alias  pcns="env proxychains4 -q nix shell -c zsh"
+# alias    nr="nix run --impure"
+# alias  pcnr="env proxychains4 -q nix run"
+# alias   nfu="nix flake update"
+# alias pcnfu="env proxychains4 -q nix flake update"
+
+alias    ns="nix-wrapper shell"
+alias  pcns="nix-wrapper proxychains-shell"
+alias    nr="nix-wrapper run"
+alias  pcnr="nix-wrapper proxychains-run"
+alias    nd="nix-wrapper develop"
+alias  pcnd="nix-wrapper proxychains-develop"
 alias   nfu="nix flake update"
-alias pcnfu="env proxychains4 -q nix flake update"
+alias pcnfu="proxychains4 -q nix flake update"
 
 alias httplz="python -m http.server"
 
@@ -64,8 +73,11 @@ alias  m="make"
 alias mt="make test"
 alias mb="make build"
 
-alias zbr="zig build run"
-alias  zb="zig build"
+if command -v zig &>/dev/null
+then
+	alias zbr="zig build run"
+	alias  zb="zig build"
+fi
 
 alias vim=nvim
 
@@ -96,13 +108,6 @@ if [ -z $IS_NIX_SHELL ]
 then
 else
 	PS1="%F{4}nix-shell%f|$PS1"
-
-	# give status for git if in repo
-	if [ -e .git ]
-	then
-		printf "\ncurrent git repo status:\n\n"
-		git status
-	fi
 fi
 
 if [ -z $IS_TOR_SHELL ]
