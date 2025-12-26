@@ -20,6 +20,10 @@
             Name = "Mojeek";
             URLTemplate = "https://www.mojeek.com/search?q={searchTerms}";
           }
+          {
+            Name = "Brave";
+            URLTemplate = "https://search.brave.com/search?q={searchTerms}";
+          }
         ];
       };
       Handlers = {

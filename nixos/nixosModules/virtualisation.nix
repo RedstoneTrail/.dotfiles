@@ -32,5 +32,5 @@
     };
   };
 
-  environment.systemPackages = [ pkgs.wine ];
+  environment.systemPackages = [ pkgs.wineWowPackages.waylandFull ];
 }

@@ -1,4 +1,5 @@
-#!/usr/bin/env python3
+#! /usr/bin/env nix
+#! nix shell nixpkgs#python313Packages.pygobject3 nixpkgs#gobject-introspection --command python3
 
 import os
 import sys

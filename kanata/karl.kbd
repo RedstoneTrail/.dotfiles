@@ -1,0 +1,16 @@
+(defcfg
+  process-unmapped-keys yes
+  concurrent-tap-hold yes
+  allow-hardware-repeat no
+  linux-dev /dev/input/by-path/pci-0000\:00\:14.0-usb-0\:12\:1.0-event-kbd
+)
+
+(defsrc)
+
+(deflayermap base
+  caps lctl
+)
+
+(defchordsv2
+  (lmet lsft f23) rctl 10 all-released ()
+)

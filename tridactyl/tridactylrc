@@ -8,6 +8,11 @@ sanitize tridactyllocal tridactylsync
 " For syntax highlighting see https://github.com/tridactyl/vim-tridactyl
 " vim: set filetype=tridactyl
 
+set searchurls.g https://www.google.com/search?q=%s
+set searchurls.d https://duckduckgo.com/?q=%s
+set searchurls.mj https://www.mojeek.com/search?q=%s
+set searchurls.br https://search.brave.com/search?q=%s
+
 set searchurls.np https://search.nixos.org/packages?query=%s
 set searchurls.no https://search.nixos.org/options?query=%s
 

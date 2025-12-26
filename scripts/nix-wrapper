@@ -16,16 +16,26 @@ case $1 in
 	proxychains-shell )
 		if echo $ARGS | grep "\-c" &>/dev/null
 		then
-			proxychains4 -q nix shell --impure $ARGS;;
+			proxychains4 -q nix shell --impure $ARGS
 		else
-			proxychains4 -q nix shell --impure $ARGS -c zsh;;
+			proxychains4 -q nix shell --impure $ARGS -c zsh
 		fi;;
 	run )
 		nix run --impure $ARGS;;
 	proxychains-run )
 		proxychains4 -q nix run --impure $ARGS;;
 	develop )
-		nix develop --impure;;
+		if echo $ARGS | grep "\-c" &>/dev/null
+		then
+			nix develop --impure $ARGS
+		else
+			nix develop --impure $ARGS -c zsh
+		fi;;
 	proxychains-develop )
-		proxychains4 -q nix develop --impure;;
+		if echo $ARGS | grep "\-c" &>/dev/null || echo $ARGS | grep "\#" &>/dev/null
+		then
+			proxychains4 -q nix develop --impure $ARGS
+		else
+			proxychains4 -q nix develop --impure $ARGS -c zsh
+		fi;;
 esac

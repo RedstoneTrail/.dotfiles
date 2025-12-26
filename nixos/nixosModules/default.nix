@@ -17,8 +17,10 @@
     ./cli.nix
     ./firefox.nix
     ./gaming.nix
+    ./input.nix
     ./networking.nix
     ./nixosSupport.nix
+    ./printing.nix
     ./school.nix
     ./tor.nix
     ./torrent.nix

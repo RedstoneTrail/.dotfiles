@@ -1,7 +1,8 @@
 tabstop 8
 indent_incr 4
-pixel_per_char 12
-pixel_per_line 25
+maxcols 0
+pixel_per_char 9
+pixel_per_line 18
 frame 0
 target_self 0
 open_tab_blank 0
@@ -10,31 +11,35 @@ display_link 0
 display_link_number 0
 decode_url 0
 display_lineinfo 0
+display_column_number 0
 ext_dirlist 1
 dirlist_cmd file:///$LIB/dirlist.cgi
 use_dictcommand 1
 dictcommand file:///$LIB/w3mdict.cgi
+dictprompt (dictionary)!
 multicol 0
 alt_entity 0
 graphic_char 0
 display_borders 0
 disable_center 0
 fold_textarea 0
+fold_pre 0
 display_ins_del 1
 ignore_null_img_alt 1
 view_unseenobject 0
-display_image 1
+display_image 0
 pseudo_inlines 1
 auto_image 1
 max_load_image 4
 ext_image_viewer 0
 image_scale 100
 inline_img_protocol 3
-imgdisplay w3mimgdisplay
+imgdisplay catimg %s
 image_map_list 1
 fold_line 0
 show_lnum 0
 show_srch_str 1
+message_delay 2
 label_topline 0
 nextpage_topline 0
 color 1
@@ -54,6 +59,7 @@ use_history 1
 history 100
 save_hist 1
 confirm_qq 0
+exit_on_last 0
 close_tab_back 0
 mark 0
 emacs_like_lineedit 0
@@ -77,6 +83,7 @@ personal_document_root
 cgi_bin 
 index_file 
 tmp_dir 
+dl_dir 
 mime_types ~/.mime.types, /usr/etc/mime.types
 mailcap ~/.w3m/mailcap, /usr/etc/w3m/mailcap
 urimethodmap ~/.w3m/urimethodmap, /usr/etc/w3m/urimethodmap
@@ -163,3 +170,4 @@ use_jisx0213 0
 strict_iso2022 1
 gb18030_as_ucs 0
 simple_preserve_space 0
+zero_based_link_no 0

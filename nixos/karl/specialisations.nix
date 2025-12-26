@@ -31,10 +31,10 @@
           '';
     };
 
-    # disable all usb power management if in hybrid-graphics specialisation
+    # disable all usb power management if in hybrid-graphics specialisation, only that for keyboard on default
     powerManagement.powertop.postStart =
       if (config.specialisation != { }) then
-        ''''
+        ''/bin/sh -c "echo on > /sys/bus/usb/devices/1-14/power/control"''
       else
         ''for i in /sys/bus/usb/devices/*/power/control; do /bin/sh -c "echo on > $i"; done'';
 
@@ -42,10 +42,12 @@
       if (config.specialisation != { }) then
         [
           pkgs.nvtopPackages.intel
+          pkgs.btop
         ]
       else
         [
           pkgs.nvtopPackages.full
+          pkgs.btop-cuda
         ];
   };
 }
