@@ -2,20 +2,19 @@
   description = "Nixos config flake";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
     mountui = {
       url = "github:AlanRandon/mountui";
     };
   };
+
   outputs =
     inputs@{
       self,
       nixpkgs,
       nixpkgs-unstable,
-      nixos-hardware,
       mountui,
       ...
     }:
@@ -45,13 +44,10 @@
     {
       nixosConfigurations.karl = mkNixosSystem {
         system = "x86_64-linux";
+
         modules = [
-          ./configuration.nix
-          ./nixosModules/default.nix
-          ./karl/hardware-configuration.nix
-          ./karl/intel.nix
-          ./karl/specialisations.nix
-          ./karl/boot.nix
+          ./karl
+          ./nixosModules
         ];
       };
     };

@@ -1,11 +1,17 @@
 {
   pkgs,
+  lib,
+  config,
   ...
 }:
+let
+  cfg = config.dotfiles.android-tooling;
+in
 {
-  programs.adb.enable = true;
-
-  environment.systemPackages = [
-    pkgs.scrcpy
-  ];
+  config = lib.mkIf cfg.enable {
+    environment.systemPackages = with pkgs; [
+      scrcpy
+      android-tools
+    ];
+  };
 }

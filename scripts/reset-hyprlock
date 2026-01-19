@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+
+LOCK_TOOL=hyprlock
+
+# allow lock restore
+hyprctl --instance 0 keyword misc:allow_session_lock_restore 1
+
+# kill all lock instances
+for pid in $(pgrep $LOCK_TOOL)
+do
+	kill $pid &
+done
+
+# re-launch lock
+hyprctl --instance 0 keyword exec $LOCK_TOOL

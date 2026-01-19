@@ -1,8 +1,8 @@
 tabstop 8
 indent_incr 4
 maxcols 0
-pixel_per_char 9
-pixel_per_line 18
+pixel_per_char 10
+pixel_per_line 20
 frame 0
 target_self 0
 open_tab_blank 0
@@ -31,10 +31,10 @@ display_image 0
 pseudo_inlines 1
 auto_image 1
 max_load_image 4
-ext_image_viewer 0
+ext_image_viewer 1
 image_scale 100
-inline_img_protocol 3
-imgdisplay catimg %s
+inline_img_protocol 0
+imgdisplay ueberzug
 image_map_list 1
 fold_line 0
 show_lnum 0

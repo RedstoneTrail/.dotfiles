@@ -1,36 +1,45 @@
 {
   pkgs,
+  config,
+  lib,
   ...
 }:
+let
+  cfg = config.dotfiles.virtualisation;
+in
 {
-  virtualisation = {
-    waydroid = {
-      enable = true;
-      package = pkgs.unstable.waydroid-nftables;
+  config = lib.mkIf cfg.enable {
+    virtualisation = {
+      waydroid = {
+        enable = true;
+        package = pkgs.unstable.waydroid-nftables;
+      };
+      libvirtd.enable = true;
+      spiceUSBRedirection.enable = true;
     };
-    libvirtd.enable = true;
-    spiceUSBRedirection.enable = true;
-  };
 
-  users.groups.libvirtd.members = [ "redstonetrail" ];
+    environment.systemPackages = [
+      pkgs.wineWowPackages.waylandFull
+    ];
 
-  programs = {
-    virt-manager.enable = true;
-    dconf = {
-      enable = true;
-      profiles.user.databases = [
-        {
-          settings = {
-            "org/virt-manager/virt-manager/connections" = {
-              autoconnect = [ "qemu:///system" ];
-              uris = [ "qemu:///system" ];
+    users.groups.libvirtd.members = [ "redstonetrail" ];
+
+    programs = {
+      virt-manager.enable = true;
+      dconf = {
+        enable = true;
+        profiles.user.databases = [
+          {
+            settings = {
+              "org/virt-manager/virt-manager/connections" = {
+                autoconnect = [ "qemu:///system" ];
+                uris = [ "qemu:///system" ];
+              };
             };
-          };
-          lockAll = true;
-        }
-      ];
+            lockAll = true;
+          }
+        ];
+      };
     };
   };
-
-  environment.systemPackages = [ pkgs.wineWowPackages.waylandFull ];
 }

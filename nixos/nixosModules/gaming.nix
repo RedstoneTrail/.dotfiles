@@ -1,10 +1,15 @@
 {
   pkgs,
+  config,
+  lib,
   ...
 }:
+let
+  cfg = config.dotfiles.gaming;
+in
 {
-  config = {
-    allowed-unfree-packages = [
+  config = lib.mkIf cfg.enable {
+    dotfiles.allowed-unfree-packages = [
       "steam"
       "steam-unwrapped"
     ];
@@ -14,6 +19,7 @@
       lutris
       mangohud
       prismlauncher
+      r2modman
       vkquake
     ];
 
@@ -22,12 +28,6 @@
       java.enable = true;
       gamemode = {
         enable = true;
-        settings = {
-          custom = {
-            start = "${pkgs.libnotify}/bin/notify-send -a gamemoded start";
-            end = "${pkgs.libnotify}/bin/notify-send -a gamemoded end";
-          };
-        };
       };
     };
   };

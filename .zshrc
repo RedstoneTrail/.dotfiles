@@ -1,9 +1,4 @@
-# fix hyprctl, only if hyprland is running
-if pgrep Hyprland >/dev/null
-then
-	# check if hyprland is running before doing the fix
-	command -v hyprctl &> /dev/null && export HYPRLAND_INSTANCE_SIGNATURE=$(hyprctl -j instances | jq -r '.[0].instance')
-fi
+which -v hyprctl &> /dev/null && pgrep Hyprland &>/dev/null && export HYPRLAND_INSTANCE_SIGNATURE=$(hyprctl -j instances | jq -r '.[0].instance')
 
 zstyle ':completion:*' completer _expand _complete _match _correct _prefix _ignored
 zstyle :compinstall filename '~/.zshrc'
@@ -14,7 +9,7 @@ compinit
 HISTFILE=~/.histfile
 HISTSIZE=10000
 SAVEHIST=10000
-setopt nobeep notify extendedglob nonomatch autolist globcomplete noautoparamslash globdots rematchpcre
+setopt nobeep notify extendedglob nonomatch autolist globcomplete noautoparamslash globdots rematchpcre interactivecomments
 
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
@@ -48,6 +43,11 @@ alias bc="bc -lq"
 alias proxychains4="env proxychains4 -q"
 alias pc="IS_TOR_SHELL=1 env proxychains4 -q"
 
+nd-gcroot() {
+	dir=$(git rev-parse --show-toplevel)
+	nix build .#devShells.x86_64-linux.default --out-link "$dir/.nix-gcroot"
+}
+
 alias   nix="IS_NIX_SHELL=1 nix"
 alias    ns="nix-wrapper shell"
 alias  pcns="nix-wrapper proxychains-shell"
@@ -66,6 +66,15 @@ alias mb="make build"
 
 if command -v zig &>/dev/null
 then
+	zig_test() {
+		if echo $@ | grep summary &>/dev/null
+		then
+			zig build test
+		else
+			zig build test --summary all
+		fi
+	}
+	alias zbt=zig_test
 	alias zbr="zig build run"
 	alias  zb="zig build"
 fi
@@ -77,7 +86,8 @@ export NNN_OPENER="$HOME/.dotfiles/scripts/nnn-nuke.sh"
 
 export GNUPGHOME="~/.gnupg"
 
-export PATH=$PATH:/sbin:/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/sbin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/usr/lib/rustup/bin:$HOME/bin:$HOME/.dotfiles/scripts:$HOME/.cargo/bin/
+# export PATH=$PATH:/sbin:/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/sbin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/usr/lib/rustup/bin:$HOME/bin:$HOME/.dotfiles/scripts:$HOME/.cargo/bin/
+export PATH=$PATH:$HOME/.dotfiles/scripts
 export PAGER=less
 export MANPAGER="nvim \+Man\!"
 export EDITOR=nvim
@@ -86,11 +96,6 @@ export TERMINAL=$TERM
 
 export LISTMAX=-1
 setopt no_hist_verify
-
-# ZVM
-export ZVM_INSTALL="$HOME/.zvm/self"
-export PATH="$PATH:$HOME/.zvm/bin"
-export PATH="$PATH:$ZVM_INSTALL/"
 
 PS1="%F{2}%n%f|%F{6}%~%f]> "
 RPROMPT="[%D{%L:%M:%S}]"
@@ -112,6 +117,7 @@ PS1="[$PS1"
 zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-completions
 zinit light zdharma-continuum/fast-syntax-highlighting
+fast-theme ~/.dotfiles/zsh-fast-theme.ini > /dev/null
 
 zinit ice depth=1
 zinit light jeffreytse/zsh-vi-mode
@@ -124,13 +130,6 @@ bindkey -v
 
 # ZSH_AUTOSUGGEST_IGNORE_WIDGETS=(fzf_completion)
 
-# zvm_after_init() {
-# 	# zvm_define_widget autosuggest-accept
-# 	# zvm_bindkey viins '^I' autosuggest-accept
-# 	# zvm_define_widget fzf_completion 
-# 	# zvm_bindkey viins '^ ' fzf_completion
-# }
-
 zinit light joshskidmore/zsh-fzf-history-search
 command -v fzf &> /dev/null && source <(fzf --zsh)
 
@@ -141,9 +140,9 @@ bindkey '^[[4~' end-of-line
 
 # Nix
 if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
-   . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+	. '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+	export PATH="$PATH:/nix/var/nix/profiles/default/bin"
 fi
-export PATH="$PATH:/nix/var/nix/profiles/default/bin"
 # End Nix
 
 # # remove the non-directory path entry ~/.nix-profile/bin

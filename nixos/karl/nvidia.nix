@@ -26,7 +26,7 @@
   # nixpkgs.config.cudaSupport = true;
 
   # so much cuda
-  allowed-unfree-packages = [
+  dotfiles.allowed-unfree-packages = [
     "cuda_cccl"
     "cuda_cudart"
     "cuda_cuobjdump"

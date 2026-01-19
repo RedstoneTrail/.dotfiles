@@ -1,7 +1,12 @@
-#!/usr/bin/env sh
+#! /usr/bin/env sh
+
+# /usr/bin/env nix
+# nix shell nixpkgs#bash nixpkgs#playerctl nixpkgs#gnused --command bash
+
 # check that there is actual data to read, overwrite data with nothing and exit otherwise
 if [ -z "$(playerctl metadata 2> /dev/null)" ]
 then
+	# echo so that something is returned, to clear the module text when nothing is playing
 	echo
 	exit
 fi

@@ -28,6 +28,7 @@
       efi.canTouchEfiVariables = true;
     };
 
+    kernel.sysctl."kernel.sysrq" = 1;
     kernelPackages = pkgs.linuxPackages_latest;
 
     tmp.cleanOnBoot = true;

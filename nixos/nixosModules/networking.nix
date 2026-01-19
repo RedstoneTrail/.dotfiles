@@ -1,24 +1,27 @@
 {
-  # lib,
-  # pkgs,
+  lib,
+  config,
   ...
 }:
+let
+  cfg = config.dotfiles.networking-control;
+in
 {
-  networking = {
-    networkmanager = {
-      enable = true;
-      wifi.backend = "iwd";
-      wifi.powersave = true;
-      # dns = "dnsmasq";
+  config = lib.mkIf cfg.enable {
+    networking = {
+      networkmanager = {
+        enable = true;
+        wifi.backend = "iwd";
+        wifi.powersave = true;
+        # dns = "dnsmasq";
+      };
+      firewall.enable = false;
     };
-    firewall.enable = false;
+
+    services.resolved.enable = true;
+
+    time.timeZone = "Europe/London";
+
+    i18n.defaultLocale = "en_US.UTF-8";
   };
-
-  # services.dnsmasq = {
-  #   enable = true;
-  #   resolveLocalQueries = true;
-  #   package = pkgs.unstable.dnsmasq;
-  # };
-
-  services.resolved.enable = true;
 }

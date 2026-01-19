@@ -11,7 +11,7 @@
     intel-media-driver
   ];
 
-  allowed-unfree-packages = [
+  dotfiles.allowed-unfree-packages = [
     "intel-ocl"
   ];
 }

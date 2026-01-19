@@ -1,6 +1,6 @@
 .PHONY: install nix home config nix-on-droid nixos
 
-install: home config
+install: | home config
 	# installing nix if present
 	if [ "$(shell hostname)" == "localhost" ] && [ "$(shell whoami)" == "nix-on-droid" ]; then make nix-on-droid; fi
 	if [ ! -z "$(shell command -v nix)" && -z "$(shell command -v nixos-rebuild)" ]; then make nix; fi
@@ -88,6 +88,7 @@ clean-store:
 	df -h / &> /tmp/usage-before
 	sudo nix store gc
 	sudo nix store optimise
+	make nixos
 	df -h / &> /tmp/usage-after
 	cat /tmp/usage-before /tmp/usage-after
 

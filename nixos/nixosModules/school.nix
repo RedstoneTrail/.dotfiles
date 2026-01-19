@@ -1,22 +1,25 @@
 {
-	pkgs,
-	lib,
-	...
+  pkgs,
+  lib,
+  config,
+  ...
 }:
+let
+  cfg = config.dotfiles.school;
+in
 {
-	config = {
-		environment.systemPackages = with pkgs; [
-			google-chrome
-			zathura
-		];
+  config = lib.mkIf cfg.enable {
+    environment.systemPackages = with pkgs; [
+      google-chrome
+    ];
 
-		allowed-unfree-packages = [
-			"google-chrome"
-		];
+    dotfiles.allowed-unfree-packages = [
+      "google-chrome"
+    ];
 
-		security.pki.certificates = [
-			(builtins.readFile ../../certificates/securly.pem)
-			(builtins.readFile ../../certificates/school.pem)
-		];
-	};
+    security.pki.certificates = [
+      (builtins.readFile ../../certificates/securly.pem)
+      (builtins.readFile ../../certificates/school.pem)
+    ];
+  };
 }

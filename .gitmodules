@@ -1,0 +1,3 @@
+[submodule "luakit/uAssets"]
+	path = luakit/uAssets
+	url = https://github.com/uBlockOrigin/uAssets.git

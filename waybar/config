@@ -99,9 +99,9 @@
 	"custom/mpris": {
 		"return-type": "json",
 		"exec-if": "playerctl metadata 2>/dev/null",
-		"exec": "nice -n 19 ~/.dotfiles/scripts/mpris-module",
+		"exec": "nice -n 19 ~/.dotfiles/scripts/mpris-module.sh",
 		"hide-empty-text": true,
-		"interval": 5,
+		"interval": 2,
 		"format": "{}",
 	},
 	"custom/temperature": {
@@ -113,7 +113,7 @@
 	"custom/inhibitor": {
 		"return-type": "text",
 		"interval": 1,
-		"exec": "cat /tmp/inhibitor",
+		"exec": "cat /tmp/inhibitor 2>/dev/null",
 		"format": "|  ",
 	},
 	"custom/refresh-rate": {

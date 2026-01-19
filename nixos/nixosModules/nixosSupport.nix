@@ -4,7 +4,6 @@
   inputs,
   ...
 }:
-
 {
   nix =
     let

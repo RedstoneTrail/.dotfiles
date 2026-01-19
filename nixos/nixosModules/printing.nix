@@ -1,13 +1,20 @@
 {
+  config,
+  lib,
   ...
 }:
+let
+  cfg = config.dotfiles.printing;
+in
 {
-  services = {
-    printing.enable = true;
-    avahi = {
-      enable = true;
-      nssmdns4 = true;
-      openFirewall = true;
+  config = lib.mkIf cfg.enable {
+    services = {
+      printing.enable = true;
+      avahi = {
+        enable = true;
+        nssmdns4 = true;
+        openFirewall = true;
+      };
     };
   };
 }

@@ -5,4 +5,4 @@ echo 165 > /tmp/refresh-rate
 pkill waybar
 pkill dunst
 waybar & disown
-dunst --startup_notification & disown
+dunst & disown
