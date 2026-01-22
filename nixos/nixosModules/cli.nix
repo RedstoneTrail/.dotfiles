@@ -18,6 +18,7 @@ in
       # communications
       abook
       aerc
+      neomutt
       pass
 
       # system-level

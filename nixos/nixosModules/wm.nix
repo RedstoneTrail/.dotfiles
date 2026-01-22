@@ -31,15 +31,15 @@ in
 
     environment.etc = {
       "xdg/gtk-2.0/gtkrc".text = ''
-        gtk-application-prefer-dark-theme = true
         gtk-cursor-theme-name="catppuccin-frappe-green-cursors"
+        gtk-application-prefer-dark-theme = true
         gtk-theme-name = "Materia-dark"
       '';
 
       "xdg/gtk-3.0/settings.ini".text = ''
         [Settings]
-        gtk-application-prefer-dark-theme = true
         gtk-cursor-theme-name = catppuccin-frappe-green-cursors
+        gtk-application-prefer-dark-theme = true
         gtk-theme-name = Materia-dark
       '';
     };
@@ -61,27 +61,33 @@ in
       noto-fonts-color-emoji
     ];
 
-    environment.systemPackages = with pkgs; [
-      alacritty
-      catppuccin-cursors.frappeGreen
-      dunst
-      fuzzel
-      gimp3
-      grim
-      hyprlock
-      hyprpolkitagent
-      libnotify
-      materia-theme
-      pipewire
-      poweralertd
-      pulseaudio
-      pulsemixer
-      slurp
-      waybar
-      wireplumber
-      wl-clipboard
-      xwayland
-      zathura
-    ];
+    environment.systemPackages =
+      with pkgs;
+      [ alacritty ] # terminal
+      ++ [
+        catppuccin-cursors.frappeGreen
+        materia-theme
+      ] # theming
+      ++ [
+        fuzzel
+        gimp3
+        grim
+        hyprlock
+        pulsemixer
+        slurp
+        waybar
+        wl-clipboard
+        zathura
+      ] # utility
+      ++ [
+        dunst
+        hyprpolkitagent
+        libnotify
+        pipewire
+        poweralertd
+        pulseaudio
+        wireplumber
+        xwayland
+      ]; # daemons
   };
 }

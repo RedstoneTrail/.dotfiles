@@ -1,0 +1,9 @@
+text/html; firefox %s; nametemplate=%s.html; test=test -n "$DISPLAY"; needsterminal;
+text/html; lynx -dump %s; nametemplate=%s.html; copiousoutput;
+image/png; mpv %s; nametemplate=%s.png; needsterminal;
+image/tiff; mpv %s; nametemplate=%s.tiff; needsterminal;
+image/jpeg; mpv %s; nametemplate=%s.tiff; needsterminal;
+video/mp4; mpv %s; nametemplate=%s.mp4; needsterminal;
+text/*; nvim %s; needsterminal;
+application/pdf; zathura %s; needsterminal;
+application/octet-stream; xdg-open %s; needsterminal;

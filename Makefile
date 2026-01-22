@@ -46,6 +46,9 @@ config:
 	rm -rf ~/.config/mpv
 	ln -s $(realpath mpv) ~/.config/mpv
 
+	rm -rf ~/.config/neomutt
+	ln -s $(realpath neomutt) ~/.config/neomutt
+
 	rm -rf ~/.config/nvim
 	ln -s $(realpath nvim) ~/.config/nvim
 

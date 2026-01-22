@@ -1,0 +1,32 @@
+set from = "Joe Bearchell <joe.bearchell@gmail.com>"
+set realname = "Joe Bearchell"
+set imap_user = "joe.bearchell@gmail.com"
+
+set my_pass = "`pass email/gmail-personal`"
+set imap_pass = $my_pass
+set smtp_pass = $my_pass
+
+set folder = "imaps://imap.gmail.com:993"
+set spoolfile = "+INBOX"
+set postponed = "+[Gmail]/Drafts"
+set trash = "+[Gmail]/Bin"
+
+set smtp_url = "smtp://joebearchell@smtp.gmail.com:587/"
+
+# mailboxes =INBOX =Sent =Drafts =Archive =Trash
+set imap_check_subscribed = true
+
+macro index,pager gi "<change-folder>=INBOX<enter>" "go to inbox"
+macro index,pager mi ";<save-message>=INBOX<enter><enter>" "move mail to inbox"
+macro index,pager ci ";<copy-message>=INBOX<enter>" "copy mail to inbox"
+macro index,pager gs "<change-folder>=Sent<enter>" "go to sent"
+macro index,pager ms ";<save-message>=Sent<enter><enter>" "move mail to sent"
+macro index,pager cs ";<copy-message>=Sent<enter>" "copy mail to sent"
+macro index,pager gS "<change-folder>=Junk<enter>" "go to spam"
+macro index,pager mS ";<save-message>=Junk<enter><enter>" "move mail to spam"
+macro index,pager cS ";<copy-message>=Junk<enter>" "copy mail to spam"
+macro index,pager ga "<change-folder>=Archive<enter>" "go to archive"
+macro index,pager ma ";<save-message>=Archive<enter><enter>" "move mail to archive"
+macro index,pager ca ";<copy-message>=Archive<enter>" "copy mail to archive"
+
+# vim: ft=neomuttrc

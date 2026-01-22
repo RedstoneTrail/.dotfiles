@@ -1,0 +1,45 @@
+#!/usr/bin/env nix
+#!nix shell github:nixos/nixpkgs#ffmpeg-full github:nixos/nixpkgs#yt-dlp github:nixos/nixpkgs#id3v2 -c sh
+
+SEPARATOR=SEPERATOR
+
+# download thumbnail if provided
+if [ ! -z "$2" ]
+then
+	echo including thumbnail
+	wget "$2" -O thumbnail.jpeg
+	thumbnail=1
+else
+	echo excluding thumbnail, not provided
+	thumbnail=0
+fi
+
+# download files
+album_info=$(yt-dlp "$1" -o "%(playlist_index)s${SEPARATOR}%(title)s.%(ext)s" --print "%(playlist_count)s-%(channel)s-%(album)s" --extractor-args "youtube:player-client=default,tv_embedded" --extractor-args "youtube:po_token=mweb.gvs+MljMXGPhQok5acwdx7RbSdHX-ZM_1sMcVKLJT5iZluh4j-9mqiL2-3bNFUTb2YFlJBQamyd6iSIczRFp1EWPsQT-fmi3LMsj2aQxjklB0Y4J38C3VLlO1Ynw" | head -n 1)
+echo $album_info
+
+# parse album info
+track_count=$(echo $album_info | cut -d- -f1)
+artist=$(echo $album_info | cut -d- -f2)
+album=$(echo $album_info | cut -d- -f3)
+
+echo '->' $track_count $artist $album
+
+for file in *.webm
+do
+	old_name=$file
+	track_num=$(($(echo $file | sed "s/${SEPARATOR}.*//") - 1))
+	echo $track_num
+	new_name=$(echo $file | tr '[A-Z]' '[a-z]' | sed 's/(.*)//' | sed 's/ *\.webm/END/' | tr ',' '.' | sed 's/\.//' | sed 's/END/.opus/' | tr ' ' '-')
+
+	echo $old_name becomes $new_name
+	# ffmpeg -i "$old_name" $new_name
+done
+
+echo conversions finished, removing old files
+
+rm *.webm
+
+echo adding metadata
+
+# vim: ft=sh

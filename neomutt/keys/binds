@@ -1,0 +1,89 @@
+bind index,pager,attach,browser,query,alias,compose q exit
+
+bind pager k previous-line
+bind pager j next-line
+bind index,attach,browser,query j next-entry
+bind index,attach,browser,query k previous-entry
+
+bind attach,browser,pager,index \Cu half-up
+bind attach,browser,pager,index \Cd half-down
+
+bind attach,browser,index g noop
+bind attach,browser,index gg first-entry
+bind attach,browser,index G last-entry
+bind pager g noop
+bind pager gg top
+bind pager G bottom
+
+macro index,pager f "<change-folder>?"
+macro index,pager mm ";<save-message>?" "move mail"
+macro index,pager cc ";<copy-message>?" "copy mail"
+
+bind index zz current-middle
+
+bind index <return> display-message
+bind attach <return> view-mailcap
+bind compose <return> view-mailcap
+bind browser <return> select-entry
+
+bind attach s save-entry
+
+bind browser o create-mailbox
+
+bind index,pager \Cn next-unread
+bind index,pager \Cp previous-unread
+
+bind index,pager H view-raw-message
+bind index,pager v view-attachments
+bind index,pager | pipe-message
+
+bind pager,index d delete-message
+
+# Tags
+bind index t tag-entry
+bind index T tag-thread
+bind index <space> flag-message 
+bind index u undelete-message
+bind index U undelete-thread
+macro index D ";:set resolve=no<enter><clear-flag>!<save-message>=Archive<enter><enter><sync-mailbox><enter><enter-command>echo 'Message deleted'<enter>:set resolve=yes<enter>" "Quick Delete"
+macro index A ";:set resolve=no<enter><clear-flag>!<save-message>=Archive<enter><enter><sync-mailbox><enter><enter-command>echo 'Message archived'<enter>:set resolve=yes<enter>" "Quick Archive"
+
+bind index,pager L edit-label
+
+bind index,pager n search-next
+bind index,pager N search-opposite
+
+bind index C mail
+bind compose y send-message
+bind compose a attach-file
+bind compose p postpone-message
+bind compose e edit-message
+bind compose t edit-to
+bind compose f edit-from
+bind compose s edit-subject
+bind compose c edit-cc
+bind compose b edit-bcc
+bind compose r rename-file
+bind compose F filter-entry
+bind compose \Ct edit-type
+bind compose \Ck move-up
+bind compose \Cj move-down
+bind compose S pgp-menu
+
+bind index,pager s sync-mailbox
+
+bind index,pager r reply
+bind index,pager \Cr group-reply
+bind index,pager \Cf forward-message
+
+macro index,pager a "<pipe-message>abook --add-email-quiet<return>" "Add this sender to abook"
+bind editor <Tab> complete-query
+
+bind query <return> select-entry
+
+macro index,pager \cb "<pipe-message>urlscan<return>" "call urlscan to extract URLs out of a message"
+macro attach,compose \cb "<pipe-entry>urlscan<return>" "call urlscan to extract URLs out of a message"
+
+# bind key_select_pgp <return> select-entry
+
+# vim: ft=neomuttrc

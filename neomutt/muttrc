@@ -1,0 +1,25 @@
+source ~/.config/neomutt/keys/unbinds
+source ~/.config/neomutt/keys/binds
+
+source ~/.config/neomutt/accounts/gmail-personal
+
+source ~/.config/neomutt/catppuccin
+
+set mailcap_path = ~/.config/neomutt/mailcap
+auto_view text/html                                   # view HTML automatically
+alternative_order text/plain text/enriched text/html  # save HTML for last
+
+set abort_key = "<Esc>"
+set help = "no"
+
+set query_command = "abook --mutt-query '%s'"
+
+set pgp_self_encrypt = yes
+set pgp_default_key = "joe.bearchell@gmail.com"
+source ~/.config/neomutt/gpg.rc
+
+set sidebar_visible
+set sidebar_format = "%B%<F? [%F]>%* %<N?%N/>%S"
+set mail_check_stats
+
+# vim: ft=neomuttrc

@@ -25,7 +25,7 @@ autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 ### End of Zinit's installer chunk
 
-alias ls="ls --color=auto -ahp"
+alias ls="ls --color=auto -ahp --time-style='+%Y-%m-%d %H:%M'"
 alias  l="ls -l"
 
 alias lsusb="cyme --lsusb"
@@ -93,6 +93,8 @@ export MANPAGER="nvim \+Man\!"
 export EDITOR=nvim
 export BROWSER=firefox
 export TERMINAL=$TERM
+
+export ESCDELAY=0
 
 export LISTMAX=-1
 setopt no_hist_verify

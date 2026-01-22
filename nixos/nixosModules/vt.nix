@@ -20,15 +20,16 @@ in
       settings = {
         animation = "doom";
         bigclock = true;
-        sleep_cmd = "/usr/bin/env systemctl sleep";
+        brightness_down_cmd = "/run/current-system/sw/bin/brightnessctl -q -n s 5%-";
         brightness_down_key = "F5";
-        brightness_down_cmd = "/run/current-system/sw/bin/brightnessctl -q -n s 10%-";
+        brightness_up_cmd = "/run/current-system/sw/bin/brightnessctl -q -n s +5%";
         brightness_up_key = "F6";
-        brightness_up_cmd = "/run/current-system/sw/bin/brightnessctl -q -n s +10%";
         clear_password = true;
         setup_cmd = "";
+        sleep_cmd = "/usr/bin/env systemctl sleep";
       };
       package = pkgs.unstable.ly;
+      x11Support = false;
     };
   };
 }
