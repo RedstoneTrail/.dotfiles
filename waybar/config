@@ -128,7 +128,7 @@
 	"custom/fan": {
 		"return-type": "text",
 		"interval": 1,
-		"exec": "sensors -j | jq -r '.\"acpi_fan-acpi-0\".\"fan1\".\"fan1_input\"' | sed 's/\\..*//'",
+		"exec": "sensors -j | jq -r '.\"acpi_fan-isa-0000\".\"fan1\".\"fan1_input\"' | sed 's/\\..*//'",
 		"exec-if": "grep hybrid-graphics /etc/redstonetrail/specialisation > /dev/null",
 		"format": "| {} RPM ",
 	},

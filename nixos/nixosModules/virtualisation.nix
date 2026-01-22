@@ -12,7 +12,7 @@ in
     virtualisation = {
       waydroid = {
         enable = true;
-        package = pkgs.unstable.waydroid-nftables;
+        package = pkgs.waydroid-nftables;
       };
       libvirtd.enable = true;
       spiceUSBRedirection.enable = true;

@@ -1,45 +1,56 @@
 #!/usr/bin/env nix
-#!nix shell github:nixos/nixpkgs#ffmpeg-full github:nixos/nixpkgs#yt-dlp github:nixos/nixpkgs#id3v2 -c sh
+#!nix shell nixpkgs#ffmpeg-full nixpkgs#yt-dlp nixpkgs#id3v2 nixpkgs#eyed3 -c zsh
 
-SEPARATOR=SEPERATOR
+# extract downloadable urls from yt-dlp because it no longer downloads the files
+tmpfile=$(mktemp)
 
-# download thumbnail if provided
-if [ ! -z "$2" ]
-then
-	echo including thumbnail
-	wget "$2" -O thumbnail.jpeg
-	thumbnail=1
-else
-	echo excluding thumbnail, not provided
-	thumbnail=0
-fi
+echo getting json and saving into $tmpfile
+yt-dlp -J --yes-playlist "$1" > $tmpfile
 
-# download files
-album_info=$(yt-dlp "$1" -o "%(playlist_index)s${SEPARATOR}%(title)s.%(ext)s" --print "%(playlist_count)s-%(channel)s-%(album)s" --extractor-args "youtube:player-client=default,tv_embedded" --extractor-args "youtube:po_token=mweb.gvs+MljMXGPhQok5acwdx7RbSdHX-ZM_1sMcVKLJT5iZluh4j-9mqiL2-3bNFUTb2YFlJBQamyd6iSIczRFp1EWPsQT-fmi3LMsj2aQxjklB0Y4J38C3VLlO1Ynw" | head -n 1)
-echo $album_info
+# commented because opus files' album covers are not broadcasted by mpv
+# download thumbnail, scale and crop it to 720x720
+# thumbnail=thumbnail.jpeg
+# thumbnail_url=$(jq -r '."entries".[0]."thumbnail"' $tmpfile)
+# wget "$thumbnail_url"
+# ffmpeg -i $(basename $thumbnail_url) -filter:v "scale=w=512:h=512:force_original_aspect_ratio=2,crop=512:512" $thumbnail
+# rm $(basename $thumbnail_url)
 
-# parse album info
-track_count=$(echo $album_info | cut -d- -f1)
-artist=$(echo $album_info | cut -d- -f2)
-album=$(echo $album_info | cut -d- -f3)
+padding=$(( $(echo $urls | tr ' ' '\n' | wc -l | wc -m) - 1 ))
 
-echo '->' $track_count $artist $album
+tracks=$(echo $urls | tr ' ' '\n' | wc -l)
 
-for file in *.webm
+for index in {0..$tracks}
 do
-	old_name=$file
-	track_num=$(($(echo $file | sed "s/${SEPARATOR}.*//") - 1))
-	echo $track_num
-	new_name=$(echo $file | tr '[A-Z]' '[a-z]' | sed 's/(.*)//' | sed 's/ *\.webm/END/' | tr ',' '.' | sed 's/\.//' | sed 's/END/.opus/' | tr ' ' '-')
+	# pad the index according to the width
+	index=$(printf %0${padding}d $index)
 
-	echo $old_name becomes $new_name
-	# ffmpeg -i "$old_name" $new_name
+	# use yt-dlp to download the video provided by the playlist (way faster than curl-ing from the google server)
+	url=$(jq -r '."entries".['$(( $index - 1 ))']."webpage_url"' $tmpfile)
+
+	# get artist
+	artist=$(jq -r '."entries".['$(( $index - 1 ))']."artists".[0]' $tmpfile | tr '[A-Z]' '[a-z]' | tr ' ' '-')
+
+	# get album name
+	album=$(jq -r '."entries".['$(( $index - 1 ))']."album"' $tmpfile | tr '[A-Z]' '[a-z]' | tr ' ' '-')
+
+	# clean up track name
+	track=$(jq -r '."entries".['$(( $index - 1 ))']."track"' $tmpfile | tr '[A-Z]' '[a-z]' | sed 's/\.\|,//g' | sed 's/(.*)//' | tr ' ' '-')
+
+	# yt-dlp "$url" -
+	yt-dlp "$url" -o "$index-$track.%(ext)s"
+
+	old_name=$(echo $index-$track.*)
+	name=$index-$track.opus
+
+	# convert to opus format
+	ffmpeg -i $old_name $name
+	rm $old_name
+
+	id3v2 --TIT2 $name -t $name --TPE1 $artist -a $artist --TALB $album -A $album --TRCK $(( $index + 1 ))/$tracks -T $(( $index + 1 ))/$tracks $name
+	# eyeD3 --add-image "$thumbnail:FRONT_COVER"
 done
 
-echo conversions finished, removing old files
+echo deleting tmpfile $tmpfile
+rm $tmpfile
 
-rm *.webm
-
-echo adding metadata
-
-# vim: ft=sh
+# # vim: ft=zsh

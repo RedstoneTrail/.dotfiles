@@ -9,7 +9,7 @@ then
 	OUTFILE="$1"
 fi
 
-if ! echo $METADATA | grep artUrl
+if ! echo $METADATA | grep artUrl &>/dev/null
 then
 	exit
 fi
