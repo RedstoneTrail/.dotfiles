@@ -67,11 +67,11 @@ alias mb="make build"
 if command -v zig &>/dev/null
 then
 	zig_test() {
-		if echo $@ | grep summary &>/dev/null
+		if echo $@ | grep '--summary' &>/dev/null
 		then
-			zig build test
+			zig build test $@
 		else
-			zig build test --summary all
+			zig build test --summary all $@
 		fi
 	}
 	alias zbt=zig_test
@@ -87,7 +87,7 @@ export NNN_OPENER="$HOME/.dotfiles/scripts/nnn-nuke.sh"
 export GNUPGHOME="~/.gnupg"
 
 # export PATH=$PATH:/sbin:/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/sbin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/usr/lib/rustup/bin:$HOME/bin:$HOME/.dotfiles/scripts:$HOME/.cargo/bin/
-export PATH=$PATH:$HOME/.dotfiles/scripts
+export PATH=$PATH:$HOME/.dotfiles/scripts:$HOME/bin
 export PAGER=less
 export MANPAGER="nvim \+Man\!"
 export EDITOR=nvim
@@ -99,22 +99,45 @@ export ESCDELAY=0
 export LISTMAX=-1
 setopt no_hist_verify
 
-PS1="%F{2}%n%f|%F{6}%~%f]> "
-RPROMPT="[%D{%L:%M:%S}]"
+# prompt faff
 
-if [ -z $IS_NIX_SHELL ]
+if which ps1-builder &>/dev/null
 then
+	PS1=$(ps1-builder)
 else
-	PS1="%F{4}nix-shell%f|$PS1"
-fi
+	echo ps1-builder not found, install
 
-if [ -z $IS_TOR_SHELL ]
-then
-else
-	PS1="%F{13}tor-shell%f|$PS1"
-fi
+	PS1="%F{6}%~%f]> "
+	RPROMPT="[%D{%L:%M:%S}]"
 
-PS1="[$PS1"
+	case "$HOST" in
+		"localhost")
+			if [ -e ~/.termux/hostname ]
+			then
+				PS1="%F{1}$(<~/.termux/hostname)%f|$PS1"
+			fi
+			;;
+		*)
+			PS1="%F{1}$HOST%f|$PS1"
+			;;
+	esac
+
+	PS1="%F{2}%n%f|$PS1"
+
+	if [ -z $IS_NIX_SHELL ]
+	then
+	else
+		PS1="%F{4}nix-shell%f|$PS1"
+	fi
+
+	if [ -z $IS_TOR_SHELL ]
+	then
+	else
+		PS1="%F{13}tor-shell%f|$PS1"
+	fi
+
+	PS1="[$PS1"
+fi
 
 zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-completions

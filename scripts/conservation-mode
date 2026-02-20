@@ -4,21 +4,25 @@ FILE=$(fd conservation_mode /sys)
 
 if [ -z "$FILE" ]
 then
-	print 'conservation_mode not supported by system'
+	printf "conservation_mode file not found (not supported by system?)\n"
 	exit
 fi
+
+printf "found file at $FILE\n"
 
 if [ "$1" = "toggle" ]
 then
 	export FILE=$FILE
-	sudo -E sh -c 'echo $[ ! $(cat $FILE) ] > $FILE'
-	printf "conservation_mode toggled to $(cat $FILE)\n"
+	sudo -E sh -c 'echo $[ ! $(cat $FILE) ] > $FILE' &&
+	printf "conservation_mode toggled to $(cat $FILE)\n" ||
+	echo cancelled
 elif [ "$1" = "0" ] || [ "$1" = "1" ]
 then
 	export FILE=$FILE
 	export STATE=$1
-	sudo -E sh -c 'echo $STATE > $FILE'
-	printf "conservation_mode set to $1\n"
+	sudo -E sh -c 'echo $STATE > $FILE' &&
+	printf "conservation_mode set to $1\n" ||
+	printf "cancelled"
 elif [ "$1" = "show" ]
 then
 	printf "conservation_mode is set to $(cat $FILE)\n"

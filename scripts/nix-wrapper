@@ -14,6 +14,8 @@ case $1 in
 			nix shell --impure $ARGS -c zsh
 		fi;;
 	proxychains-shell )
+		export IS_TOR_SHELL=1
+
 		if echo $ARGS | grep "\-c" &>/dev/null
 		then
 			proxychains4 -q nix shell --impure $ARGS
@@ -23,6 +25,8 @@ case $1 in
 	run )
 		nix run --impure $ARGS;;
 	proxychains-run )
+		export IS_TOR_SHELL=1
+
 		proxychains4 -q nix run --impure $ARGS;;
 	develop )
 		if echo $ARGS | grep "\-c" &>/dev/null
@@ -32,6 +36,8 @@ case $1 in
 			nix develop --impure $ARGS -c zsh
 		fi;;
 	proxychains-develop )
+		export IS_TOR_SHELL=1
+
 		if echo $ARGS | grep "\-c" &>/dev/null || echo $ARGS | grep "\#" &>/dev/null
 		then
 			proxychains4 -q nix develop --impure $ARGS

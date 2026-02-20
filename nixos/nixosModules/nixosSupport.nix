@@ -2,6 +2,7 @@
   config,
   lib,
   inputs,
+  pkgs,
   ...
 }:
 {
@@ -31,6 +32,12 @@
       nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
     };
 
-  programs.nix-ld.enable = true;
+  programs = {
+    nix-ld.enable = true;
+    nh = {
+      enable = true;
+      flake = "/home/redstonetrail/.dotfiles/nixos";
+    };
+  };
   services.envfs.enable = true;
 }

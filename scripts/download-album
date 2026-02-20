@@ -1,6 +1,8 @@
 #!/usr/bin/env nix
 #!nix shell nixpkgs#ffmpeg-full nixpkgs#yt-dlp nixpkgs#id3v2 nixpkgs#eyed3 -c zsh
 
+alias yt-dlp="yt-dlp --cookies-from-browser firefox"
+
 # extract downloadable urls from yt-dlp because it no longer downloads the files
 tmpfile=$(mktemp)
 
@@ -15,38 +17,56 @@ yt-dlp -J --yes-playlist "$1" > $tmpfile
 # ffmpeg -i $(basename $thumbnail_url) -filter:v "scale=w=512:h=512:force_original_aspect_ratio=2,crop=512:512" $thumbnail
 # rm $(basename $thumbnail_url)
 
-padding=$(( $(echo $urls | tr ' ' '\n' | wc -l | wc -m) - 1 ))
+tracks=$(jq -r '."entries".[]."webpage_url"' $tmpfile | tr ' ' '\n' | wc -l)
 
-tracks=$(echo $urls | tr ' ' '\n' | wc -l)
+padding=$(( $(echo $tracks | wc -m) - 1 ))
 
-for index in {0..$tracks}
+echo $tracks, $padding
+
+convert_name() {
+	cat - | tr '[A-Z]' '[a-z]' | sed 's/\.\|,\|\/\|?\|'\''//g' | sed 's/ *(.*) *//' | tr ' ' '-'
+}
+
+for index in {0..$(( tracks - 1 ))}
 do
 	# pad the index according to the width
 	index=$(printf %0${padding}d $index)
 
 	# use yt-dlp to download the video provided by the playlist (way faster than curl-ing from the google server)
-	url=$(jq -r '."entries".['$(( $index - 1 ))']."webpage_url"' $tmpfile)
+	url=$(jq -r '."entries".['$index']."webpage_url"' $tmpfile)
 
 	# get artist
-	artist=$(jq -r '."entries".['$(( $index - 1 ))']."artists".[0]' $tmpfile | tr '[A-Z]' '[a-z]' | tr ' ' '-')
+	artist=$(jq -r '."entries".['$index']."artists".[0]' $tmpfile | convert_name)
 
 	# get album name
-	album=$(jq -r '."entries".['$(( $index - 1 ))']."album"' $tmpfile | tr '[A-Z]' '[a-z]' | tr ' ' '-')
+	album=$(jq -r '."entries".['$index']."album"' $tmpfile | convert_name)
 
 	# clean up track name
-	track=$(jq -r '."entries".['$(( $index - 1 ))']."track"' $tmpfile | tr '[A-Z]' '[a-z]' | sed 's/\.\|,//g' | sed 's/(.*)//' | tr ' ' '-')
+	track=$(jq -r '."entries".['$index']."track"' $tmpfile | convert_name)
 
-	# yt-dlp "$url" -
+	if [ "$(echo $track | cut -b1)" = "-" ]
+	then
+		track=$(echo $track | cut -b2-)
+	fi
+
+	if [ "$(echo $track | rev | cut -b1)" = "-" ]
+	then
+		track=$(echo $track | rev | cut -b2- | rev)
+	fi
+
+	echo $index, $track, $album, $artist
+
+	# yt-dlp "$url" -o "$index-$track.%(ext)s"
 	yt-dlp "$url" -o "$index-$track.%(ext)s"
 
 	old_name=$(echo $index-$track.*)
 	name=$index-$track.opus
 
 	# convert to opus format
-	ffmpeg -i $old_name $name
+	ffmpeg -i $old_name -vn $name
 	rm $old_name
 
-	id3v2 --TIT2 $name -t $name --TPE1 $artist -a $artist --TALB $album -A $album --TRCK $(( $index + 1 ))/$tracks -T $(( $index + 1 ))/$tracks $name
+	echo id3v2 --TIT2 "$name" -t "$name" --TPE1 "$artist" -a "$artist" --TALB "$album" -A "$album" --TRCK "$(( $index + 1 ))/$tracks" -T "$(( $index + 1 ))/$tracks" "$name"
 	# eyeD3 --add-image "$thumbnail:FRONT_COVER"
 done
 

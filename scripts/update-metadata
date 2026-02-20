@@ -1,13 +1,18 @@
+#!/usr/bin/env nix
+#!nix shell nixpkgs#id3v2 --command sh
+
 for artist in *
 do
+	printf "albums for $artist\n"
 	cd $artist
 	for album in *
 	do
+		printf "\ttracks for $album\n"
 		cd $album
 
-		for song in *.mp3
+		for song in *.opus
 		do
-			id3v2 -t $song -a $artist -A $album -T $(( $(echo $song | cut -d\- -f1 | bc) + 1 ))/$(ls -1 *.mp3 | grep -c .\*) $song
+			id3v2 -t $song -a $artist -A $album -T $(( $(echo $song | cut -d\- -f1 | bc) + 1 ))/$(ls -1 *.opus | grep -c .\*) $song
 		done
 		cd ..
 	done

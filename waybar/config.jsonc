@@ -1,0 +1,77 @@
+{
+  "layer": "top",
+  "height": 30,
+  "spacing": 4,
+  "modules-left": ["hyprland/workspaces"],
+  "modules-center": ["custom/mpris"],
+  "modules-right": [
+    "tray",
+    "pulseaudio#source",
+    "pulseaudio#sink",
+    "custom/separator",
+    "network",
+    "custom/separator",
+    "backlight",
+    "custom/separator",
+    "battery",
+    "custom/separator",
+    "clock",
+  ],
+  "clock": {
+    "format": "{:%d/%m/%Y %H:%M}",
+  },
+  "battery": {
+    "states": {
+      "warning": 30,
+      "critical": 15,
+    },
+    "interval": 5,
+    "format": "{capacity}%{time}  {icon}  {power}W",
+    "format-charging": "{capacity}%{time} 󱐋{icon}  {power}W",
+    "format-time": " {H}:{m}",
+    "format-icons": ["", "", "", "", ""],
+  },
+  "backlight": {
+    "device": "intel_backlight",
+    "format": "{percent}% {icon}",
+    "format-icons": ["󰃞", "󰃟", "󰃠"],
+  },
+  "network": {
+    "format-wifi": "{essid} {signalStrength}% 󰖩",
+    "format-ethernet": "{ipaddr}/{cidr} ",
+    "format-disconnected": "Disconnected 󰖪",
+  },
+  "pulseaudio#source": {
+    "format": "{format_source}",
+    "format-source": "{volume}% ",
+    "format-source-muted": "{volume}% ",
+  },
+  "pulseaudio#sink": {
+    "format": "{volume}% {icon}",
+    "format-muted": "{volume}% 󰝟",
+    "format-icons": {
+      "headphone": [" 󰕿", " 󰖀", " 󰕾"],
+      "default": ["󰓃 󰕿", "󰓃 󰖀", "󰓃 󰕾"],
+    },
+  },
+  "custom/mpris": {
+    "return-type": "json",
+    "exec-if": "playerctl metadata 2>/dev/null",
+    "exec": "~/.dotfiles/scripts/mpris-module.sh",
+    "hide-empty-text": true,
+    "interval": 2,
+    "format": "{}",
+  },
+  "custom/separator": {
+    "format": "|",
+  },
+  "power-profiles-daemon": {
+    "format": "{icon} ",
+    "format-icons": {
+      "default": "",
+      "performance": "",
+      "balanced": "",
+      "power-saver": "",
+    },
+  },
+}

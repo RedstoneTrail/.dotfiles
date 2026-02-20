@@ -30,7 +30,6 @@ in
       lua-language-server
       neovim
       nixd
-      # nixfmt-rfc-style
       nixfmt
       prettier
       texlab
@@ -66,6 +65,7 @@ in
       w3m-nographics
       wget
       zip
+      units
       unzip
 
       # man
@@ -96,11 +96,13 @@ in
       lm_sensors
       playerctl
       smartmontools
+      cpufrequtils
 
       # fun
       catimg
       figlet
       glow
+      id3v2
       lolcat
       vitetris
       yt-dlp
@@ -108,7 +110,7 @@ in
 
     documentation = {
       dev.enable = true;
-      # man.generateCaches = true;
+      man.generateCaches = true;
     };
 
     programs.gnupg.agent = {

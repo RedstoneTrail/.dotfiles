@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 
 waydroid session stop
-notify-send "stopped waydroid session"
+notify-send "Stopped waydroid session"

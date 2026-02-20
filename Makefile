@@ -73,13 +73,14 @@ nix:
 nix-on-droid:
 	nix-on-droid switch --flake ~/.dotfiles/nix-on-droid/
 
-SPECIALISATION:=$(shell cat /etc/redstonetrail/specialisation)
+SPECIALISATION_FILE:=/etc/specialisation
+SPECIALISATION:=$(shell cat $(SPECIALISATION_FILE))
 
 SPECIALISATION_FLAGS:=
 ifeq ($(SPECIALISATION), default)
 	SPECIALISATION_FLAGS:=
 else
-	SPECIALISATION_FLAGS:=-c "$(shell cat /etc/redstonetrail/specialisation)"
+	SPECIALISATION_FLAGS:=-c "$(shell cat $(SPECIALISATION_FILE))"
 endif
 
 nixos:

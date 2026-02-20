@@ -20,15 +20,7 @@
     system.nixos.tags = if (config.specialisation != { }) then [ "default" ] else [ "hybrid-graphics" ];
 
     environment.etc = {
-      "redstonetrail/specialisation".text =
-        if (config.specialisation != { }) then
-          ''
-            default
-          ''
-        else
-          ''
-            hybrid-graphics
-          '';
+      "specialisation".text = if (config.specialisation != { }) then "default" else "hybrid-graphics";
     };
 
     # disable all usb power management if in hybrid-graphics specialisation, only that for keyboard on default
