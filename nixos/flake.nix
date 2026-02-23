@@ -7,9 +7,7 @@
     # nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     # nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
-    mountui = {
-      url = "github:AlanRandon/mountui";
-    };
+    mountui.url = "github:AlanRandon/mountui";
   };
 
   outputs =

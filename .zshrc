@@ -25,6 +25,27 @@ autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 ### End of Zinit's installer chunk
 
+zinit ice depth=1
+
+zinit light zsh-users/zsh-autosuggestions
+zinit light zsh-users/zsh-completions
+
+zinit light joshskidmore/zsh-fzf-history-search
+command -v fzf &> /dev/null && source <(fzf --zsh)
+
+zinit light zdharma-continuum/fast-syntax-highlighting
+fast-theme ~/.dotfiles/zsh-fast-theme.ini > /dev/null
+
+zinit light jeffreytse/zsh-vi-mode
+bindkey -v
+
+# zinit wait lucid for \
+# 	pick"zsh/fzf-zsh-completion.sh" \
+# 		lincheney/fzf-tab-completion \
+# 		OMZP::git \
+
+# ZSH_AUTOSUGGEST_IGNORE_WIDGETS=(fzf_completion)
+
 alias ls="ls --color=auto -ahp --time-style='+%Y-%m-%d %H:%M'"
 alias  l="ls -l"
 
@@ -100,64 +121,36 @@ export LISTMAX=-1
 setopt no_hist_verify
 
 # prompt faff
+PS1="%F{6}%~%f]> "
+RPROMPT="[%D{%L:%M:%S}]"
 
-if which ps1-builder &>/dev/null
+case "$HOST" in
+	"localhost")
+		if [ -e ~/.termux/hostname ]
+		then
+			PS1="%F{1}$(<~/.termux/hostname)%f|$PS1"
+		fi
+		;;
+	*)
+		PS1="%F{1}$HOST%f|$PS1"
+		;;
+esac
+
+PS1="%F{2}%n%f|$PS1"
+
+if [ -z $IS_NIX_SHELL ]
 then
-	PS1=$(ps1-builder)
 else
-	echo ps1-builder not found, install
-
-	PS1="%F{6}%~%f]> "
-	RPROMPT="[%D{%L:%M:%S}]"
-
-	case "$HOST" in
-		"localhost")
-			if [ -e ~/.termux/hostname ]
-			then
-				PS1="%F{1}$(<~/.termux/hostname)%f|$PS1"
-			fi
-			;;
-		*)
-			PS1="%F{1}$HOST%f|$PS1"
-			;;
-	esac
-
-	PS1="%F{2}%n%f|$PS1"
-
-	if [ -z $IS_NIX_SHELL ]
-	then
-	else
-		PS1="%F{4}nix-shell%f|$PS1"
-	fi
-
-	if [ -z $IS_TOR_SHELL ]
-	then
-	else
-		PS1="%F{13}tor-shell%f|$PS1"
-	fi
-
-	PS1="[$PS1"
+	PS1="%F{4}nix-shell%f|$PS1"
 fi
 
-zinit light zsh-users/zsh-autosuggestions
-zinit light zsh-users/zsh-completions
-zinit light zdharma-continuum/fast-syntax-highlighting
-fast-theme ~/.dotfiles/zsh-fast-theme.ini > /dev/null
+if [ -z $IS_TOR_SHELL ]
+then
+else
+	PS1="%F{13}tor-shell%f|$PS1"
+fi
 
-zinit ice depth=1
-zinit light jeffreytse/zsh-vi-mode
-bindkey -v
-
-# zinit wait lucid for \
-# 	pick"zsh/fzf-zsh-completion.sh" \
-# 		lincheney/fzf-tab-completion \
-# 		OMZP::git \
-
-# ZSH_AUTOSUGGEST_IGNORE_WIDGETS=(fzf_completion)
-
-zinit light joshskidmore/zsh-fzf-history-search
-command -v fzf &> /dev/null && source <(fzf --zsh)
-
+PS1="[$PS1"
 
 # Fix home and end
 bindkey '^[[1~' beginning-of-line
