@@ -9,8 +9,29 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
+    # wayland.windowManager.pinnacle = {
+    #   enable = true;
+    #   config.execCmd = "/home/redstonetrail/.config/pinnacle/init.lua";
+    # };
+
     programs = {
+      # dwl = {
+      #   enable = true;
+      #   package = (
+      #     pkgs.dwl.override {
+      #       configH = ../../dwl/config.h;
+      #     }
+      #   );
+      # };
+
+      # pinnacle = {
+      #   enable = true;
+      #   xdg-portals.enable = true;
+      #   withUWSM = false;
+      # };
+
       hyprland.enable = true;
+
       dconf = {
         enable = true;
         profiles.user.databases = [

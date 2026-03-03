@@ -37,6 +37,10 @@ config:
 	rm -rf ~/.config/fuzzel
 	ln -s $(realpath fuzzel) ~/.config/fuzzel
 
+	mkdir -p ~/.config/gtk-3.0 ~/.config/gtk-4.0
+	ln -s $(realpath ./gtk.css) ~/.config/gtk-3.0/gtk.css
+	ln -s $(realpath ./gtk.css) ~/.config/gtk-4.0/gtk.css
+
 	rm -rf ~/.config/hypr
 	ln -s $(realpath hypr) ~/.config/hypr
 

@@ -8,6 +8,8 @@
     # nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
     mountui.url = "github:AlanRandon/mountui";
+
+    # pinnacle.url = "github:pinnacle-comp/pinnacle";
   };
 
   outputs =
@@ -16,11 +18,15 @@
       nixpkgs,
       nixpkgs-unstable,
       mountui,
+      # pinnacle,
       ...
     }:
     let
       mkNixosSystem =
-        { system, modules }:
+        {
+          system,
+          modules,
+        }:
         nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = { inherit inputs; };

@@ -9,6 +9,13 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
+    boot.binfmt.emulatedSystems = [
+      "wasm32-wasi"
+      "x86_64-windows"
+      "aarch64-linux"
+      "riscv64-linux"
+    ];
+
     virtualisation = {
       waydroid = {
         enable = true;

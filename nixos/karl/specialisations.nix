@@ -11,6 +11,8 @@
       hybrid-graphics = {
         inheritParentConfig = true;
         configuration = {
+          environment.etc."specialisation".text = "hybrid-graphics";
+
           imports = [
             ../karl/nvidia.nix
           ];
@@ -19,9 +21,9 @@
     };
     system.nixos.tags = if (config.specialisation != { }) then [ "default" ] else [ "hybrid-graphics" ];
 
-    environment.etc = {
-      "specialisation".text = if (config.specialisation != { }) then "default" else "hybrid-graphics";
-    };
+    # environment.etc = {
+    #   "specialisation".text = if (config.specialisation != { }) then "default" else "hybrid-graphics";
+    # };
 
     # disable all usb power management if in hybrid-graphics specialisation, only that for keyboard on default
     powerManagement.powertop.postStart =

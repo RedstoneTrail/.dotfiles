@@ -22,7 +22,7 @@
     };
   };
 
-  # enable cuda support for programs that provide it - currently broken as of 18:54 10/11/2025
+  # enable cuda support for programs that provide it
   # nixpkgs.config.cudaSupport = true;
 
   # so much cuda

@@ -90,4 +90,6 @@ end
 
 vim.keymap.set("i", "<C-x><C-a>", "<cmd>set completefunc=v:lua.coauthorfunc<CR><C-x><C-u>")
 
+vim.opt.shiftwidth = 0
+
 require("lazy").setup("config.plugins")

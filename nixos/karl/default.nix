@@ -4,9 +4,8 @@
 }:
 {
   imports = [
-    ./hardware-configuration.nix
     ./boot.nix
-    ./nvidia.nix
+    ./hardware-configuration.nix
     ./intel.nix
     ./specialisations.nix
   ];

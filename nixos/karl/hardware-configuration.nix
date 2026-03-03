@@ -26,6 +26,10 @@
       extraModprobeConfig = ''
         options nvidia "NVreg_DynamicPowerManagement=0x03"
       '';
+
+      kernelParams = [
+        "reboot=pci" # fix for non-functional direct ethernet connection
+      ];
     };
 
     fileSystems."/" = {
