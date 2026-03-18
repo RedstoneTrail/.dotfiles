@@ -1,5 +1,4 @@
-#!/usr/bin/env nix
-#!nix shell nixpkgs#id3v2 --command sh
+#!/usr/bin/env sh
 
 for artist in *
 do
@@ -12,7 +11,15 @@ do
 
 		for song in *.opus
 		do
-			id3v2 -t $song -a $artist -A $album -T $(( $(echo $song | cut -d\- -f1 | bc) + 1 ))/$(ls -1 *.opus | grep -c .\*) $song
+			track_number=$(( $(echo $song | cut -d\- -f1 | bc) + 1 ))
+			total_tracks=$(ls -1 *.opus | grep -c .\*)
+			# id3v2 -t $song -a $artist -A $album -T $(( $(echo $song | cut -d\- -f1 | bc) + 1 ))/$(ls -1 *.opus | grep -c .\*) $song
+			opustags -i\
+				-a ARTIST=$artist\
+				-a TITLE=$song\
+				-a ALBUM=$album\
+				-a TRACKNUMBER="${track_number}/${total_tracks}"\
+				$song
 		done
 		cd ..
 	done

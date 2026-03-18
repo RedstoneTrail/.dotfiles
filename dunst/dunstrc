@@ -27,6 +27,7 @@
 	timeout					= 60
 	mouse_right_click			= context
 	dmenu					= /usr/bin/fuzzel --dmenu
+	enable_posix_regex			= true
 
 [urgency_low]
 	background = "#212121"
@@ -47,5 +48,5 @@
 		highlight = "#000000", "#FF0000"
 
 [play_sound]
-	summary = "*"
+	summary = ".*"
 	script = ~/.dotfiles/scripts/play-notification-sound

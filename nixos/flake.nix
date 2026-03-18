@@ -4,12 +4,8 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    # nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    # nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
     mountui.url = "github:AlanRandon/mountui";
-
-    # pinnacle.url = "github:pinnacle-comp/pinnacle";
   };
 
   outputs =
@@ -18,7 +14,6 @@
       nixpkgs,
       nixpkgs-unstable,
       mountui,
-      # pinnacle,
       ...
     }:
     let
