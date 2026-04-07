@@ -6,6 +6,8 @@
   "modules-center": ["custom/mpris"],
   "modules-right": [
     "tray",
+    "custom/inhibitor",
+    "custom/separator",
     "pulseaudio#source",
     "pulseaudio#sink",
     "custom/separator",
@@ -19,6 +21,7 @@
   ],
   "clock": {
     "format": "{:%Y/%m/%d %H:%M}",
+    "tooltip": false,
   },
   "battery": {
     "states": {
@@ -30,21 +33,29 @@
     "format-charging": "{capacity}%{time} 󱐋{icon}  {power}W",
     "format-time": " {H}:{m}",
     "format-icons": ["", "", "", "", ""],
+    "tooltip": false,
   },
   "backlight": {
     "device": "intel_backlight",
     "format": "{percent}% {icon}",
     "format-icons": ["󰃞", "󰃟", "󰃠"],
+    "on-scroll-up": "",
+    "on-scroll-down": "",
+    "tooltip": false,
   },
   "network": {
     "format-wifi": "{essid} {signalStrength}% 󰖩",
     "format-ethernet": "{ipaddr}/{cidr} ",
     "format-disconnected": "Disconnected 󰖪",
+    "tooltip": false,
   },
   "pulseaudio#source": {
     "format": "{format_source}",
     "format-source": "{volume}% ",
     "format-source-muted": "{volume}% ",
+    "on-scroll-up": "",
+    "on-scroll-down": "",
+    "tooltip": false,
   },
   "pulseaudio#sink": {
     "format": "{volume}% {icon}",
@@ -53,6 +64,9 @@
       "headphone": [" 󰕿", " 󰖀", " 󰕾"],
       "default": ["󰓃 󰕿", "󰓃 󰖀", "󰓃 󰕾"],
     },
+    "on-scroll-up": "",
+    "on-scroll-down": "",
+    "tooltip": false,
   },
   "custom/mpris": {
     "return-type": "json",
@@ -61,9 +75,17 @@
     "hide-empty-text": true,
     "interval": 2,
     "format": "{}",
+    "tooltip": false,
   },
   "custom/separator": {
     "format": "|",
+    "tooltip": false,
+  },
+  "custom/inhibitor": {
+    "return-type": "text",
+    "interval": 1,
+    "exec": "cat /tmp/inhibitor 2>/dev/null",
+    "format": " ",
   },
   "power-profiles-daemon": {
     "format": "{icon} ",

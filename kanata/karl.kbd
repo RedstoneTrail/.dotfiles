@@ -8,7 +8,8 @@
 (defsrc)
 
 (deflayermap base
-  caps lctl
+  caps (tap-hold 200 150 esc lctl)
+  lctl comp
 )
 
 (defchordsv2

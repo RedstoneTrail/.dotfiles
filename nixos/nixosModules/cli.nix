@@ -55,6 +55,7 @@ in
       # communications
       abook
       aerc
+      lynx
       neomutt
       pass
 
@@ -82,6 +83,7 @@ in
       # useful
       bc
       custom.mountui
+      dust
       fd
       ffmpeg-full
       file
@@ -95,6 +97,7 @@ in
           mpv-image-viewer.image-positioning
         ];
       })
+      nethogs
       ripgrep
       socat
       tmux
@@ -141,6 +144,7 @@ in
       glow
       id3v2
       lolcat
+      opustags
       vitetris
       yt-dlp
     ];

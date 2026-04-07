@@ -1,6 +1,6 @@
 [font]
 normal = { family = "FiraMono Nerd Font", style = "Medium" }
-size = 12
+size = 18
 
 [colors.primary]
 background = '#000000'

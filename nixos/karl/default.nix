@@ -1,5 +1,7 @@
 {
   pkgs,
+  config,
+  lib,
   ...
 }:
 {
@@ -28,8 +30,6 @@
         graphical = enabled;
         hardware-accessible = enabled;
         networking-control = enabled;
-        pihole = disabled;
-        printing = enabled;
         school = enabled;
         ssh = enabled;
         tor = enabled;
@@ -37,6 +37,9 @@
         virtualisation = enabled;
         vt-config = enabled;
         web = enabled;
+
+        pihole = disabled;
+        printing = disabled;
       };
 
     networking.hostName = "karl";
@@ -49,9 +52,11 @@
         "network"
         "networkmanager"
         "uinput"
-        "docker"
+        # ]
+        # ++ lib.mkIf config.dotfiles.pihole.enabled [
+        #   "docker"
       ];
-      initialHashedPassword = "$y$j9T$G2B0eQRQsBc7mN.ihxfKU.$N9zi8NT1GsjcHIeABfeukXZXUu.04.SmiwF14NuQX68";
+      initialHashedPassword = "$y$j9T$rQ1v1g1IaFIJ6P7UHWsJ91$LjP8EG33DaUg9DTwbU8gbV6/eY4TB/SgUvRMvAphWFD";
       shell = pkgs.zsh;
     };
   };

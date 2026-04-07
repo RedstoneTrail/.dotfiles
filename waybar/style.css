@@ -42,8 +42,10 @@ tooltip {
   padding: 0.2em 0.3em;
 }
 
-#workspaces button {
+#workspaces button,
+#workspaces button.hover {
   color: #ffffff;
+  background: rgba(0, 0, 0, 0);
 }
 
 #workspaces button.active,

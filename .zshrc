@@ -1,3 +1,5 @@
+# zmodload zsh/zprof
+
 which -v hyprctl &> /dev/null && pgrep Hyprland &>/dev/null && export HYPRLAND_INSTANCE_SIGNATURE=$(hyprctl -j instances | jq -r '.[0].instance')
 
 zstyle ':completion:*' completer _expand _complete _match _correct _prefix _ignored
@@ -34,10 +36,19 @@ zinit light joshskidmore/zsh-fzf-history-search
 command -v fzf &> /dev/null && source <(fzf --zsh)
 
 zinit light zdharma-continuum/fast-syntax-highlighting
-fast-theme ~/.dotfiles/zsh-fast-theme.ini > /dev/null
+# fast-theme ~/.dotfiles/zsh-fast-theme.ini > /dev/null
 
 zinit light jeffreytse/zsh-vi-mode
 bindkey -v
+
+bindkey -M vicmd q push-line-or-edit
+
+ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
+ZVM_MODE=$ZVM_LINE_INIT_MODE
+
+function zvm_after_select_vi_mode() {
+	create_prompt
+}
 
 # zinit wait lucid for \
 # 	pick"zsh/fzf-zsh-completion.sh" \
@@ -120,37 +131,67 @@ export ESCDELAY=0
 export LISTMAX=-1
 setopt no_hist_verify
 
-# prompt faff
-PS1="%F{6}%~%f]> "
-RPROMPT="[%D{%L:%M:%S}]"
+export FUNCNEST=1000
 
-case "$HOST" in
-	"localhost")
-		if [ -e ~/.termux/hostname ]
-		then
-			PS1="%F{1}$(<~/.termux/hostname)%f|$PS1"
-		fi
+export today=$(date '+%Y-%m-%d')
+
+create_prompt() {
+	separator="/"
+
+	PS1="]> "
+
+	case $ZVM_MODE in
+		$ZVM_MODE_NORMAL)
+			PS1="%F{8}normal%f$PS1"
 		;;
-	*)
-		PS1="%F{1}$HOST%f|$PS1"
+		$ZVM_MODE_INSERT)
+			PS1="%F{2}insert%f$PS1"
 		;;
-esac
+		$ZVM_MODE_VISUAL)
+			PS1="%F{5}visual%f$PS1"
+		;;
+		$ZVM_MODE_VISUAL_LINE)
+			PS1="%F{5}v-line%f$PS1"
+		;;
+		$ZVM_MODE_REPLACE)
+			PS1="%F{1}replace%f$PS1"
+		;;
+	esac
 
-PS1="%F{2}%n%f|$PS1"
+	# prompt faff
+	PS1="%F{6}%~%f$separator$PS1"
+	RPROMPT="[%D{%L:%M:%S}]"
 
-if [ -z $IS_NIX_SHELL ]
-then
-else
-	PS1="%F{4}nix-shell%f|$PS1"
-fi
+	PS1="%F{2}%n%f$separator$PS1"
 
-if [ -z $IS_TOR_SHELL ]
-then
-else
-	PS1="%F{13}tor-shell%f|$PS1"
-fi
+	case "$HOST" in
+		"localhost")
+			if [ -e ~/.termux/hostname ]
+			then
+				PS1="%F{1}$(<~/.termux/hostname)%f$separator$PS1"
+			fi
+			;;
+		*)
+			PS1="%F{1}$HOST%f$separator$PS1"
+			;;
+	esac
 
-PS1="[$PS1"
+	if [ -z $IS_NIX_SHELL ]
+	then
+	else
+		PS1="%F{4}nix-shell%f$separator$PS1"
+	fi
+
+	if [ -z $IS_TOR_SHELL ]
+	then
+	else
+		PS1="%F{13}tor-shell%f$separator$PS1"
+	fi
+
+	PS1="[$PS1"
+}
+
+create_prompt
 
 # Fix home and end
 bindkey '^[[1~' beginning-of-line
@@ -192,3 +233,5 @@ then
 
 	echo 'Not entering a tmux session'
 fi
+
+# zprof | less

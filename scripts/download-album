@@ -1,5 +1,5 @@
 #!/usr/bin/env nix
-#!nix shell nixpkgs#ffmpeg-full nixpkgs#yt-dlp nixpkgs#id3v2 nixpkgs#eyed3 -c zsh
+#!nix shell nixpkgs#ffmpeg-full github:nixos/nixpkgs#yt-dlp nixpkgs#id3v2 nixpkgs#eyed3 -c zsh
 
 alias yt-dlp="yt-dlp --cookies-from-browser firefox"
 
@@ -63,10 +63,9 @@ do
 	name=$index-$track.opus
 
 	# convert to opus format
-	ffmpeg -i $old_name -vn $name
-	rm $old_name
+	ffmpeg -i $old_name -vn $name && rm $old_name &
 
-	echo id3v2 --TIT2 "$name" -t "$name" --TPE1 "$artist" -a "$artist" --TALB "$album" -A "$album" --TRCK "$(( $index + 1 ))/$tracks" -T "$(( $index + 1 ))/$tracks" "$name"
+	# id3v2 --TIT2 "$name" -t "$name" --TPE1 "$artist" -a "$artist" --TALB "$album" -A "$album" --TRCK "$(( $index + 1 ))/$tracks" -T "$(( $index + 1 ))/$tracks" "$name"
 	# eyeD3 --add-image "$thumbnail:FRONT_COVER"
 done
 

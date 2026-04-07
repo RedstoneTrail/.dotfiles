@@ -6,6 +6,7 @@
 }:
 let
   cfg = config.dotfiles.web;
+  genAttrsConst = keys: value: lib.attrsets.genAttrs keys (_: value);
 in
 {
   config = lib.mkIf cfg.enable {
@@ -19,6 +20,19 @@ in
       policies = {
         DisablePocket = true;
         DisableTelemetry = true;
+        GenerativeAI = {
+          Enabled = false;
+          Chatbot = false;
+          LinkPreviews = false;
+          TabGroups = false;
+          Locked = true;
+        };
+        Homepage = {
+          URL = "file:///home/redstonetrail/.dotfiles/firefox/newtab.html";
+          Locked = true;
+          StartPage = "homepage";
+        };
+        ShowHomeButton = false;
         SearchEngines = {
           Default = "Brave";
           Add = [
@@ -50,6 +64,51 @@ in
               ];
             };
           };
+          mimeTypes = {
+            # test
+            "text/*" = {
+              action = "useHelperApp";
+              ask = false;
+              handlers = [
+                {
+                  name = "nvim";
+                  path = "/bin/nvim";
+                }
+              ];
+            };
+          }
+          // (genAttrsConst
+            [
+              "image/png"
+              "image/jpeg"
+              "image/webp"
+              "image/avif"
+              "image/gif"
+              "video/vnd.avi"
+              "video/mp4"
+              "video/mpeg"
+              "video/webm"
+              "video/ogg"
+              "audio/mp4"
+              "audio/x-mpegurl"
+              "audio/x-flac"
+              "audio/x-wav"
+              "audio/x-opus+ogg"
+              "audio/mpeg"
+              "audio/ogg"
+              "audio/vnd.wave"
+            ]
+            {
+              action = "useHelperApp";
+              ask = false;
+              handlers = [
+                {
+                  name = "mpv";
+                  path = "/bin/mpv";
+                }
+              ];
+            }
+          );
         };
         ExtensionSettings = {
           # uBlock Origin
@@ -75,14 +134,11 @@ in
             };
           in
           {
-            "browser.startup.homepage" = value "file:///home/redstonetrail/.dotfiles/firefox/newtab.html";
-            "browser.newtab.url" = value "file:///home/redstonetrail/.dotfiles/firefox/newtab.html";
-            "browser.newtabpage.enabled" = value false;
+            # "browser.startup.homepage" = value "file:///home/redstonetrail/.dotfiles/firefox/newtab.html";
+            # "browser.newtab.url" = value "file:///home/redstonetrail/.dotfiles/firefox/newtab.html";
+            # "browser.newtabpage.enabled" = value false;
             "toolkit.legacyUserProfileCustomizations.stylesheets" = value true;
             "browser.toolbars.bookmarks.visibility" = value "never";
-            "browser.ml.chat.enabled" = value false;
-            "browser.ml.chat.menu" = value false;
-            "browser.ml.chat.sidebar" = value false;
             "sidebar.notification.badge.aichat" = value false;
             "browser.bookmarks.restore_default_bookmarks" = value false;
           };
