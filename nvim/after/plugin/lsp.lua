@@ -10,7 +10,7 @@ set("n", "K", function()
 end, { desc = "LSP: Hover Documentation" })
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require("blink.cmp").get_lsp_capabilities(capabilities)
+-- capabilities = require("blink.cmp").get_lsp_capabilities(capabilities)
 
 vim.g.rustaceanvim = {
 	inlay_hints = {

@@ -66,7 +66,7 @@ in
       # for nvim
       buf
       lua-language-server
-      neovim
+      unstable.neovim
       nixd
       nixfmt
       prettier

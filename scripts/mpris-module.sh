@@ -3,6 +3,8 @@
 # /usr/bin/env nix
 # nix shell nixpkgs#bash nixpkgs#playerctl nixpkgs#gnused --command bash
 
+alias playerctl="~/.dotfiles/scripts/playerctl-wrapper"
+
 # check that there is actual data to read, overwrite data with nothing and exit otherwise
 if [ -z "$(playerctl metadata 2> /dev/null)" ]
 then

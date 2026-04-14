@@ -1,0 +1,33 @@
+#! /usr/bin/env sh
+
+ctl () {
+	if [ -z "$selected_player" ]
+	then
+		playerctl $@
+	else
+		playerctl -p $selected_player $@
+	fi
+}
+
+selected_player_file=/tmp/current-player
+
+if [ -e $selected_player_file ]
+then
+	selected_player=$(cat $selected_player_file)
+fi
+
+# selected player does not currently exist, remove it
+if playerctl -p $selected_player metadata &>/dev/stdout | grep "No players found" &>/dev/null
+then
+	echo non-existent player found in file, removing
+	rm $selected_player_file
+	selected_player=
+fi
+
+# player has been provided, clear selection from file
+if echo "$@" | grep -- " -p " > /dev/null
+then
+	selected_player=
+fi
+
+ctl $@

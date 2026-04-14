@@ -1,0 +1,25 @@
+#! /usr/bin/env sh
+
+selected_player_file=/tmp/current-player
+
+if [ -e $selected_player_file ]
+then
+	selected_player=$(cat $selected_player_file)
+fi
+
+players=$(playerctl -l)
+
+selected=$(for player in $players
+do
+	title=$(playerctl metadata -p $player -f '{{title}}')
+
+	echo "${player}:${title}"
+done | fuzzel -d)
+
+for player in $players
+do
+	if echo $selected | grep "^${player}.*" &>/dev/null
+	then
+		echo $player > $selected_player_file
+	fi
+done
