@@ -7,7 +7,7 @@ local autoformat_enabled = true
 local function is_null_ls_formatting_enabled(bufnr)
 	local file_type = vim.api.nvim_get_option_value("filetype", { buf = bufnr })
 	local generators =
-		require("null-ls.generators").get_available(file_type, require("null-ls.methods").internal.FORMATTING)
+	    require("null-ls.generators").get_available(file_type, require("null-ls.methods").internal.FORMATTING)
 	return #generators > 0
 end
 

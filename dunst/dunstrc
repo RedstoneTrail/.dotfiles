@@ -25,8 +25,7 @@
 	format					= <b>%a/%s</b>\n%b\n%p
 	enable_recursive_icon_lookup		= true
 	timeout					= 60
-	mouse_right_click			= context
-	dmenu					= /usr/bin/fuzzel --dmenu
+	dmenu					= fuzzel --dmenu
 	enable_posix_regex			= true
 
 [urgency_low]
