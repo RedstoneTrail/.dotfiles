@@ -1,0 +1,3 @@
+[Desktop Entry]
+Name=ffplay
+Exec=ffplay %F

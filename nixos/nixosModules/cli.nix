@@ -45,7 +45,10 @@ in
     ] "mpv.desktop")
     // (genAttrsConst [
       "inode/directory"
-    ] "nvim.desktop");
+    ] "nvim.desktop")
+    // (genAttrsConst [
+      "image/svg+xml"
+    ] "inkview.desktop");
 
     programs = {
       zsh.enable = true;
@@ -79,15 +82,18 @@ in
       dig
       impala
       nmap
+      termshark
 
       # useful
       bc
+      catimg
       custom.mountui
       dust
       fd
       ffmpeg-full
       file
       fzf
+      inkscape
       jq
       (mpv.override {
         scripts = with mpvScripts; [
@@ -154,9 +160,23 @@ in
       # man.generateCaches = true;
     };
 
-    programs.gnupg.agent = {
-      enable = true;
-      pinentryPackage = pkgs.pinentry-gnome3;
+    programs = {
+      gnupg.agent = {
+        enable = true;
+        pinentryPackage = pkgs.pinentry-gnome3;
+      };
+
+      wireshark = {
+        enable = true;
+      };
+    };
+
+    security.wrappers.termshark = {
+      source = "${pkgs.termshark}/bin/termshark";
+      capabilities = "cap_net_raw,cap_net_admin+eip";
+      owner = "root";
+      group = "wireshark";
+      permissions = "u+rx,g+x";
     };
 
     services.smartd.enable = lib.mkIf cfg-hardware-access.enable true;

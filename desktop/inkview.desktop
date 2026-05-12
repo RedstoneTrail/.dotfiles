@@ -1,0 +1,18 @@
+# https://gitlab.com/inkscape/inkscape/-/merge_requests/7370/diffs?commit_id=65d470c63215cacb5b1c85db49b8ee0347cb3243#97630713b140b8b462701d4f83b43c9858398729
+
+# SPDX-License-Identifier: GPL-2.0-or-later
+[Desktop Entry]
+Version=1.0
+Name=Inkview
+GenericName=Vector Graphics Viewer
+X-GNOME-FullName=Inkview Vector Graphics Viewer
+Comment=View Scalable Vector Graphics images
+Keywords=image;viewer;vector;drawing;
+Type=Application
+Categories=Graphics;Viewer;VectorGraphics;GTK;
+MimeType=image/svg+xml
+Exec=inkview %F
+TryExec=inkview
+Terminal=false
+StartupNotify=true
+Icon=org.inkscape.Inkscape

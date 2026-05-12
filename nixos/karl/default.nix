@@ -29,6 +29,7 @@
         gaming = enabled;
         graphical = enabled;
         hardware-accessible = enabled;
+        input = enabled;
         networking-control = enabled;
         school = enabled;
         ssh = enabled;
@@ -52,6 +53,7 @@
         "network"
         "networkmanager"
         "uinput"
+        "wireshark"
         # ]
         # ++ lib.mkIf config.dotfiles.pihole.enabled [
         #   "docker"

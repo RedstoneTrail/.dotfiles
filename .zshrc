@@ -90,11 +90,20 @@ alias  pcnd="nix-wrapper proxychains-develop"
 alias   nfu="nix flake update"
 alias pcnfu="proxychains4 -q nix flake update"
 
+alias n="nom"
+
 alias httplz="python -m http.server"
 
 alias  m="make"
 alias mt="make test"
 alias mb="make build"
+
+if command -v cargo &>/dev/null
+then
+	alias c=cargo
+	alias cr="c r"
+	alias cb="c b"
+fi
 
 if command -v zig &>/dev/null
 then

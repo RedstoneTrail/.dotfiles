@@ -18,6 +18,7 @@
     gaming.enable = lib.mkEnableOption "Enable settings related to gaming";
     graphical.enable = lib.mkEnableOption "Enable graphical features";
     hardware-accessible.enable = lib.mkEnableOption "Enable hardware access";
+    input.enable = lib.mkEnableOption "Enable input remapping with kanata";
     networking-control.enable = lib.mkEnableOption "Enable configuration of networking hardware and low-level software";
     pihole.enable = lib.mkEnableOption "Enable hosting pihole for network-wide adblock";
     printing.enable = lib.mkEnableOption "Enable CUPS and other printing features";

@@ -103,6 +103,6 @@ clean-store:
 clean-generations:
 	df -h / &> /tmp/usage-before
 	sudo nix-env -p /nix/var/nix/profiles/system --delete-generations +3
-	make nixos
+	# make nixos
 	df -h / &> /tmp/usage-after
 	cat /tmp/usage-before /tmp/usage-after
