@@ -87,16 +87,36 @@ else
 	SPECIALISATION_FLAGS:=-c "$(shell cat $(SPECIALISATION_FILE))"
 endif
 
+ifeq (,$(shell which nom))
+	HAME_NOM:="n"
+else
+	HAVE_NOM:="y"
+endif
+
 nixos:
 	git add .
 	@echo building for $(SPECIALISATION) with \"$(SPECIALISATION_FLAGS)\"
-	sudo nixos-rebuild switch --flake ./nixos $(SPECIALISATION_FLAGS)
+	if [ $(HAVE_NOM) == "n" ]; then sudo nixos-rebuild switch --flake ./nixos $(SPECIALISATION_FLAGS); fi
+	if [ $(HAVE_NOM) == "y" ]; \
+	then \
+		sudo printf ""; \
+		sudo nixos-rebuild switch --log-format internal-json --flake ./nixos $(SPECIALISATION_FLAGS) |& nom --json; \
+	fi
 
 clean-store:
 	df -h / &> /tmp/usage-before
-	sudo nix store gc
-	sudo nix store optimise
-	make nixos
+	if [ $(HAVE_NOM) == "n" ]; \
+	then \
+		sudo nix store gc; \
+		sudo nix store optimise; \
+	fi
+	if [ $(HAVE_NOM) == "y" ]; \
+	then \
+		sudo printf ""; \
+		sudo nix store gc --log-format internal-json |& nom --json; \
+		sudo nix store optimise  --log-format internal-json |& nom --json; \
+	fi
+	# make nixos
 	df -h / &> /tmp/usage-after
 	cat /tmp/usage-before /tmp/usage-after
 
@@ -106,3 +126,5 @@ clean-generations:
 	# make nixos
 	df -h / &> /tmp/usage-after
 	cat /tmp/usage-before /tmp/usage-after
+
+clean-all: clean-generations clean-store

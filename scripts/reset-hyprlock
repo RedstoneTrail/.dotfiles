@@ -13,3 +13,10 @@ done
 
 # re-launch lock
 hyprctl --instance 0 keyword exec $LOCK_TOOL
+
+# wait for re-login
+echo go and login, then press enter here
+read a
+
+# disallow lock restore
+hyprctl --instance 0 keyword misc:allow_session_lock_restore 0

@@ -11,7 +11,7 @@
         # temporarily comment the line below when setting up secure boot
         secureBoot.enable = true;
         package = pkgs.unstable.limine;
-        maxGenerations = 10;
+        maxGenerations = 5;
         style = {
           wallpapers = [
             "/home/redstonetrail/.dotfiles/wallpapers/wallpaper.png"
@@ -30,7 +30,6 @@
     };
 
     kernel.sysctl."kernel.sysrq" = 1;
-    kernelPackages = pkgs.linuxPackages_6_18;
 
     tmp.cleanOnBoot = true;
   };

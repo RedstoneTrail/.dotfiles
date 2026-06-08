@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+
+tmpdir=$(mktemp -d)
+dir=$(pwd)
+cd $tmpdir
+
+yt-dlp --cookies-from-browser firefox -o "%(autonumber)s-%(title)s.%(ext)s" --add-metadata $1
+
+mpv $tmpdir
+
+cd $dir
+rm -r $tmpdir

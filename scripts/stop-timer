@@ -1,0 +1,25 @@
+#!/usr/bin/env sh
+
+filename=$(ls /tmp/active-timers | fuzzel -d)
+
+if [ -z "$filename" ]
+then
+	exit
+fi
+
+timer_file="/tmp/active-timers/$filename"
+
+info=$(cat $timer_file)
+
+pid=$(echo $info | cut -d\: -f 1)
+
+echo stopping timer from file $timer_file with pid $pid
+
+kill $pid
+
+rm -f $timer_file
+
+if [ -z "$(ls -A /tmp/active-timers)" ]
+then
+	rm -rf /tmp/active-timers
+fi

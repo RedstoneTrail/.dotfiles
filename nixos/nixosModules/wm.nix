@@ -10,7 +10,10 @@ in
 {
   config = lib.mkIf cfg.enable {
     programs = {
-      hyprland.enable = true;
+      hyprland = {
+        enable = true;
+        # package = pkgs.unstable.hyprland;
+      };
 
       dconf = {
         enable = true;

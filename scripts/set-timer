@@ -1,0 +1,66 @@
+#!/usr/bin/env sh
+
+if [ -z "$@" ]
+then
+	duration=$(printf "5m\n1m\n30s" |fuzzel -d)
+else
+	duration="$@"
+fi
+
+start_time=$(date +%T)
+
+total_time=0
+
+for token in $(echo $duration | tr ' ' '\n')
+do
+	unit=$(echo $token | rev | cut -b 1 | rev)
+	number=$(echo $token | rev | cut -b 2- | rev)
+
+	case $unit in
+		s)
+			multiplier=1
+			;;
+		m)
+			multiplier=60
+			;;
+		h)
+			multiplier=$(( 60 * 60 ))
+			;;
+		0|1|2|3|4|5|6|7|8|9)
+			multiplier=1
+			number="${number}${unit}"
+			;;
+		*)
+			echo invalid time unit: $unit
+			exit
+			;;
+	esac
+
+	total_time=$(( $total_time + $number * $multiplier ))
+
+	echo $total_time seconds
+done
+
+if [ ! -z "$duration" ]
+then
+	mkdir -p /tmp/active-timers
+
+	PIDFILE="/tmp/active-timers/$(echo $duration | tr ' ' '-')@$(echo $start_time | tr ':' '-')"
+
+	timestamp=$(date +%s)
+	
+	end_time=$(( $timestamp + $total_time ))
+
+	printf "%s:%s" $$ $end_time > $PIDFILE
+
+	echo sleeping for $duration \($total_time seconds\)
+	sleep $total_time
+	notify-send -a "timer" "$duration passed since $start_time"
+
+	rm $PIDFILE
+fi
+
+if [ -z "$(ls -A /tmp/active-timers)" ]
+then
+	rm -rf /tmp/active-timers
+fi

@@ -13,11 +13,17 @@ if pactl get-sink-mute @DEFAULT_SINK@ | grep no; then
 
 	if [ "$1" == "lid" ];
 	then
+		echo locked at $(date) > /tmp/open
+
 		systemctl sleep
+
 		$lock_cmd
 	else
 		$lock_cmd
 	fi
+
+	echo unlocked at $(date) >> /tmp/open
+
 	pactl set-sink-mute @DEFAULT_SINK@ false
 else
 	playerctl -a pause

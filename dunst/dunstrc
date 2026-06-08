@@ -5,13 +5,12 @@
 	notification_limit			= 10
 	origin					= bottom-left
 	offset					= (4, 4)
-	progress_bar				= true
-	progress_bar_horizontal_alignment	= right
+	progress_bar_horizontal_alignment	= left
 	progress_bar_height			= 16
 	progress_bar_min_width			= 128
 	progress_bar_max_width			= 256
 	progress_bar_frame_width		= 0
-	progress_bar_corner_radius		= 5
+	progress_bar_corner_radius		= 8
 	separator_height			= 0
 	padding					= 4
 	horizontal_padding			= 4
@@ -24,7 +23,7 @@
 	line_height				= 0
 	format					= <b>%a/%s</b>\n%b\n%p
 	enable_recursive_icon_lookup		= true
-	timeout					= 60
+	timeout					= 0
 	dmenu					= fuzzel --dmenu
 	enable_posix_regex			= true
 

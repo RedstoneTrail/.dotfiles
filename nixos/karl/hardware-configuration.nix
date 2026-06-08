@@ -14,13 +14,15 @@
     hardware.graphics.enable = true;
 
     boot = {
-      initrd.availableKernelModules = [
-        "xhci_pci"
-        "ahci"
-        "nvme"
-        "usbhid"
-      ];
-      initrd.kernelModules = [ ];
+      initrd = {
+        availableKernelModules = [
+          "xhci_pci"
+          "ahci"
+          "nvme"
+          "usbhid"
+        ];
+        kernelModules = [ ];
+      };
       kernelModules = [ "kvm-intel" ];
       extraModulePackages = [ ];
       extraModprobeConfig = ''
@@ -49,14 +51,15 @@
     swapDevices = [
       { device = "/dev/disk/by-label/swap"; }
     ];
+    zramSwap = {
+      enable = true;
+      memoryPercent = 75;
+    };
 
     networking.useDHCP = lib.mkDefault true;
 
     nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
     hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-
-    # always blacklist nouveau
-    boot.blacklistedKernelModules = [ "nouveau" ];
 
     # enable powertop
     powerManagement.powertop = {
@@ -83,5 +86,11 @@
       ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x030000", TEST=="power/control", ATTR{power/control}="auto"
       ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x030200", TEST=="power/control", ATTR{power/control}="auto"
     '';
+
+    # disable keyboard power management
+    powerManagement.powertop.postStart = ''for i in /sys/bus/usb/devices/*/power/control; do /bin/sh -c "echo on > $i"; done'';
+
+    # always blacklist nouveau
+    boot.blacklistedKernelModules = [ "nouveau" ];
   };
 }

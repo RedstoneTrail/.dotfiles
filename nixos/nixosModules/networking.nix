@@ -11,8 +11,10 @@ in
     networking = {
       networkmanager = {
         enable = true;
-        wifi.backend = "iwd";
-        wifi.powersave = true;
+        wifi = {
+          backend = "iwd";
+          powersave = true;
+        };
         # dns = "dnsmasq";
       };
       firewall.enable = false;

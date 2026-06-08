@@ -27,7 +27,7 @@ else
 		else
 			cd {1}
 			git -C . rev-parse 2>/dev/null && git log --oneline --color | head -n3
-			eza --icons --git --tree --color=always
+			# eza --icons --git --tree --color=always
 		fi
 	')
 fi

@@ -216,7 +216,7 @@ fi
 # # remove the non-directory path entry ~/.nix-profile/bin
 # export PATH=$(echo $PATH | tr ':' '\n' | grep -v '.nix-profile/bin' | tr '\n' ':' | rev | cut -b2- | rev)
 
-# start tmux session if not on vt
+# start tmux session if not on vt, termux or in tmux
 if [ -z "$TMUX" ] && [ "$TERM" != "linux" ] && [ -z "$TERMUX_VERSION" ]
 then
 	exec tmux

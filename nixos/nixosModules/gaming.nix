@@ -18,9 +18,11 @@ in
       gamescope
       lutris
       mangohud
+      mcpelauncher-ui-qt
       prismlauncher
       r2modman
       vkquake
+      openjdk25
     ];
 
     programs = {

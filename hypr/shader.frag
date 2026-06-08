@@ -84,5 +84,7 @@ void main() {
 
     // pixColor = vecpow(pixColor, 0.7);
 
+    // pixColor = pow(pixColor,vec4(0.75));
+
     fragColor = pixColor;
 }

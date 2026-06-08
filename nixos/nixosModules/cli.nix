@@ -103,16 +103,18 @@ in
           mpv-image-viewer.image-positioning
         ];
       })
+      mpv-handler
       nethogs
       ripgrep
       socat
       tmux
       tree
-      w3m-nographics
-      wget
-      zip
       units
       unzip
+      w3m-nographics
+      wget
+      xxd
+      zip
 
       # man
       man-pages

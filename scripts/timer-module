@@ -1,0 +1,49 @@
+#!/usr/bin/env sh
+
+timers=$(ls -A /tmp/active-timers | wc -l)
+
+if [ "$timers" == "0" ]
+then
+	exit
+fi
+
+for timer in /tmp/active-timers/*
+do
+	info=$(cat $timer)
+
+	pid=$(cat $timer | cut -d\: -f 1)
+
+	if ! ps -p $pid &>/dev/null
+	then
+		echo nonexistent timer found: $timer, removing >/dev/stderr
+		rm -f $timer
+	fi
+
+	timestamp=$(echo $info | cut -d\: -f 2)
+
+	if [ -z "$soonest" ]
+	then
+		soonest=$timestamp
+	fi
+
+	if [ "$timestamp" -lt "$soonest" ]
+	then
+		soonest=$timestamp
+	fi
+done
+
+pretty_time=$(date --date="@$((- 60 * 60 + $soonest - $(date +%s)))" +%T)
+
+# echo $pretty_time
+
+time_to_end=$(( $soonest - $(date +%s) ))
+
+printf "| $timers timer"
+
+if [ "$timers" != "1" ]
+then
+	printf "s"
+fi
+
+# printf " - next ends at $pretty_time (${time_to_end}s away)"
+printf " - next ends in ${pretty_time}"
