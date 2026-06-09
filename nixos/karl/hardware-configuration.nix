@@ -53,7 +53,7 @@
     ];
     zramSwap = {
       enable = true;
-      memoryPercent = 75;
+      memoryPercent = 50;
     };
 
     networking.useDHCP = lib.mkDefault true;
