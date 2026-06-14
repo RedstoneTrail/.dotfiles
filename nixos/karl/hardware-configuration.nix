@@ -51,10 +51,10 @@
     swapDevices = [
       { device = "/dev/disk/by-label/swap"; }
     ];
-    zramSwap = {
-      enable = true;
-      memoryPercent = 50;
-    };
+    # zramSwap = {
+    #   enable = true;
+    #   memoryPercent = 50;
+    # };
 
     networking.useDHCP = lib.mkDefault true;
 

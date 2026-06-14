@@ -1,6 +1,10 @@
 # zmodload zsh/zprof
 
-which -v hyprctl &> /dev/null && pgrep Hyprland &>/dev/null && export HYPRLAND_INSTANCE_SIGNATURE=$(hyprctl -j instances | jq -r '.[0].instance')
+have_cmd() {
+	command -v $1 &>/dev/null
+}
+
+have_cmd hyprctl && have_cmd pgrep && have_cmd jq && pgrep Hyprland &>/dev/null && export HYPRLAND_INSTANCE_SIGNATURE=$(hyprctl -j instances | jq -r '.[0].instance')
 
 zstyle ':completion:*' completer _expand _complete _match _correct _prefix _ignored
 zstyle :compinstall filename '~/.zshrc'
@@ -32,8 +36,11 @@ zinit ice depth=1
 zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-completions
 
-zinit light joshskidmore/zsh-fzf-history-search
-command -v fzf &> /dev/null && source <(fzf --zsh)
+if have_cmd fzf
+then
+	zinit light joshskidmore/zsh-fzf-history-search
+	source <(fzf --zsh)
+fi
 
 zinit light zdharma-continuum/fast-syntax-highlighting
 # fast-theme ~/.dotfiles/zsh-fast-theme.ini > /dev/null
@@ -50,64 +57,72 @@ function zvm_after_select_vi_mode() {
 	create_prompt
 }
 
-# zinit wait lucid for \
-# 	pick"zsh/fzf-zsh-completion.sh" \
-# 		lincheney/fzf-tab-completion \
-# 		OMZP::git \
-
-# ZSH_AUTOSUGGEST_IGNORE_WIDGETS=(fzf_completion)
-
 alias ls="ls --color=auto -ahp --time-style='+%Y-%m-%d %H:%M'"
 alias  l="ls -l"
 
-alias lsusb="cyme --lsusb"
+have_cmd grep && alias grep="grep --color=auto"
 
-alias grep="grep --color=auto"
+have_cmd fzf && alias fm="fzfman"
 
-alias fm="fzfman"
+have_cmd bc && alias bc="bc -lq"
 
-alias open="xdg-open"
+have_cmd xdg-open && alias open="xdg-open"
 
-alias notify="notify-send -a zsh done"
+if have_cmd notify-send
+then
+	alias notify="notify-send -a zsh done"
+fi
 
-alias bc="bc -lq"
+if have_cmd proxychains4
+then
+	alias proxychains4="env proxychains4 -q"
+	alias pc="IS_TOR_SHELL=1 env proxychains4 -q"
+fi
 
-alias proxychains4="env proxychains4 -q"
-alias pc="IS_TOR_SHELL=1 env proxychains4 -q"
+if have_cmd nix
+then
+	if have_cmd git
+	then
+		nd-gcroot() {
+			dir=$(git rev-parse --show-toplevel)
+			nix build .#devShells.x86_64-linux.default --out-link "$dir/.nix-gcroot"
+		}
+	fi
 
-nd-gcroot() {
-	dir=$(git rev-parse --show-toplevel)
-	nix build .#devShells.x86_64-linux.default --out-link "$dir/.nix-gcroot"
-}
+	alias   nix="IS_NIX_SHELL=1 nix"
+	alias    ns="nix-wrapper shell"
+	alias    nr="nix-wrapper run"
+	alias    nd="nix-wrapper develop"
+	alias   nfu="nix flake update"
 
-alias   nix="IS_NIX_SHELL=1 nix"
-alias    ns="nix-wrapper shell"
-alias  pcns="nix-wrapper proxychains-shell"
-alias    nr="nix-wrapper run"
-alias  pcnr="nix-wrapper proxychains-run"
-alias    nd="nix-wrapper develop"
-alias  pcnd="nix-wrapper proxychains-develop"
-alias   nfu="nix flake update"
-alias pcnfu="proxychains4 -q nix flake update"
+	if have_cmd proxychains4
+	then
+		alias  pcns="nix-wrapper proxychains-shell"
+		alias  pcnr="nix-wrapper proxychains-run"
+		alias  pcnd="nix-wrapper proxychains-develop"
+		alias pcnfu="proxychains4 -q nix flake update"
+	fi
+fi
 
-alias n="nom"
+have_cmd python && alias httplz="python -m http.server"
 
-alias httplz="python -m http.server"
+if have_cmd make
+then
+	alias  m="make"
+	alias mt="make test"
+	alias mb="make build"
+fi
 
-alias  m="make"
-alias mt="make test"
-alias mb="make build"
-
-if command -v cargo &>/dev/null
+if have_cmd cargo
 then
 	alias c=cargo
 	alias cr="c r"
 	alias cb="c b"
 fi
 
-if command -v zig &>/dev/null
+if have_cmd zig
 then
-	zig_test() {
+	zbt() {
 		if echo $@ | grep '--summary' &>/dev/null
 		then
 			zig build test $@
@@ -115,24 +130,28 @@ then
 			zig build test --summary all $@
 		fi
 	}
-	alias zbt=zig_test
+
 	alias zbr="zig build run"
 	alias  zb="zig build"
 fi
 
-alias vim=nvim
+have_cmd cyme && alias lsusb="cyme --lsusb"
 
-export NNN_OPTS="cdHiJQuU"
-export NNN_OPENER="$HOME/.dotfiles/scripts/nnn-nuke.sh"
+if have_cmd nvim
+then
+	alias vim=nvim
 
-export GNUPGHOME="~/.gnupg"
+	export MANPAGER="nvim \+Man\!"
+	export EDITOR=nvim
+fi
 
-# export PATH=$PATH:/sbin:/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/sbin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/usr/lib/rustup/bin:$HOME/bin:$HOME/.dotfiles/scripts:$HOME/.cargo/bin/
+have_cmd gpg && export GNUPGHOME="~/.gnupg"
+
 export PATH=$PATH:$HOME/.dotfiles/scripts:$HOME/bin
-export PAGER=less
-export MANPAGER="nvim \+Man\!"
-export EDITOR=nvim
-export BROWSER=firefox
+
+have_cmd less && export PAGER=less
+
+have_cmd firefox && export BROWSER=firefox
 export TERMINAL=$TERM
 
 export ESCDELAY=0
@@ -142,7 +161,7 @@ setopt no_hist_verify
 
 export FUNCNEST=1000
 
-export today=$(date '+%Y-%m-%d')
+have_cmd date && export today=$(date '+%Y-%m-%d')
 
 create_prompt() {
 	separator="/"
@@ -167,7 +186,6 @@ create_prompt() {
 		;;
 	esac
 
-	# prompt faff
 	PS1="%F{6}%~%f$separator$PS1"
 	RPROMPT="[%D{%L:%M:%S}]"
 
@@ -205,16 +223,6 @@ create_prompt
 # Fix home and end
 bindkey '^[[1~' beginning-of-line
 bindkey '^[[4~' end-of-line
-
-# Nix
-if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
-	. '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
-	export PATH="$PATH:/nix/var/nix/profiles/default/bin"
-fi
-# End Nix
-
-# # remove the non-directory path entry ~/.nix-profile/bin
-# export PATH=$(echo $PATH | tr ':' '\n' | grep -v '.nix-profile/bin' | tr '\n' ':' | rev | cut -b2- | rev)
 
 # start tmux session if not on vt, termux or in tmux
 if [ -z "$TMUX" ] && [ "$TERM" != "linux" ] && [ -z "$TERMUX_VERSION" ]
