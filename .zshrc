@@ -43,7 +43,6 @@ then
 fi
 
 zinit light zdharma-continuum/fast-syntax-highlighting
-# fast-theme ~/.dotfiles/zsh-fast-theme.ini > /dev/null
 
 zinit light jeffreytse/zsh-vi-mode
 bindkey -v
