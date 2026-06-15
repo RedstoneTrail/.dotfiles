@@ -94,7 +94,6 @@ else
 endif
 
 nixos:
-	git add .
 	@echo building for $(SPECIALISATION) with \"$(SPECIALISATION_FLAGS)\"
 	if [ $(HAVE_NOM) == "n" ]; then sudo nixos-rebuild switch --flake ./nixos $(SPECIALISATION_FLAGS); fi
 	if [ $(HAVE_NOM) == "y" ]; \

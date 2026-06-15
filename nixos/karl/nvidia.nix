@@ -1,4 +1,6 @@
 {
+  pkgs,
+  config,
   ...
 }:
 {
@@ -51,5 +53,6 @@
     "libnvjitlink"
     "nvidia-x11"
     "cudnn"
+    "nvidia-settings"
   ];
 }
