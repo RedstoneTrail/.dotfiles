@@ -36,10 +36,6 @@
 
   programs = {
     nix-ld.enable = true;
-    nh = {
-      enable = true;
-      flake = "/home/redstonetrail/.dotfiles/nixos";
-    };
   };
 
   services.envfs.enable = true;
