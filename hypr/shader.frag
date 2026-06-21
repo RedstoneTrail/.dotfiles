@@ -86,5 +86,11 @@ void main() {
 
     // pixColor = pow(pixColor,vec4(0.75));
 
+    // float total = pixColor.x + pixColor.y + pixColor.z;
+
+    // float ratio = 0.7;
+
+    // pixColor = vec4(vec3(total/3.0) * ratio + pixColor.xyz * (1.0 - ratio) ,pixColor.w);
+
     fragColor = pixColor;
 }

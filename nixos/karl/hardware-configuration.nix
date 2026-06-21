@@ -85,6 +85,8 @@
       # Enable runtime PM for NVIDIA VGA/3D controller devices on adding device
       ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x030000", TEST=="power/control", ATTR{power/control}="auto"
       ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x030200", TEST=="power/control", ATTR{power/control}="auto"
+
+      KERNEL=="intel-rapl:0", SUBSYSTEM=="powercap", RUN="/run/current-system/sw/bin/chmod +rw /sys/class/powercap/intel-rapl:0/energy_uj"
     '';
 
     # disable keyboard power management

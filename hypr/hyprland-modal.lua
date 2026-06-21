@@ -2,7 +2,7 @@
 
 hl.monitor({
 	output = "",
-	mode = "preferred",
+	mode = "highrr",
 	position = "auto",
 	scale = "1",
 })
@@ -59,7 +59,8 @@ env {
 
 	{ "PATH",                os.getenv("PATH") .. ":/home/redstonetrail/.dotfiles/scripts" },
 
-	{ "NIXOS_OZONE_WL",      "true env = XCURSOR_SIZE,24" },
+	{ "NIXOS_OZONE_WL",      "1" },
+	{ "XCURSOR_SIZE",        "24" },
 
 	{ "HYPRCURSOR_SIZE",     "24" },
 	{ "HYPRCURSOR_THEME",    "catppuccin-frappe-green-cursors" },
@@ -280,8 +281,10 @@ hl.define_submap("screenshot", function()
 		if (screenshot_mode.area == SCREENSHOT_AREA_MODES.screen) then
 			hl.exec_cmd(preexec .. "slurp > " .. screenshot_area_outfile .. postexec)
 		elseif (screenshot_mode.area == SCREENSHOT_AREA_MODES.window) then
-			hl.exec_cmd(preexec .. "hyprctl -j activewindow | jq -r \\(.at[0]\\),\\(.at[1]\\) \\(.size[0]\\)x\\(.size[1]\\) > " .. screenshot_area_outfile .. postexec)
--- hyprctl -j activewindow | jq -r '"\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])"'
+			hl.exec_cmd(preexec ..
+				"hyprctl -j activewindow | jq -r \\(.at[0]\\),\\(.at[1]\\) \\(.size[0]\\)x\\(.size[1]\\) > " ..
+				screenshot_area_outfile .. postexec)
+			-- hyprctl -j activewindow | jq -r '"\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])"'
 		end
 	end)
 end)

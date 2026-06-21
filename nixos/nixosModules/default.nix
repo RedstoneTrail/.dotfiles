@@ -22,6 +22,7 @@
     networking-control.enable = lib.mkEnableOption "Enable configuration of networking hardware and low-level software";
     pihole.enable = lib.mkEnableOption "Enable hosting pihole for network-wide adblock";
     printing.enable = lib.mkEnableOption "Enable CUPS and other printing features";
+    rclone.enable = lib.mkEnableOption "Enable rclone";
     school.enable = lib.mkEnableOption "Enable software and other such config for school";
     ssh.enable = lib.mkEnableOption "Enable ssh";
     tor.enable = lib.mkEnableOption "Enable tor proxying using torsocks and proxychains";
@@ -42,6 +43,7 @@
     ./nixosSupport.nix
     ./pihole.nix
     ./printing.nix
+    ./rclone.nix
     ./school.nix
     ./ssh.nix
     ./tor.nix

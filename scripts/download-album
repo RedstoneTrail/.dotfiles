@@ -1,5 +1,5 @@
 #!/usr/bin/env nix
-#!nix shell nixpkgs#ffmpeg-full nixpkgs#yt-dlp nixpkgs#id3v2 nixpkgs#eyed3 -c zsh
+#!nix shell nixpkgs#ffmpeg-full github:nixos/nixpkgs#yt-dlp nixpkgs#id3v2 nixpkgs#eyed3 -c zsh
 
 alias yt-dlp="yt-dlp --cookies-from-browser firefox"
 

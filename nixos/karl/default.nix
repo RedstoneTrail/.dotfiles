@@ -31,6 +31,7 @@
         hardware-accessible = enabled;
         input = enabled;
         networking-control = enabled;
+        rclone = enabled;
         school = enabled;
         ssh = enabled;
         tor = enabled;

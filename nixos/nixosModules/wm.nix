@@ -60,10 +60,14 @@ in
       udisks2.enable = true;
     };
 
-    fonts.packages = with pkgs; [
-      nerd-fonts.fira-mono
-      noto-fonts-color-emoji
-    ];
+    fonts = {
+      fontDir.enable = true;
+
+      packages = with pkgs; [
+        nerd-fonts.fira-mono
+        noto-fonts-color-emoji
+      ];
+    };
 
     environment.systemPackages =
       with pkgs;
