@@ -28,9 +28,6 @@ in
     programs = {
       steam.enable = true;
       java.enable = true;
-      gamemode = {
-        enable = true;
-      };
     };
   };
 }
