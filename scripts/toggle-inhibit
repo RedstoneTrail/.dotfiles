@@ -13,3 +13,5 @@ else
 		--who="$(whoami)" \
 		sleep 1000000000 & echo $! > $INHIBITOR_FILE; disown
 fi
+
+pkill -RTMIN+2 waybar

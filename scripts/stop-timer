@@ -23,3 +23,5 @@ if [ -z "$(ls -A /tmp/active-timers)" ]
 then
 	rm -rf /tmp/active-timers
 fi
+
+pkill -RTMIN+3 waybar

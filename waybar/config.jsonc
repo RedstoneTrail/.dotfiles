@@ -2,8 +2,12 @@
   "layer": "top",
   "height": 30,
   "spacing": 4,
-  //, "hyprland/submap"
-  "modules-left": ["hyprland/workspaces", "hyprland/submap", "custom/timers"],
+  "modules-left": [
+    "hyprland/workspaces",
+    "hyprland/submap",
+    "custom/screenshot-mode",
+    "custom/timers",
+  ],
   "modules-center": ["custom/mpris"],
   "modules-right": [
     "tray",
@@ -84,7 +88,7 @@
   },
   "custom/inhibitor": {
     "return-type": "text",
-    "interval": 1,
+    "signal": 2,
     "exec": "cat /tmp/inhibitor 2>/dev/null",
     "format": " ",
   },
@@ -98,15 +102,25 @@
     },
   },
   "custom/timers": {
-    "exec-if": "ls /tmp/active-timers &>/dev/null",
     "exec": "~/.dotfiles/scripts/timer-module",
     "hide-empty-text": true,
     "interval": 1,
+    "signal": 3,
     "format": "{}",
+    "tooltip": false,
+  },
+  "custom/screenshot-mode": {
+    "exec-if": "ls /tmp/screenshot-mode &>/dev/null",
+    "exec": "cat /tmp/screenshot-mode",
+    "hide-empty-text": true,
+    "signal": 1,
+    "format": "- {}",
     "tooltip": false,
   },
   "hyprland/submap": {
     "format": "| {}",
+    "always-on": true,
+    "default-submap": "normal",
   },
 }
 

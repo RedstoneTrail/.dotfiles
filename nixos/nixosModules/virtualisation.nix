@@ -56,7 +56,7 @@ in
     };
 
     environment.systemPackages = [
-      pkgs.wineWowPackages.waylandFull
+      pkgs.wineWow64Packages.waylandFull
     ];
 
     users.groups.libvirtd.members = [ "redstonetrail" ];

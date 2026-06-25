@@ -53,6 +53,8 @@ then
 
 	printf "%s:%s" $$ $end_time > $PIDFILE
 
+	pkill -RTMIN+3 waybar
+
 	echo sleeping for $duration \($total_time seconds\)
 	sleep $total_time
 	notify-send -a "timer" "$duration passed since $start_time"

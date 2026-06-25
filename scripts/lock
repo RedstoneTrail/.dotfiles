@@ -7,25 +7,28 @@ else
 	lock_cmd="hyprlock"
 fi
 
+playerctl -a pause
+
 if pactl get-sink-mute @DEFAULT_SINK@ | grep no; then
-	playerctl -a pause
+	muted="yes"
 	pactl set-sink-mute @DEFAULT_SINK@ true
+fi
 
-	if [ "$1" == "lid" ];
-	then
-		echo locked at $(date) > /tmp/open
+echo locked at $(date) > /tmp/open
 
-		systemctl sleep
+if [ "$1" == "lid" ] || [ "$1" == "sleep" ]
+then
+	systemctl sleep
+elif [ "$1" == "hibernate" ]
+then
+	systemctl hibernate
+fi
 
-		$lock_cmd
-	else
-		$lock_cmd
-	fi
+$lock_cmd > /tmp/log
 
-	echo unlocked at $(date) >> /tmp/open
+echo unlocked at $(date) >> /tmp/open
 
+if ! [ -z "$muted" ]
+then
 	pactl set-sink-mute @DEFAULT_SINK@ false
-else
-	playerctl -a pause
-	$lock_cmd
 fi

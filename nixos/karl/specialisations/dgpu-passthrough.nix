@@ -9,7 +9,7 @@
       pkgs.btop
     ];
 
-    etc."specialisation".text = "dgpu-passhthrough";
+    etc."specialisation".text = "dgpu-passthrough";
   };
 
   system.nixos.tags = [ "dgpu-passthrough" ];
