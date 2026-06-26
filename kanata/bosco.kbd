@@ -1,0 +1,25 @@
+(defcfg
+  process-unmapped-keys yes
+  concurrent-tap-hold yes
+  allow-hardware-repeat no
+  linux-dev /dev/input/by-path/platform-i8042-serio-0-event-kbd
+)
+
+(defalias
+  escfn (layer-while-held fn)
+)
+
+(defsrc
+  lmet lctl lalt
+  esc f1 f2 f3 f4 f6 f7 f8 f9 f10
+)
+
+(deflayer base
+  (tap-hold 200 150 esc lctl) lalt lmet
+  @escfn f1 f2 f3 f4 f6 f7 f8 f9 f10
+)
+
+(deflayer fn
+  _ _ _
+  _ MediaTrackPrevious MediaTrackNext MediaPlayPause prnt brdown brup mute vold volu
+)

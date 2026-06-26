@@ -1,15 +1,12 @@
 {
-  pkgs,
   config,
   lib,
+  pkgs,
   ...
 }:
 {
   imports = [
-    ./boot.nix
     ./hardware-configuration.nix
-    ./intel.nix
-    ./specialisations.nix
     ../nixosModules/limine.nix
     ../nixosModules/user.nix
   ];
@@ -25,44 +22,28 @@
         };
       in
       {
-        android-tooling = enabled;
         bluetooth = enabled;
         cli = enabled;
-        gaming = enabled;
         graphical = enabled;
         hardware-accessible = enabled;
         input = enabled;
         networking-control = enabled;
         rclone = enabled;
-        school = enabled;
         ssh = enabled;
         tor = enabled;
         torrenting = enabled;
-        virtualisation = enabled;
         vt-config = enabled;
         web = enabled;
 
+        android-tooling = disabled;
+        gaming = disabled;
         pihole = disabled;
         printing = disabled;
+        school = disabled;
+        virtualisation = disabled;
       };
 
-    networking.hostName = "karl";
-    system.stateVersion = "25.05";
-
-    users.users.redstonetrail = {
-      isNormalUser = true;
-      extraGroups = [
-        "wheel"
-        "network"
-        "networkmanager"
-        "uinput"
-        "wireshark"
-        # ]
-        # ++ lib.mkIf config.dotfiles.pihole.enabled [
-        #   "docker"
-      ];
-      initialHashedPassword = "$y$j9T$rQ1v1g1IaFIJ6P7UHWsJ91$LjP8EG33DaUg9DTwbU8gbV6/eY4TB/SgUvRMvAphWFD";
-      shell = pkgs.zsh;
-    };
+    system.stateVersion = "26.05";
+    networking.hostName = "bosco";
   };
 }

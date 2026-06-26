@@ -89,6 +89,15 @@
           ];
         };
 
+        bosco = mkNixosSystem {
+          system = "x86_64-linux";
+
+          modules = [
+            ./bosco
+            ./nixosModules
+          ];
+        };
+
         raspi = mkRpiNixosSystem {
           system = "aarch64-linux";
 
