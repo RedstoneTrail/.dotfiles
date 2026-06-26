@@ -125,6 +125,10 @@ in
             install_url = "https://addons.mozilla.org/firefox/downloads/file/4619794/vim_for_docs-2.2.xpi";
             installation_mode = "force_installed";
           };
+          "zotero@chnm.gmu.edu" = {
+            install_url = "https://www.zotero.org/download/connector/dl?browser=firefox&version=5.0.210";
+            installation_mode = "force_installed";
+          };
         };
         Preferences =
           let
