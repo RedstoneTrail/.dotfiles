@@ -2,24 +2,56 @@
   process-unmapped-keys yes
   concurrent-tap-hold yes
   allow-hardware-repeat no
-  linux-dev /dev/input/by-path/platform-i8042-serio-0-event-kbd
+)
+
+(defvar
+  mouse-move-rate 50
+  mouse-move-increment 10
+  touchpad-toggle (arbitrary-code 530)
 )
 
 (defalias
   escfn (layer-while-held fn)
+  escfn-mouse (layer-while-held mouse-mode-fn)
+  rctlmouseon (layer-switch mouse-mode)
+  rctlmouseoff (layer-switch base)
+  mouse-up (movemouse-up $mouse-move-rate $mouse-move-increment)
+  mouse-down (movemouse-down $mouse-move-rate $mouse-move-increment)
+  mouse-left (movemouse-left $mouse-move-rate $mouse-move-increment)
+  mouse-right (movemouse-right $mouse-move-rate $mouse-move-increment)
 )
 
 (defsrc
   lmet lctl lalt
-  esc f1 f2 f3 f4 f6 f7 f8 f9 f10
+  esc f1 f2 f3 f4 f5 f6 f7 f8 f9 f10
+  rctl . / rsft
+  up down left right
 )
 
 (deflayer base
   (tap-hold 200 150 esc lctl) lalt lmet
-  @escfn f1 f2 f3 f4 f6 f7 f8 f9 f10
+  @escfn f1 f2 f3 f4 f5 f6 f7 f8 f9 f10
+  @rctlmouseon _ _ _
+  _ _ _ _
 )
 
 (deflayer fn
   _ _ _
-  _ MediaTrackPrevious MediaTrackNext MediaPlayPause prnt brdown brup mute vold volu
+  _ MediaTrackPrevious MediaTrackNext MediaPlayPause prnt $touchpad-toggle brdown brup mute vold volu
+  _ _ _ _
+  _ _ _ _
+)
+
+(deflayer mouse-mode
+  (tap-hold 200 150 esc lctl) lalt lmet
+  @escfn-mouse _ _ _ _ _ _ _ _ _ _
+  @rctlmouseoff mlft mmid mrgt
+  @mouse-up @mouse-down @mouse-left @mouse-right
+)
+
+(deflayer mouse-mode-fn
+  _ _ _
+  _ MediaTrackPrevious MediaTrackNext MediaPlayPause prnt $touchpad-toggle brdown brup mute vold volu
+  @rctlmouseoff mlft mmid mrgt
+  @mouse-up @mouse-down @mouse-left @mouse-right
 )
