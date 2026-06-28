@@ -173,7 +173,10 @@ local function base_bindings()
 	hl.bind("ALT + XF86AudioStop", hl.dsp.exec_cmd("playerctl-wrapper pause"))
 	hl.bind("ALT + XF86AudioNext", hl.dsp.exec_cmd("playerctl-wrapper position 5+"))
 	hl.bind("ALT + XF86AudioPrev", hl.dsp.exec_cmd("playerctl-wrapper position 5-"))
-	hl.bind("SHIFT + XF86AudioPlay", hl.dsp.exec_cmd("select-player"))
+	hl.bind("SHIFT + XF86AudioPlay", function()
+		hl.dispatch(hl.dsp.submap("passthru"))
+		hl.exec_cmd("select-player && hyprctl eval 'hl.dispatch(hl.dsp.submap('\\''normal'\\''))'")
+	end)
 
 	-- volume keys
 	hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("pactl set-sink-volume @DEFAULT_SINK@ +5%"))
@@ -228,6 +231,136 @@ hl.window_rule({
 	size = { "(monitor_w * 0.2)", "(monitor_h * 0.2)" },
 })
 
+SCREENSHOT_AREA_MODES = {
+	screen = 0,
+	window = 1,
+	selection = 2,
+}
+
+SCREENSHOT_DESTINATION_MODES = {
+	file = 0,
+	mpv = 1,
+	clipboard = 2,
+}
+
+local screenshot_mode = { area = SCREENSHOT_AREA_MODES.selection, dest = SCREENSHOT_DESTINATION_MODES.clipboard }
+local screenshot_mode_file = "/tmp/screenshot-mode"
+
+local function update_screenshot_mode_file()
+	local area_string = ""
+	local dest_string = ""
+
+	if (screenshot_mode.area == SCREENSHOT_AREA_MODES.screen) then
+		area_string = "screen"
+	elseif (screenshot_mode.area == SCREENSHOT_AREA_MODES.window) then
+		area_string = "window"
+	elseif (screenshot_mode.area == SCREENSHOT_AREA_MODES.selection) then
+		area_string = "selection"
+	end
+
+	if (screenshot_mode.dest == SCREENSHOT_DESTINATION_MODES.file) then
+		dest_string = "file"
+	elseif (screenshot_mode.dest == SCREENSHOT_DESTINATION_MODES.mpv) then
+		dest_string = "mpv"
+	elseif (screenshot_mode.dest == SCREENSHOT_DESTINATION_MODES.clipboard) then
+		dest_string = "clipboard"
+	end
+
+	os.execute("echo " .. area_string .. "," .. dest_string .. " > " .. screenshot_mode_file)
+	os.execute("pkill -RTMIN+1 waybar")
+end
+
+local function remove_screenshot_mode_file()
+	os.execute("rm " .. screenshot_mode_file)
+	os.execute("pkill -RTMIN+1 waybar")
+end
+
+local function screenshot()
+	local selection = ""
+	local dest = "- | wl-copy"
+
+	if (screenshot_mode.dest == SCREENSHOT_DESTINATION_MODES.clipboard) then
+		dest = " - | wl-copy"
+	elseif (screenshot_mode.dest == SCREENSHOT_DESTINATION_MODES.file) then
+		dest = ""
+	elseif (screenshot_mode.dest == SCREENSHOT_DESTINATION_MODES.mpv) then
+		dest = " - | mpv --keep-open -"
+	end
+
+	if (screenshot_mode.area == SCREENSHOT_AREA_MODES.screen) then
+		selection = ""
+	elseif (screenshot_mode.area == SCREENSHOT_AREA_MODES.selection) then
+		selection = "-g \"$(slurp)\""
+		hl.dispatch(hl.dsp.submap("passthru"))
+	elseif (screenshot_mode.area == SCREENSHOT_AREA_MODES.window) then
+		local window = hl.get_active_window()
+
+		if window == nil then
+			return
+		end
+
+		local area_selection = window.at.x ..
+		    "," .. window.at.y .. " " .. window.size.x .. "x" .. window.size.y
+
+		selection = "-g \"" .. area_selection .. "\""
+	end
+
+	hl.exec_cmd("grim " .. selection .. dest .. " && hyprctl eval 'hl.dispatch(hl.dsp.submap('\\''normal'\\''))'")
+
+	if (screenshot_mode.area ~= SCREENSHOT_AREA_MODES.selection) then
+		hl.dispatch(hl.dsp.submap("normal"))
+	end
+
+	remove_screenshot_mode_file()
+end
+
+hl.define_submap("screenshot", function()
+	hl.bind("catchall", function() end)
+
+	base_bindings()
+
+	hl.bind("i", function()
+		hl.dispatch(hl.dsp.submap("passthru"))
+		remove_screenshot_mode_file()
+	end)
+	hl.bind("m", function()
+		hl.dispatch(hl.dsp.submap("move/resize"))
+		remove_screenshot_mode_file()
+	end)
+	hl.bind("SUPER_L", function()
+		hl.dispatch(hl.dsp.submap("normal"))
+		remove_screenshot_mode_file()
+	end)
+
+	hl.bind("s", function()
+		screenshot_mode.area = screenshot_mode.area + 1
+
+		if screenshot_mode.area > SCREENSHOT_AREA_MODES.selection then
+			screenshot_mode.area = SCREENSHOT_AREA_MODES.screen
+		end
+
+		update_screenshot_mode_file()
+	end)
+	hl.bind("d", function()
+		screenshot_mode.dest = screenshot_mode.dest + 1
+
+		if screenshot_mode.dest > SCREENSHOT_DESTINATION_MODES.clipboard then
+			screenshot_mode.dest = SCREENSHOT_DESTINATION_MODES.file
+		end
+
+		update_screenshot_mode_file()
+	end)
+
+	hl.bind("Return", screenshot)
+end)
+
+hl.on("keybinds.submap", function(submap)
+	if submap == "screenshot" then
+		hl.exec_cmd("touch " .. screenshot_mode_file)
+		update_screenshot_mode_file()
+	end
+end)
+
 hl.define_submap("normal", function()
 	hl.bind("catchall", function() end)
 
@@ -236,6 +369,7 @@ hl.define_submap("normal", function()
 	hl.bind("i", hl.dsp.submap("passthru"))
 	hl.bind("m", hl.dsp.submap("move/resize"))
 	hl.bind("Print", hl.dsp.submap("screenshot"))
+	hl.bind("SHIFT + Print", screenshot)
 
 	hl.bind("SHIFT + ALT + q", hl.dsp.exit())
 
@@ -336,134 +470,6 @@ hl.define_submap("normal", function()
 	hl.bind("ALT + Q", hl.dsp.window.close())
 	hl.bind("ALT + SHIFT + Q", hl.dsp.window.kill())
 	hl.bind("CONTROL + Q", hl.dsp.exec_cmd("hyprctl kill"))
-end)
-
-SCREENSHOT_AREA_MODES = {
-	screen = 0,
-	window = 1,
-	selection = 2,
-}
-
-SCREENSHOT_DESTINATION_MODES = {
-	file = 0,
-	mpv = 1,
-	clipboard = 2,
-}
-
-local screenshot_mode = { area = SCREENSHOT_AREA_MODES.selection, dest = SCREENSHOT_DESTINATION_MODES.clipboard }
-local screenshot_mode_file = "/tmp/screenshot-mode"
-
-local function update_screenshot_mode_file()
-	local area_string = ""
-	local dest_string = ""
-
-	if (screenshot_mode.area == SCREENSHOT_AREA_MODES.screen) then
-		area_string = "screen"
-	elseif (screenshot_mode.area == SCREENSHOT_AREA_MODES.window) then
-		area_string = "window"
-	elseif (screenshot_mode.area == SCREENSHOT_AREA_MODES.selection) then
-		area_string = "selection"
-	end
-
-	if (screenshot_mode.dest == SCREENSHOT_DESTINATION_MODES.file) then
-		dest_string = "file"
-	elseif (screenshot_mode.dest == SCREENSHOT_DESTINATION_MODES.mpv) then
-		dest_string = "mpv"
-	elseif (screenshot_mode.dest == SCREENSHOT_DESTINATION_MODES.clipboard) then
-		dest_string = "clipboard"
-	end
-
-	os.execute("echo " .. area_string .. "," .. dest_string .. " > " .. screenshot_mode_file)
-	os.execute("pkill -RTMIN+1 waybar")
-end
-
-local function remove_screenshot_mode_file()
-	os.execute("rm " .. screenshot_mode_file)
-	os.execute("pkill -RTMIN+1 waybar")
-end
-
-hl.define_submap("screenshot", function()
-	hl.bind("catchall", function() end)
-
-	base_bindings()
-
-	hl.bind("i", function()
-		hl.dispatch(hl.dsp.submap("passthru"))
-		remove_screenshot_mode_file()
-	end)
-	hl.bind("m", function()
-		hl.dispatch(hl.dsp.submap("move/resize"))
-		remove_screenshot_mode_file()
-	end)
-	hl.bind("SUPER_L", function()
-		hl.dispatch(hl.dsp.submap("normal"))
-		remove_screenshot_mode_file()
-	end)
-
-	hl.bind("s", function()
-		screenshot_mode.area = screenshot_mode.area + 1
-
-		if screenshot_mode.area > SCREENSHOT_AREA_MODES.selection then
-			screenshot_mode.area = SCREENSHOT_AREA_MODES.screen
-		end
-
-		update_screenshot_mode_file()
-	end)
-	hl.bind("d", function()
-		screenshot_mode.dest = screenshot_mode.dest + 1
-
-		if screenshot_mode.dest > SCREENSHOT_DESTINATION_MODES.clipboard then
-			screenshot_mode.dest = SCREENSHOT_DESTINATION_MODES.file
-		end
-
-		update_screenshot_mode_file()
-	end)
-
-	hl.bind("Return", function()
-		local selection = ""
-		local dest = "- | wl-copy"
-
-		if (screenshot_mode.dest == SCREENSHOT_DESTINATION_MODES.clipboard) then
-			dest = " - | wl-copy"
-		elseif (screenshot_mode.dest == SCREENSHOT_DESTINATION_MODES.file) then
-			dest = ""
-		elseif (screenshot_mode.dest == SCREENSHOT_DESTINATION_MODES.mpv) then
-			dest = " - | mpv --keep-open -"
-		end
-
-		if (screenshot_mode.area == SCREENSHOT_AREA_MODES.screen) then
-			selection = ""
-		elseif (screenshot_mode.area == SCREENSHOT_AREA_MODES.selection) then
-			selection = "-g \"$(slurp)\""
-			hl.dispatch(hl.dsp.submap("passthru"))
-		elseif (screenshot_mode.area == SCREENSHOT_AREA_MODES.window) then
-			local window = hl.get_active_window()
-
-			if window == nil then
-				return
-			end
-
-			local area_selection = window.at.x ..
-			    "," .. window.at.y .. " " .. window.size.x .. "x" .. window.size.y
-
-			selection = "-g \"" .. area_selection .. "\""
-		end
-
-		hl.exec_cmd("grim " .. selection .. dest)
-
-		if (screenshot_mode.area ~= SCREENSHOT_AREA_MODES.selection) then
-			hl.dispatch(hl.dsp.submap("normal"))
-		end
-
-		remove_screenshot_mode_file()
-	end)
-end)
-
-hl.on("keybinds.submap", function(submap)
-	if submap == "screenshot" then
-		hl.exec_cmd("touch " .. screenshot_mode_file)
-		update_screenshot_mode_file()
-	end
 end)
 
 hl.define_submap("move/resize", function()
