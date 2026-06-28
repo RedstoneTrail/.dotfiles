@@ -45,5 +45,9 @@
 
     system.stateVersion = "26.05";
     networking.hostName = "bosco";
+
+    environment.systemPackages = [
+      pkgs.prismlauncher
+    ];
   };
 }

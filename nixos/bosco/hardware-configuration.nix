@@ -23,6 +23,7 @@
         "sd_mod"
         "sdhci_pci"
       ];
+      systemd.tpm2.enable = false;
     };
     kernelModules = [ "kvm-amd" ];
 
@@ -68,4 +69,6 @@
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+
+  services.smartd.enable = lib.mkForce false;
 }
