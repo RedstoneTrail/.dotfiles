@@ -70,5 +70,24 @@
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
-  services.smartd.enable = lib.mkForce false;
+  services = {
+    smartd.enable = lib.mkForce false;
+
+    pipewire.wireplumber.extraConfig = {
+      "increase-headroom" = {
+        "monitor.alsa.rules" = [
+          {
+            "matches" = [
+              { "node.name" = "~alsa.output.*"; }
+            ];
+            "actions" = {
+              "update-props" = {
+                "api.alsa.headroom" = 2048;
+              };
+            };
+          }
+        ];
+      };
+    };
+  };
 }

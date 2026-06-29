@@ -48,6 +48,16 @@
 
     environment.systemPackages = [
       pkgs.prismlauncher
+      pkgs.unstable.sbctl
     ];
+
+    boot = {
+      loader = {
+        limine.secureBoot.enable = true;
+        efi.canTouchEfiVariables = true;
+      };
+
+      tmp.cleanOnBoot = true;
+    };
   };
 }
