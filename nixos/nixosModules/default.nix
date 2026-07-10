@@ -24,6 +24,7 @@
     printing.enable = lib.mkEnableOption "Enable CUPS and other printing features";
     rclone.enable = lib.mkEnableOption "Enable rclone";
     school.enable = lib.mkEnableOption "Enable software and other such config for school";
+    slsk.enable = lib.mkEnableOption "Enable soulseek support";
     ssh.enable = lib.mkEnableOption "Enable ssh";
     tor.enable = lib.mkEnableOption "Enable tor proxying using torsocks and proxychains";
     torrenting.enable = lib.mkEnableOption "Enable torrenting software";
@@ -45,6 +46,7 @@
     ./printing.nix
     ./rclone.nix
     ./school.nix
+    ./slsk.nix
     ./ssh.nix
     ./tor.nix
     ./torrent.nix

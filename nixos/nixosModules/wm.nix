@@ -66,6 +66,7 @@ in
       packages = with pkgs; [
         nerd-fonts.fira-mono
         noto-fonts-color-emoji
+        unifont
       ];
     };
 

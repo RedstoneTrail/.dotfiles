@@ -35,6 +35,7 @@
         networking-control = enabled;
         rclone = enabled;
         school = enabled;
+        slsk = enabled;
         ssh = enabled;
         tor = enabled;
         torrenting = enabled;
@@ -48,5 +49,7 @@
 
     networking.hostName = "karl";
     system.stateVersion = "25.05";
+
+    nix.settings.trusted-users = [ "nixremote" ];
   };
 }

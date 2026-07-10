@@ -29,6 +29,7 @@
         input = enabled;
         networking-control = enabled;
         rclone = enabled;
+        slsk = enabled;
         ssh = enabled;
         tor = enabled;
         torrenting = enabled;

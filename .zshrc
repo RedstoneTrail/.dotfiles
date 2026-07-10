@@ -146,6 +146,16 @@ fi
 
 have_cmd gpg && export GNUPGHOME="~/.gnupg"
 
+if have_cmd waves
+then
+	waves () {
+		# auto start slskd
+		have_cmd slskd && ! pgrep slskd && env SLSKD_SLSK_PASSWORD="$(pass show slsk)" setsid -f slskd &>/dev/null
+
+		env waves
+	}
+fi
+
 export PATH=$PATH:$HOME/.dotfiles/scripts:$HOME/bin
 
 have_cmd less && export PAGER=less

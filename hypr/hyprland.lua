@@ -405,6 +405,7 @@ hl.define_submap("normal", function()
 	hl.bind("V", hl.dsp.window.float({}))
 	hl.bind("P", hl.dsp.window.pin({}))
 	hl.bind("F", hl.dsp.window.fullscreen({}))
+	hl.bind("CONTROL + F", hl.dsp.window.fullscreen_state({ internal = 1, client = 0 }))
 	hl.bind("SHIFT + F", function()
 		local window = hl.get_active_window()
 

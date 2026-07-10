@@ -17,6 +17,7 @@ echo there are $JOBS ip addressess to scan
 for i in $ADDRS
 do
 	nmap -Pn $i > $WORK_DIR/$i &
+	# host $i > $WORK_DIR/$i &
 done
 
 CURRENT_JOBS=$JOBS

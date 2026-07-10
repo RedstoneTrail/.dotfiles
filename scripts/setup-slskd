@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+export SLSKD_SLSK_PASSWORD="$(pass show slsk)"
+
+setsid -f slskd &>/dev/null

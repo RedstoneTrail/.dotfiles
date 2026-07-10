@@ -87,7 +87,7 @@ else
 	SPECIALISATION_FLAGS:=-c "$(shell cat $(SPECIALISATION_FILE))"
 endif
 
-ifeq (,$(shell command -v nom))
+ifeq (yes,$(shell command -v nom && echo yes))
 	HAME_NOM:="n"
 else
 	HAVE_NOM:="y"
