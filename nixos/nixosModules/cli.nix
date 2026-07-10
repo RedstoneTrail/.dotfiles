@@ -73,6 +73,7 @@ in
       nixd
       nixfmt
       prettier
+      stylua
       texlab
       tinymist
       websocat
