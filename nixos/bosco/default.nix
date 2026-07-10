@@ -49,6 +49,7 @@
     environment.systemPackages = [
       pkgs.prismlauncher
       pkgs.unstable.sbctl
+      pkgs.alsa-utils
     ];
 
     boot = {
@@ -58,6 +59,29 @@
       };
 
       tmp.cleanOnBoot = true;
+    };
+
+    nix = {
+      buildMachines = [
+        {
+          hostName = "karl";
+          system = "x86_64-linux";
+          protocol = "ssh-ng";
+          maxJobs = 8;
+          speedFactor = 2;
+          supportedFeatures = [
+            "nixos-test"
+            "benchmark"
+            "big-parallel"
+            "kvm"
+          ];
+          mandatoryFeatures = [ ];
+        }
+      ];
+      distributedBuilds = true;
+      extraOptions = ''
+        builders-use-substitutes = true
+      '';
     };
   };
 }
