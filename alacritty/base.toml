@@ -1,0 +1,31 @@
+[font]
+normal = { family = "FiraMono Nerd Font", style = "Medium" }
+size = 14
+
+[colors.primary]
+background = '#000000'
+foreground = '#ffffff'
+
+[colors.normal]
+black = '#000000'
+red = '#FF0000'
+green = '#00FF00'
+yellow = '#FFFF55'
+blue = '#8888FF'
+magenta = '#FF00FF'
+cyan = '#00DDDD'
+white = '#FFFFFF'
+
+[colors.bright]
+black = '#555555'
+red = '#FF5555'
+green = '#55FF55'
+yellow = '#FFFF55'
+blue = '#7BE7EE'
+magenta = '#FF55FF'
+cyan = '#55FFFF'
+white = '#FFFFFF'
+
+[window]
+opacity = 1
+dynamic_padding = true

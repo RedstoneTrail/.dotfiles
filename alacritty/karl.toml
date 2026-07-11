@@ -1,0 +1,9 @@
+# larger font size on karl, as the screen is higher resolution
+
+[general]
+import = [
+  "base.toml"
+]
+
+[font]
+size = 14

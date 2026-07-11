@@ -47,8 +47,45 @@
     system.stateVersion = "26.05";
     networking.hostName = "bosco";
 
+    programs.steam.enable = true;
+
     environment.systemPackages = [
       pkgs.prismlauncher
     ];
+
+    boot = {
+      loader = {
+        # temporarily comment the line below when setting up secure boot
+        limine.secureBoot.enable = true;
+        efi.canTouchEfiVariables = true;
+      };
+
+      kernel.sysctl."kernel.sysrq" = 1;
+
+      tmp.cleanOnBoot = true;
+    };
+
+    nix = {
+      buildMachines = [
+        {
+          hostName = "karl";
+          system = "x86_64-linux";
+          protocol = "ssh-ng";
+          maxJobs = 8;
+          speedFactor = 2;
+          supportedFeatures = [
+            "nixos-test"
+            "benchmark"
+            "big-parallel"
+            "kvm"
+          ];
+          mandatoryFeatures = [ ];
+        }
+      ];
+      distributedBuilds = true;
+      extraOptions = ''
+        builders-use-substitutes = true
+      '';
+    };
   };
 }

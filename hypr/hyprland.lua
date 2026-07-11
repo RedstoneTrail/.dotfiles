@@ -27,6 +27,13 @@ elseif host == "karl" then
 end
 
 local term = "alacritty"
+
+if host == "karl" then
+	term = "alacritty --config-file " .. os.getenv("HOME") .. "/.dotfiles/alacritty/karl.toml"
+elseif host == "bosco" then
+	term = "alacritty --config-file " .. os.getenv("HOME") .. "/.dotfiles/alacritty/bosco.toml"
+end
+
 local browser = "firefox"
 local editor = "nvim"
 local launcher = "fuzzel"
@@ -59,36 +66,36 @@ local function env(environ_table)
 	end
 end
 
-env {
-	{ "BROWSER",             browser },
-	{ "TERM",                term },
-	{ "TERMINAL",            term },
-	{ "EDITOR",              editor },
-	{ "VISUAL",              editor },
+env({
+	{ "BROWSER", browser },
+	{ "TERM", term },
+	{ "TERMINAL", term },
+	{ "EDITOR", editor },
+	{ "VISUAL", editor },
 
-	{ "XCURSOR_SIZE",        "24" },
+	{ "XCURSOR_SIZE", "24" },
 
 	{ "XDG_CURRENT_DESKTOP", "Hyprland" },
-	{ "XDG_SESSION_TYPE",    "wayland" },
+	{ "XDG_SESSION_TYPE", "wayland" },
 	{ "XDG_SESSION_DESKTOP", "Hyprland" },
-	{ "LIBVA_DRIVER_NAME",   "nvidia" },
-	{ "GTK_USE_PORTAL",      "1" },
+	{ "LIBVA_DRIVER_NAME", "nvidia" },
+	{ "GTK_USE_PORTAL", "1" },
 
-	{ "PATH",                os.getenv("PATH") .. ":/home/redstonetrail/.dotfiles/scripts" },
+	{ "PATH", os.getenv("PATH") .. ":/home/redstonetrail/.dotfiles/scripts" },
 
-	{ "NIXOS_OZONE_WL",      "1" },
-	{ "XCURSOR_SIZE",        "24" },
+	{ "NIXOS_OZONE_WL", "1" },
+	{ "XCURSOR_SIZE", "24" },
 
-	{ "HYPRCURSOR_SIZE",     "24" },
-	{ "HYPRCURSOR_THEME",    "catppuccin-frappe-green-cursors" },
-}
+	{ "HYPRCURSOR_SIZE", "24" },
+	{ "HYPRCURSOR_THEME", "catppuccin-frappe-green-cursors" },
+})
 
 local borders = {
 	active = "0xff00AA00",
 	inactive = "0xff077000",
 }
 
-hl.config {
+hl.config({
 	ecosystem = {
 		no_update_news = true,
 		no_donation_nag = true,
@@ -131,7 +138,7 @@ hl.config {
 			active_border = borders.active,
 		},
 
-		no_focus_fallback = true
+		no_focus_fallback = true,
 	},
 	decoration = {
 		blur = {
@@ -153,13 +160,13 @@ hl.config {
 	debug = {
 		disable_logs = false,
 	},
-}
+})
 
 if host == "karl" then
-	hl.device {
+	hl.device({
 		name = "ftcs0038:00-2808:0106-touchpad",
 		sensitivity = 1,
-	}
+	})
 end
 
 local function base_bindings()
@@ -250,19 +257,19 @@ local function update_screenshot_mode_file()
 	local area_string = ""
 	local dest_string = ""
 
-	if (screenshot_mode.area == SCREENSHOT_AREA_MODES.screen) then
+	if screenshot_mode.area == SCREENSHOT_AREA_MODES.screen then
 		area_string = "screen"
-	elseif (screenshot_mode.area == SCREENSHOT_AREA_MODES.window) then
+	elseif screenshot_mode.area == SCREENSHOT_AREA_MODES.window then
 		area_string = "window"
-	elseif (screenshot_mode.area == SCREENSHOT_AREA_MODES.selection) then
+	elseif screenshot_mode.area == SCREENSHOT_AREA_MODES.selection then
 		area_string = "selection"
 	end
 
-	if (screenshot_mode.dest == SCREENSHOT_DESTINATION_MODES.file) then
+	if screenshot_mode.dest == SCREENSHOT_DESTINATION_MODES.file then
 		dest_string = "file"
-	elseif (screenshot_mode.dest == SCREENSHOT_DESTINATION_MODES.mpv) then
+	elseif screenshot_mode.dest == SCREENSHOT_DESTINATION_MODES.mpv then
 		dest_string = "mpv"
-	elseif (screenshot_mode.dest == SCREENSHOT_DESTINATION_MODES.clipboard) then
+	elseif screenshot_mode.dest == SCREENSHOT_DESTINATION_MODES.clipboard then
 		dest_string = "clipboard"
 	end
 
@@ -279,35 +286,34 @@ local function screenshot()
 	local selection = ""
 	local dest = "- | wl-copy"
 
-	if (screenshot_mode.dest == SCREENSHOT_DESTINATION_MODES.clipboard) then
+	if screenshot_mode.dest == SCREENSHOT_DESTINATION_MODES.clipboard then
 		dest = " - | wl-copy"
-	elseif (screenshot_mode.dest == SCREENSHOT_DESTINATION_MODES.file) then
+	elseif screenshot_mode.dest == SCREENSHOT_DESTINATION_MODES.file then
 		dest = ""
-	elseif (screenshot_mode.dest == SCREENSHOT_DESTINATION_MODES.mpv) then
+	elseif screenshot_mode.dest == SCREENSHOT_DESTINATION_MODES.mpv then
 		dest = " - | mpv --keep-open -"
 	end
 
-	if (screenshot_mode.area == SCREENSHOT_AREA_MODES.screen) then
+	if screenshot_mode.area == SCREENSHOT_AREA_MODES.screen then
 		selection = ""
-	elseif (screenshot_mode.area == SCREENSHOT_AREA_MODES.selection) then
-		selection = "-g \"$(slurp)\""
+	elseif screenshot_mode.area == SCREENSHOT_AREA_MODES.selection then
+		selection = '-g "$(slurp)"'
 		hl.dispatch(hl.dsp.submap("passthru"))
-	elseif (screenshot_mode.area == SCREENSHOT_AREA_MODES.window) then
+	elseif screenshot_mode.area == SCREENSHOT_AREA_MODES.window then
 		local window = hl.get_active_window()
 
 		if window == nil then
 			return
 		end
 
-		local area_selection = window.at.x ..
-		    "," .. window.at.y .. " " .. window.size.x .. "x" .. window.size.y
+		local area_selection = window.at.x .. "," .. window.at.y .. " " .. window.size.x .. "x" .. window.size.y
 
-		selection = "-g \"" .. area_selection .. "\""
+		selection = '-g "' .. area_selection .. '"'
 	end
 
 	hl.exec_cmd("grim " .. selection .. dest .. " && hyprctl eval 'hl.dispatch(hl.dsp.submap('\\''normal'\\''))'")
 
-	if (screenshot_mode.area ~= SCREENSHOT_AREA_MODES.selection) then
+	if screenshot_mode.area ~= SCREENSHOT_AREA_MODES.selection then
 		hl.dispatch(hl.dsp.submap("normal"))
 	end
 
@@ -382,13 +388,17 @@ hl.define_submap("normal", function()
 	end)
 
 	hl.bind("n", function()
-		hl.exec_cmd(term .. " --title impala -e impala",
-			{ float = true, size = { "(monitor_w * 0.3)", "(monitor_h * 0.4)" } })
+		hl.exec_cmd(
+			term .. " --title impala -e impala",
+			{ float = true, size = { "(monitor_w * 0.3)", "(monitor_h * 0.4)" } }
+		)
 		hl.dispatch(hl.dsp.submap("passthru"))
 	end)
 	hl.bind("SHIFT + n", function()
-		hl.exec_cmd(term .. " --title bluetui -e bluetui",
-			{ float = true, size = { "(monitor_w * 0.3)", "(monitor_h * 0.4)" } })
+		hl.exec_cmd(
+			term .. " --title bluetui -e bluetui",
+			{ float = true, size = { "(monitor_w * 0.3)", "(monitor_h * 0.4)" } }
+		)
 		hl.dispatch(hl.dsp.submap("passthru"))
 	end)
 

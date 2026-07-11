@@ -1,0 +1,9 @@
+# smaller font size on bosco, as the screen is lower resolution
+
+[general]
+import = [
+  "base.toml"
+]
+
+[font]
+size = 10
