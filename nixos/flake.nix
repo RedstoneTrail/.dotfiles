@@ -5,7 +5,8 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
-    mountui.url = "github:AlanRandon/mountui";
+    # mountui.url = "github:AlanRandon/mountui";
+    mountui.url = "github:AlanRandon/mountui-go";
 
     nixos-raspberrypi.url = "github:nvmd/nixos-raspberrypi/main";
   };
