@@ -82,6 +82,7 @@ in
         gimp3
         grim
         hyprlock
+        hyprpicker
         pulsemixer
         slurp
         waybar

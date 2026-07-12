@@ -181,8 +181,10 @@ local function base_bindings()
 	hl.bind("ALT + XF86AudioNext", hl.dsp.exec_cmd("playerctl-wrapper position 5+"))
 	hl.bind("ALT + XF86AudioPrev", hl.dsp.exec_cmd("playerctl-wrapper position 5-"))
 	hl.bind("SHIFT + XF86AudioPlay", function()
+		local submap = hl.get_current_submap()
+
 		hl.dispatch(hl.dsp.submap("passthru"))
-		hl.exec_cmd("select-player && hyprctl eval 'hl.dispatch(hl.dsp.submap('\\''normal'\\''))'")
+		hl.exec_cmd("select-player && hyprctl eval 'hl.dispatch(hl.dsp.submap(\"" .. submap .. "\"))'")
 	end)
 
 	-- volume keys
@@ -376,6 +378,12 @@ hl.define_submap("normal", function()
 	hl.bind("m", hl.dsp.submap("move/resize"))
 	hl.bind("Print", hl.dsp.submap("screenshot"))
 	hl.bind("SHIFT + Print", screenshot)
+	hl.bind("ALT + Print", function()
+		local submap = hl.get_current_submap()
+
+		hl.dispatch(hl.dsp.submap("passthru"))
+		hl.exec_cmd("hyprpicker -a && hyprctl eval 'hl.dispatch(hl.dsp.submap(\"" .. submap .. "\"))'")
+	end)
 
 	hl.bind("SHIFT + ALT + q", hl.dsp.exit())
 

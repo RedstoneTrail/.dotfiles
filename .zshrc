@@ -234,13 +234,13 @@ bindkey '^[[1~' beginning-of-line
 bindkey '^[[4~' end-of-line
 
 # start tmux session if not on vt, termux or in tmux
-if [ -z "$TMUX" ] && [ "$TERM" != "linux" ] && [ -z "$TERMUX_VERSION" ]
+if [ -z "$TMUX" ] && [ "$TERM" != "linux" ] && [ -z "$TERMUX_VERSION" ] && [ -z "$SSH_CONNECTION" ]
 then
 	exec tmux
 fi
 
 # ask for tmux session when on vt or in termux
-if [ "$TERM" == "linux" ] || [ ! -z "$TERMUX_VERSION" ] && [ -z "$TMUX" ]
+if [ "$TERM" == "linux" ] || [ ! -z "$TERMUX_VERSION" ] && [ -z "$TMUX" ] || [ ! -z "$SSH_CONNECTION" ]
 then
 	echo 'Enter a tmux session? (y)'
 	read -k 1 want_tmux
