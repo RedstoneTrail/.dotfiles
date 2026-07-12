@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 let
@@ -13,9 +12,5 @@ in
       enable = true;
       settings.PasswordAuthentication = false;
     };
-
-    environment.systemPackages = [
-      pkgs.waypipe
-    ];
   };
 }
