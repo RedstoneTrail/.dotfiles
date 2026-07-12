@@ -47,8 +47,6 @@
     system.stateVersion = "26.05";
     networking.hostName = "bosco";
 
-    programs.steam.enable = true;
-
     environment.systemPackages = [
       pkgs.prismlauncher
     ];
