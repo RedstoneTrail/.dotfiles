@@ -78,7 +78,6 @@ env({
 	{ "XDG_CURRENT_DESKTOP", "Hyprland" },
 	{ "XDG_SESSION_TYPE", "wayland" },
 	{ "XDG_SESSION_DESKTOP", "Hyprland" },
-	{ "LIBVA_DRIVER_NAME", "nvidia" },
 	{ "GTK_USE_PORTAL", "1" },
 
 	{ "PATH", os.getenv("PATH") .. ":/home/redstonetrail/.dotfiles/scripts" },
