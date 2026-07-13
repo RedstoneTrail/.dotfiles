@@ -1,4 +1,5 @@
 {
+  pkgs,
   config,
   lib,
   ...
@@ -10,7 +11,15 @@ in
   config = lib.mkIf cfg.enable {
     services.openssh = {
       enable = true;
-      settings.PasswordAuthentication = false;
+      settings = {
+        PasswordAuthentication = false;
+        X11Forwarding = true;
+      };
     };
+
+    environment.systemPackages = [
+      pkgs.xauth
+      pkgs.xpra
+    ];
   };
 }
