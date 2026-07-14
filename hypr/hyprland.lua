@@ -183,7 +183,7 @@ local function base_bindings()
 		local submap = hl.get_current_submap()
 
 		hl.dispatch(hl.dsp.submap("passthru"))
-		hl.exec_cmd("select-player && hyprctl eval 'hl.dispatch(hl.dsp.submap(\"" .. submap .. "\"))'")
+		hl.exec_cmd("select-player; hyprctl eval 'hl.dispatch(hl.dsp.submap(\"" .. submap .. "\"))'")
 	end)
 
 	-- volume keys
@@ -312,7 +312,7 @@ local function screenshot()
 		selection = '-g "' .. area_selection .. '"'
 	end
 
-	hl.exec_cmd("grim " .. selection .. dest .. " && hyprctl eval 'hl.dispatch(hl.dsp.submap('\\''normal'\\''))'")
+	hl.exec_cmd("grim " .. selection .. dest .. "; hyprctl eval 'hl.dispatch(hl.dsp.submap('\\''normal'\\''))'")
 
 	if screenshot_mode.area ~= SCREENSHOT_AREA_MODES.selection then
 		hl.dispatch(hl.dsp.submap("normal"))
@@ -381,7 +381,7 @@ hl.define_submap("normal", function()
 		local submap = hl.get_current_submap()
 
 		hl.dispatch(hl.dsp.submap("passthru"))
-		hl.exec_cmd("hyprpicker -a && hyprctl eval 'hl.dispatch(hl.dsp.submap(\"" .. submap .. "\"))'")
+		hl.exec_cmd("hyprpicker -a; hyprctl eval 'hl.dispatch(hl.dsp.submap(\"" .. submap .. "\"))'")
 	end)
 
 	hl.bind("SHIFT + ALT + q", hl.dsp.exit())
@@ -390,7 +390,7 @@ hl.define_submap("normal", function()
 	hl.bind("Return", hl.dsp.exec_cmd(term))
 	hl.bind("SHIFT + V", hl.dsp.exec_cmd("virt-manager"))
 	hl.bind("w", function()
-		hl.exec_cmd(launcher .. " && hyprctl eval 'hl.dispatch(hl.dsp.submap('\\''normal'\\''))'")
+		hl.exec_cmd(launcher .. "; hyprctl eval 'hl.dispatch(hl.dsp.submap('\\''normal'\\''))'")
 		hl.dispatch(hl.dsp.submap("passthru"))
 	end)
 
