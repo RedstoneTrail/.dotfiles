@@ -42,13 +42,21 @@
         printing = disabled;
         school = disabled;
         virtualisation = disabled;
+
+        allowed-unfree-packages = [
+          "steam"
+          "steam-unwrapped"
+        ];
       };
 
     system.stateVersion = "26.05";
     networking.hostName = "bosco";
 
+    programs.steam.enable = true;
+
     environment.systemPackages = [
       pkgs.prismlauncher
+      pkgs.unstable.sbctl
     ];
 
     boot = {
