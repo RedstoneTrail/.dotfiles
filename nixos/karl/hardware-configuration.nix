@@ -98,5 +98,9 @@
 
     # always blacklist nouveau
     boot.blacklistedKernelModules = [ "nouveau" ];
+
+    services.thermald = {
+      enable = true;
+    };
   };
 }
