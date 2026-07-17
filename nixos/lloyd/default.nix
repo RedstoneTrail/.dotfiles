@@ -30,28 +30,29 @@
         };
       in
       {
+        cli = enabled;
+        graphical = enabled;
+        hardware-accessible = enabled;
+        networking-control = enabled;
+        ssh = enabled;
+        vt-config = enabled;
+
         android-tooling = disabled;
         bluetooth = disabled;
-        cli = disabled;
         gaming = disabled;
-        graphical = disabled;
-        hardware-accessible = disabled;
         input = disabled;
-        networking-control = disabled;
         school = disabled;
-        ssh = disabled;
         tor = disabled;
         torrenting = disabled;
         virtualisation = disabled;
-        vt-config = disabled;
         web = disabled;
 
         pihole = disabled;
         printing = disabled;
       };
 
-    networking.hostName = "raspi";
-    system.stateVersion = "25.11";
+    networking.hostName = "lloyd";
+    system.stateVersion = "26.05";
 
     boot = {
       loader.raspberry-pi.bootloader = "kernel";
@@ -91,16 +92,16 @@
       setNixPath = false;
     };
 
-    # hardware.raspberry-pi.config.all.base-dt-params = {
-    #   pciex1 = {
-    #     enable = true;
-    #     value = "on";
-    #   };
+    hardware.raspberry-pi.config.all.base-dt-params = {
+      pciex1 = {
+        enable = true;
+        value = "on";
+      };
 
-    #   pciex1_gen = {
-    #     enable = true;
-    #     value = "3";
-    #   };
-    # };
+      pciex1_gen = {
+        enable = true;
+        value = "3";
+      };
+    };
   };
 }

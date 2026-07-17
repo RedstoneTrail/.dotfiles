@@ -99,7 +99,7 @@
           ];
         };
 
-        raspi = mkRpiNixosSystem {
+        lloyd = mkRpiNixosSystem {
           system = "aarch64-linux";
 
           modules = [
