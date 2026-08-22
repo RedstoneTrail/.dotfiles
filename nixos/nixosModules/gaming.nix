@@ -19,10 +19,12 @@ in
       lutris
       mangohud
       mcpelauncher-ui-qt
+      openjdk25
       prismlauncher
+      protontricks
       r2modman
       vkquake
-      openjdk25
+      winetricks
     ];
 
     programs = {

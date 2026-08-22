@@ -4,6 +4,19 @@ have_cmd() {
 	command -v $1 &>/dev/null
 }
 
+ask_prompt () {
+	echo $@' (y)'
+
+	read -k 1 ASKRESULT
+
+	if [ "$ASKRESULT" == "y" ]
+	then
+		true
+	else
+		false
+	fi
+}
+
 have_cmd hyprctl && have_cmd pgrep && have_cmd jq && pgrep Hyprland &>/dev/null && export HYPRLAND_INSTANCE_SIGNATURE=$(hyprctl -j instances | jq -r '.[0].instance')
 
 zstyle ':completion:*' completer _expand _complete _match _correct _prefix _ignored
@@ -150,7 +163,7 @@ if have_cmd waves
 then
 	waves () {
 		# auto start slskd
-		have_cmd slskd && ! pgrep slskd && env SLSKD_SLSK_PASSWORD="$(pass show slsk)" setsid -f slskd &>/dev/null
+		have_cmd slskd && ! pgrep slskd && ask_prompt "start slskd?" && env SLSKD_SLSK_PASSWORD="$(pass show slsk)" setsid -f slskd &>/dev/null
 
 		env waves
 	}
@@ -242,22 +255,24 @@ fi
 # ask for tmux session when on vt or in termux
 if [ "$TERM" == "linux" ] || [ ! -z "$TERMUX_VERSION" ] || [ ! -z "$SSH_CONNECTION" ] && [ -z "$TMUX" ]
 then
-	echo 'Enter a tmux session? (y)'
-	read -k 1 want_tmux
-	echo
+	# echo 'Enter a tmux session? (y)'
+	# read -k 1 want_tmux
+	# echo
 
-	if [ -z "$want_tmux" ]
-	then
-		want_tmux='n'
-	fi
+	# if [ -z "$want_tmux" ]
+	# then
+	# 	want_tmux='n'
+	# fi
 
-	if [ "$want_tmux" == 'y' ]
-	then
-		echo 'Entering tmux session'
-		exec tmux
-	fi
+	# if [ "$want_tmux" == 'y' ]
+	# then
+	# 	echo 'Entering tmux session'
+	# 	exec tmux
+	# fi
 
-	echo 'Not entering a tmux session'
+	# echo 'Not entering a tmux session'
+
+	ask_prompt "Enter a tmux session?" && exec tmux
 fi
 
 # zprof | less

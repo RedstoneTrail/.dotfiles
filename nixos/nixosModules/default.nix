@@ -13,6 +13,7 @@
 
   options.dotfiles = {
     android-tooling.enable = lib.mkEnableOption "Enable android interaction tools";
+    appimage.enable = lib.mkEnableOption "Enable appimage support";
     bluetooth.enable = lib.mkEnableOption "Enable bluetooth support";
     cli.enable = lib.mkEnableOption "Enable command line utilities";
     gaming.enable = lib.mkEnableOption "Enable settings related to gaming";
@@ -35,6 +36,7 @@
 
   imports = [
     ./android.nix
+    ./appimage.nix
     ./bluetooth.nix
     ./cli.nix
     ./firefox.nix

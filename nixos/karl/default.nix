@@ -26,6 +26,7 @@
       in
       {
         android-tooling = enabled;
+        appimage = enabled;
         bluetooth = enabled;
         cli = enabled;
         gaming = enabled;

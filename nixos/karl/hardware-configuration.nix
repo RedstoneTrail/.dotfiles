@@ -30,7 +30,7 @@
       '';
 
       kernelParams = [
-        "reboot=pci" # fix for non-functional direct ethernet connection
+        # "reboot=pci" # fix for non-functional direct ethernet connection
         "split_lock_detect=off" # this makes some otherwise unplayably slow games way faster
       ];
     };

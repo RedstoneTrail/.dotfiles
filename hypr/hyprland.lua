@@ -490,6 +490,43 @@ hl.define_submap("normal", function()
 	hl.bind("CONTROL + Q", hl.dsp.exec_cmd("hyprctl kill"))
 end)
 
+local function dynamic_move(direction, increment)
+	local window = hl.get_active_window()
+
+	if window == nil then
+		hl.exec_cmd("no current window")
+		return
+	end
+
+	local args = {}
+
+	if window.floating then
+		if direction == "up" then
+			args = { relative = true, x = 0, y = -1 * increment }
+		elseif direction == "down" then
+			args = { relative = true, x = 0, y = 1 * increment }
+		elseif direction == "left" then
+			args = { relative = true, x = -1 * increment, y = 0 }
+		elseif direction == "right" then
+			args = { relative = true, x = 1 * increment, y = 0 }
+		else
+			--- wrong
+			hl.exec_cmd("notify-send 'invalid arg: " .. direction .. "'")
+			return
+		end
+	else
+		if direction == "up" or direction == "down" or direction == "left" or direction == "right" then
+			args = { direction = direction }
+		else
+			--- wrong
+			hl.exec_cmd("notify-send 'invalid arg: " .. direction .. "'")
+			return
+		end
+	end
+
+	hl.dispatch(hl.dsp.window.move(args))
+end
+
 hl.define_submap("move/resize", function()
 	hl.bind("catchall", function() end)
 
@@ -498,10 +535,49 @@ hl.define_submap("move/resize", function()
 	hl.bind("i", hl.dsp.submap("passthru"))
 	hl.bind("SUPER_L", hl.dsp.submap("normal"))
 
-	hl.bind("h", hl.dsp.window.move({ direction = "left" }))
-	hl.bind("j", hl.dsp.window.move({ direction = "down" }))
-	hl.bind("k", hl.dsp.window.move({ direction = "up" }))
-	hl.bind("l", hl.dsp.window.move({ direction = "right" }))
+	hl.bind("h", function()
+		dynamic_move("left", 10)
+	end)
+	hl.bind("j", function()
+		dynamic_move("down", 10)
+	end)
+	hl.bind("k", function()
+		dynamic_move("up", 10)
+	end)
+	hl.bind("l", function()
+		dynamic_move("right", 10)
+	end)
+
+	hl.bind("SHIFT + h", function()
+		dynamic_move("left", 100)
+	end)
+	hl.bind("SHIFT + j", function()
+		dynamic_move("down", 100)
+	end)
+	hl.bind("SHIFT + k", function()
+		dynamic_move("up", 100)
+	end)
+	hl.bind("SHIFT + l", function()
+		dynamic_move("right", 100)
+	end)
+
+	hl.bind("CONTROL + h", function()
+		dynamic_move("left", 1)
+	end)
+	hl.bind("CONTROL + j", function()
+		dynamic_move("down", 1)
+	end)
+	hl.bind("CONTROL + k", function()
+		dynamic_move("up", 1)
+	end)
+	hl.bind("CONTROL + l", function()
+		dynamic_move("right", 1)
+	end)
+
+	hl.bind("CONTROL + SHIFT + h", hl.dsp.window.move({ direction = "left" }))
+	hl.bind("CONTROL + SHIFT + j", hl.dsp.window.move({ direction = "down" }))
+	hl.bind("CONTROL + SHIFT + k", hl.dsp.window.move({ direction = "up" }))
+	hl.bind("CONTROL + SHIFT + l", hl.dsp.window.move({ direction = "right" }))
 
 	hl.bind("ALT + h", hl.dsp.window.resize({ x = -10, y = 0, relative = true }), { repeating = true })
 	hl.bind("ALT + j", hl.dsp.window.resize({ x = 0, y = 10, relative = true }), { repeating = true })
