@@ -60,11 +60,19 @@ case $2 in
 			nvme1)
 				sudo umount /windows/boot
 				sudo umount /windows/root
+
+				if sudo fuser -v /dev/nvme1*
+				then
+					echo device in use! refusing to detach
+					exit
+				else
+					echo confirmed device is not in use
+				fi
 				;;
 			dgpu-video)
-				if sudo fuser -v /dev/nvidia0
+				if sudo fuser -v /dev/nvidia*
 				then
-					echo device in use! refusing to detach gpu
+					echo device in use! refusing to detach
 					exit
 				else
 					echo confirmed device is not in use
