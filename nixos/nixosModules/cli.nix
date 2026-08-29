@@ -106,6 +106,7 @@ in
       })
       mpv-handler
       nethogs
+      psmisc
       ripgrep
       socat
       tmux

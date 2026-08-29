@@ -54,18 +54,30 @@ esac
 
 case $2 in
 	detach)
-		echo detaching device $1 from host for vfio
-
-		sudo modprobe vfio
-		sudo modprobe vfio_iommu_type1
-		sudo modprobe vfio_pci
+		echo performing pre-detachment actions
 
 		case $1 in
 			nvme1)
 				sudo umount /windows/boot
 				sudo umount /windows/root
 				;;
+			dgpu-video)
+				if sudo fuser -v /dev/nvidia0
+				then
+					echo device in use! refusing to detach gpu
+					exit
+				else
+					echo confirmed device is not in use
+				fi
+				;;
 		esac
+
+
+		echo detaching device $1 from host for vfio
+
+		sudo modprobe vfio
+		sudo modprobe vfio_iommu_type1
+		sudo modprobe vfio_pci
 
 		sudo virsh nodedev-detach pci_${PCI_DOMAIN}_${PCI_BUS}_${PCI_SLOT}_${PCI_FUNC}
 		;;
@@ -73,6 +85,8 @@ case $2 in
 		echo attaching device $1 to host from vfio
 
 		sudo virsh nodedev-reattach pci_${PCI_DOMAIN}_${PCI_BUS}_${PCI_SLOT}_${PCI_FUNC}
+
+		echo performing post-attachment actions
 
 		case $1 in
 			nvme1)
