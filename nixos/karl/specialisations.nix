@@ -16,12 +16,14 @@
           ];
         };
       };
-      # this specialisation provides pci passthrough on the dedicated gpu for vms
-      dgpu-passthrough = {
+      # this specialisation provides pci passthrough on:
+      # the dedicated gpu - for general vm uses (inc. below)
+      # the windows ssd - for running the windows installation as a vm
+      vfio-maxxing = {
         inheritParentConfig = true;
         configuration = {
           imports = [
-            ./specialisations/dgpu-passthrough.nix
+            ./specialisations/vfio-maxxing.nix
           ];
         };
       };

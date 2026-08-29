@@ -1,7 +1,10 @@
 -- new lua format test
 
-function get_host()
+local function get_host()
 	local f = io.popen("/bin/hostname")
+	if f == nil then
+		return "localhost"
+	end
 	local hostname = f:read("*a") or ""
 	f:close()
 	hostname = string.gsub(hostname, "\n$", "")
@@ -24,6 +27,26 @@ elseif host == "karl" then
 		position = "auto",
 		scale = "1",
 	})
+
+	local specialisation_file = io.open("/etc/specialisation")
+
+	if specialisation_file == nil then
+		SPECIALISATION = "default"
+	else
+		SPECIALISATION = specialisation_file:read("*a")
+
+		specialisation_file:close()
+	end
+
+	if SPECIALISATION == "default" then
+		hl.env("AQ_DRM_DEVICES", "/dev/dri/card0")
+	elseif SPECIALISATION == "hybrid-graphics" then
+		hl.env("AQ_DRM_DEVICES", "/dev/dri/card1:/dev/dri/card0")
+	elseif SPECIALISATION == "vfio-maxxing" then
+		hl.env("AQ_DRM_DEVICES", "/dev/dri/card1")
+		-- fix for /dev/nvidia0 remaining open by hyprland for some reason despite not actually using the gpu (important for vfio-tool)
+		hl.env("__EGL_VENDOR_LIBRARY_FILENAMES", "/run/opengl-driver/share/glvnd/egl_vendor.d/50_mesa.json")
+	end
 end
 
 local term = "alacritty"
@@ -37,6 +60,9 @@ end
 local browser = "firefox"
 local editor = "nvim"
 local launcher = "fuzzel"
+
+local minor_change_mod = "CONTROL + "
+local major_change_mod = "SHIFT + "
 
 hl.on("hyprland.start", function()
 	print("hyprland.start")
@@ -168,6 +194,18 @@ if host == "karl" then
 	})
 end
 
+local function change_output_volume(delta)
+	return hl.dsp.exec_cmd("pactl set-sink-volume @DEFAULT_SINK@ " .. delta)
+end
+
+local function change_input_volume(delta)
+	return hl.dsp.exec_cmd("pactl set-source-volume @DEFAULT_SOURCE@ " .. delta)
+end
+
+local function change_brightness(delta)
+	return hl.dsp.exec_cmd("brightnessctl s " .. delta)
+end
+
 local function base_bindings()
 	-- media keys
 	hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("playerctl-wrapper play-pause"))
@@ -187,28 +225,53 @@ local function base_bindings()
 	end)
 
 	-- volume keys
-	hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("pactl set-sink-volume @DEFAULT_SINK@ +5%"))
-	hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("pactl set-sink-volume @DEFAULT_SINK@ -5%"))
-	hl.bind("SHIFT + XF86AudioRaiseVolume", hl.dsp.exec_cmd("pactl set-sink-volume @DEFAULT_SINK@ +1%"))
-	hl.bind("SHIFT + XF86AudioLowerVolume", hl.dsp.exec_cmd("pactl set-sink-volume @DEFAULT_SINK@ -1%"))
-	hl.bind("ALT + XF86AudioRaiseVolume", hl.dsp.exec_cmd("pactl set-source-volume @DEFAULT_SOURCE@ +5%"))
-	hl.bind("ALT + XF86AudioLowerVolume", hl.dsp.exec_cmd("pactl set-source-volume @DEFAULT_SOURCE@ -5%"))
-	hl.bind("SHIFT + ALT + XF86AudioRaiseVolume", hl.dsp.exec_cmd("pactl set-source-volume @DEFAULT_SOURCE@ +5%"))
-	hl.bind("SHIFT + ALT + XF86AudioLowerVolume", hl.dsp.exec_cmd("pactl set-source-volume @DEFAULT_SOURCE@ -5%"))
+	hl.bind("XF86AudioRaiseVolume", change_output_volume("+5%"), { repeating = true })
+	hl.bind("XF86AudioLowerVolume", change_output_volume("-5%"), { repeating = true })
+	hl.bind(minor_change_mod .. "XF86AudioRaiseVolume", change_output_volume("+1%"), { repeating = true })
+	hl.bind(minor_change_mod .. "XF86AudioLowerVolume", change_output_volume("-1%"), { repeating = true })
+	hl.bind("ALT + XF86AudioRaiseVolume", change_input_volume("+5%"), { repeating = true })
+	hl.bind("ALT + XF86AudioLowerVolume", change_input_volume("-5%"), { repeating = true })
+	hl.bind(minor_change_mod .. "ALT + XF86AudioRaiseVolume", change_input_volume("+1%"), { repeating = true })
+	hl.bind(minor_change_mod .. "ALT + XF86AudioLowerVolume", change_input_volume("-1%"), { repeating = true })
 
 	hl.bind("XF86AudioMute", hl.dsp.exec_cmd("pactl set-sink-mute @DEFAULT_SINK@ toggle"))
 	hl.bind("ALT + XF86AudioMute", hl.dsp.exec_cmd("pactl set-source-mute @DEFAULT_SORUCE@ toggle"))
 
 	-- brightness keys
-	hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("brightnessctl s 5%+"))
-	hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl s 5%-"))
-	hl.bind("SHIFT + XF86MonBrightnessUp", hl.dsp.exec_cmd("brightnessctl s 1%+"))
-	hl.bind("SHIFT + XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl s 1%-"))
-	hl.bind("CONTROL + XF86MonBrightnessUp", hl.dsp.exec_cmd("brightnessctl s 1+"))
-	hl.bind("CONTROL + XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl s 1-"))
+	hl.bind("XF86MonBrightnessUp  ", change_brightness("5%+"), { repeating = true, locked = true })
+	hl.bind("XF86MonBrightnessDown", change_brightness("5%-"), { repeating = true, locked = true })
+	hl.bind(minor_change_mod .. "XF86MonBrightnessUp  ", change_brightness("1%+"), { repeating = true, locked = true })
+	hl.bind(minor_change_mod .. "XF86MonBrightnessDown", change_brightness("1%-"), { repeating = true, locked = true })
+	hl.bind(major_change_mod .. "XF86MonBrightnessUp  ", change_brightness("10%+"), { repeating = true, locked = true })
+	hl.bind(major_change_mod .. "XF86MonBrightnessDown", change_brightness("10%-"), { repeating = true, locked = true })
 
 	-- special
-	hl.bind("XF86RefreshRateToggle", hl.dsp.exec_cmd("cycle-resolution"))
+	if host == "karl" then
+		hl.bind("XF86RefreshRateToggle", function()
+			local edp = hl.get_monitor("eDP-1")
+
+			if edp == nil then
+				hl.exec_cmd("notify-send 'display id changed?'")
+				return
+			end
+
+			local fps = 165
+
+			if math.floor(edp.refresh_rate) == 60 then
+				fps = 165
+			elseif math.floor(edp.refresh_rate) == 165 then
+				fps = 60
+			else
+				hl.exec_cmd("notify-send 'refresh_rate is not 60 or 165?'")
+				fps = 165
+			end
+
+			hl.monitor({
+				output = edp.name,
+				mode = edp.width .. "x" .. edp.height .. "@" .. fps,
+			})
+		end)
+	end
 	hl.bind("code:78", hl.dsp.exec_cmd("toggle-inhibit"))
 
 	-- touchpad toggle
@@ -409,8 +472,8 @@ hl.define_submap("normal", function()
 		hl.dispatch(hl.dsp.submap("passthru"))
 	end)
 
-	hl.bind("d", hl.dsp.window.close())
-	hl.bind("CONTROL + d", hl.dsp.window.kill())
+	hl.bind("q", hl.dsp.window.close())
+	hl.bind("CONTROL + q", hl.dsp.window.kill())
 
 	hl.bind("H", hl.dsp.focus({ direction = "left" }))
 	hl.bind("J", hl.dsp.focus({ direction = "down" }))
@@ -484,10 +547,6 @@ hl.define_submap("normal", function()
 	hl.bind("SHIFT + S", hl.dsp.exec_cmd("lock hibernate"))
 	hl.bind("ALT + S", hl.dsp.exec_cmd("lock sleep"))
 	hl.bind("switch:Lid Switch", hl.dsp.exec_cmd("lock lid"))
-
-	hl.bind("ALT + Q", hl.dsp.window.close())
-	hl.bind("ALT + SHIFT + Q", hl.dsp.window.kill())
-	hl.bind("CONTROL + Q", hl.dsp.exec_cmd("hyprctl kill"))
 end)
 
 local function dynamic_move(direction, increment)
@@ -584,15 +643,47 @@ hl.define_submap("move/resize", function()
 	hl.bind("ALT + k", hl.dsp.window.resize({ x = 0, y = -10, relative = true }), { repeating = true })
 	hl.bind("ALT + l", hl.dsp.window.resize({ x = 10, y = 0, relative = true }), { repeating = true })
 
-	hl.bind("ALT + SHIFT + h", hl.dsp.window.resize({ x = -100, y = 0, relative = true }), { repeating = true })
-	hl.bind("ALT + SHIFT + j", hl.dsp.window.resize({ x = 0, y = 100, relative = true }), { repeating = true })
-	hl.bind("ALT + SHIFT + k", hl.dsp.window.resize({ x = 0, y = -100, relative = true }), { repeating = true })
-	hl.bind("ALT + SHIFT + l", hl.dsp.window.resize({ x = 100, y = 0, relative = true }), { repeating = true })
+	hl.bind(
+		major_change_mod .. "ALT + h",
+		hl.dsp.window.resize({ x = -100, y = 0, relative = true }),
+		{ repeating = true }
+	)
+	hl.bind(
+		major_change_mod .. "ALT + j",
+		hl.dsp.window.resize({ x = 0, y = 100, relative = true }),
+		{ repeating = true }
+	)
+	hl.bind(
+		major_change_mod .. "ALT + k",
+		hl.dsp.window.resize({ x = 0, y = -100, relative = true }),
+		{ repeating = true }
+	)
+	hl.bind(
+		major_change_mod .. "ALT + l",
+		hl.dsp.window.resize({ x = 100, y = 0, relative = true }),
+		{ repeating = true }
+	)
 
-	hl.bind("ALT + CONTROL + h", hl.dsp.window.resize({ x = -1, y = 0, relative = true }), { repeating = true })
-	hl.bind("ALT + CONTROL + j", hl.dsp.window.resize({ x = 0, y = 1, relative = true }), { repeating = true })
-	hl.bind("ALT + CONTROL + k", hl.dsp.window.resize({ x = 0, y = -1, relative = true }), { repeating = true })
-	hl.bind("ALT + CONTROL + l", hl.dsp.window.resize({ x = 1, y = 0, relative = true }), { repeating = true })
+	hl.bind(
+		minor_change_mod .. "ALT + h",
+		hl.dsp.window.resize({ x = -1, y = 0, relative = true }),
+		{ repeating = true }
+	)
+	hl.bind(
+		minor_change_mod .. "ALT + j",
+		hl.dsp.window.resize({ x = 0, y = 1, relative = true }),
+		{ repeating = true }
+	)
+	hl.bind(
+		minor_change_mod .. "ALT + k",
+		hl.dsp.window.resize({ x = 0, y = -1, relative = true }),
+		{ repeating = true }
+	)
+	hl.bind(
+		minor_change_mod .. "ALT + l",
+		hl.dsp.window.resize({ x = 1, y = 0, relative = true }),
+		{ repeating = true }
+	)
 
 	hl.bind("v", hl.dsp.window.float({}))
 	hl.bind("p", hl.dsp.window.pin({}))

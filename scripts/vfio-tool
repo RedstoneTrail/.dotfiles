@@ -1,0 +1,84 @@
+#!/usr/bin/env sh
+
+set -e
+
+HOST=$(hostname)
+
+case $HOST in
+	karl)
+		SPECIALISATION=$(</etc/specialisation)
+		if [ "$SPECIALISATION" == "vfio-maxxing" ]
+		then
+			case $1 in
+				nvme1)
+					PCI_DOMAIN=0000
+					PCI_BUS=07
+					PCI_SLOT=00
+					PCI_FUNC=0
+
+					NORMAL_DRIVER=nvme
+					;;
+				dgpu)
+					$0 dgpu-video $2
+					$0 dgpu-audio $2
+
+					exit
+					;;
+				dgpu-video)
+					PCI_DOMAIN=0000
+					PCI_BUS=01
+					PCI_SLOT=00
+					PCI_FUNC=0
+
+					NORMAL_DRIVER=nvidia
+					;;
+				dgpu-audio)
+					PCI_DOMAIN=0000
+					PCI_BUS=01
+					PCI_SLOT=00
+					PCI_FUNC=1
+
+					NORMAL_DRIVER=snd_hda_intel
+					;;
+			esac
+		else
+			echo not supported for host \"$HOST\" with specialisation \"$SPECIALISATION\"
+			exit
+		fi
+		;;
+	*)
+		echo not supported for host \"$HOST\"
+		exit
+		;;
+esac
+
+case $2 in
+	detach)
+		echo detaching device $1 from host for vfio
+
+		sudo modprobe vfio
+		sudo modprobe vfio_iommu_type1
+		sudo modprobe vfio_pci
+
+		case $1 in
+			nvme1)
+				sudo umount /windows/boot
+				sudo umount /windows/root
+				;;
+		esac
+
+		sudo virsh nodedev-detach pci_${PCI_DOMAIN}_${PCI_BUS}_${PCI_SLOT}_${PCI_FUNC}
+		;;
+	attach)
+		echo attaching device $1 to host from vfio
+
+		sudo virsh nodedev-reattach pci_${PCI_DOMAIN}_${PCI_BUS}_${PCI_SLOT}_${PCI_FUNC}
+
+		case $1 in
+			nvme1)
+				sudo mount /windows/boot
+				sudo mount /windows/root
+				;;
+		esac
+		;;
+esac

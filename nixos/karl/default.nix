@@ -10,6 +10,7 @@
     ./hardware-configuration.nix
     ./intel.nix
     ./specialisations.nix
+    ./windows.nix
     ../nixosModules/limine.nix
     ../nixosModules/user.nix
   ];
