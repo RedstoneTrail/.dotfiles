@@ -94,7 +94,6 @@ end
 
 env({
 	{ "BROWSER", browser },
-	{ "TERM", term },
 	{ "TERMINAL", term },
 	{ "EDITOR", editor },
 	{ "VISUAL", editor },
