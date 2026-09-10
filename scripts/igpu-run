@@ -7,7 +7,7 @@ then
 	export __GLX_VENDOR_LIBRARY_NAME=intel
 	export LIBGL_ALWAYS_SOFTWARE=0
 	export __NV_PRIME_RENDER_OFFLOAD=0
-	export VK_DRIVER_FILES=/run/opengl-driver/share/vulkan/icd.d/intel_icd.x86_64.json
+	export VK_DRIVER_FILES=/run/opengl-driver/share/vulkan/icd.d/intel_icd.x86_64.json:/run/opengl-driver/share/vulkan/icd.d/intel_icd.json
 	export __VK_LAYER_NV_optimus=non_NVIDIA_only
 	
 	exec "$@"

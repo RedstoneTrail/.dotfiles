@@ -163,6 +163,7 @@ hl.config({
 		},
 
 		no_focus_fallback = true,
+		allow_tearing = true,
 	},
 	decoration = {
 		blur = {
@@ -184,6 +185,11 @@ hl.config({
 	debug = {
 		disable_logs = false,
 	},
+})
+
+hl.window_rule({
+	match = { class = "steam_app_.*" },
+	immediate = true,
 })
 
 if host == "karl" then
@@ -268,6 +274,8 @@ local function base_bindings()
 			hl.monitor({
 				output = edp.name,
 				mode = edp.width .. "x" .. edp.height .. "@" .. fps,
+				scale = "1",
+				position = "auto",
 			})
 		end)
 	end

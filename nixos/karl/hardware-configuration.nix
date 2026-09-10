@@ -24,7 +24,10 @@
         kernelModules = [ ];
       };
       kernelModules = [ "kvm-intel" ];
-      extraModulePackages = [ ];
+      extraModulePackages = [
+        # current version does not whitelist this device
+        # config.boot.kernelPackages.lenovo-legion-module
+      ];
       extraModprobeConfig = ''
         options nvidia "NVreg_DynamicPowerManagement=0x03"
       '';
@@ -33,6 +36,10 @@
         # "reboot=pci" # fix for non-functional direct ethernet connection
         "split_lock_detect=off" # this makes some otherwise unplayably slow games way faster
       ];
+
+      kernel.sysctl = {
+        "vm.swappiness" = 10;
+      };
     };
 
     fileSystems."/" = {
@@ -67,11 +74,13 @@
       enable = true;
     };
 
-    # gpu info packages
     environment.systemPackages = with pkgs; [
       powertop
       clinfo
       pocl
+
+      # current version does not whitelist this device
+      # lenovo-legion
     ];
 
     services = {
