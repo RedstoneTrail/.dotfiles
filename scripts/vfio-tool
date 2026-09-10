@@ -58,16 +58,16 @@ case $2 in
 
 		case $1 in
 			nvme1)
-				sudo umount /windows/boot
-				sudo umount /windows/root
-
-				if sudo fuser -v /dev/nvme1*
+				if sudo fuser -m /dev/disk/by-id/nvme-Micron_2210_MTFDHBA512QFD_20452B678873-part*
 				then
 					echo device in use! refusing to detach
 					exit
 				else
 					echo confirmed device is not in use
 				fi
+
+				sudo umount /windows/boot
+				sudo umount /windows/root
 				;;
 			dgpu-video)
 				if sudo fuser -v /dev/nvidia*
@@ -98,6 +98,8 @@ case $2 in
 
 		case $1 in
 			nvme1)
+				sleep 1
+
 				sudo mount /windows/boot
 				sudo mount /windows/root
 				;;
