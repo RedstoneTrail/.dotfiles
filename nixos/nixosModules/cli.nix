@@ -8,6 +8,11 @@ let
   cfg-enabled = config.dotfiles.cli;
   cfg-hardware-access = config.dotfiles.hardware-accessible;
   genAttrsConst = keys: value: lib.attrsets.genAttrs keys (_: value);
+
+  pinentry-wrapper-pkg = pkgs.writeShellApplication {
+    name = "pinentry-wrapper";
+    text = ./pinentry-wrapper.sh;
+  };
 in
 {
   config = lib.mkIf cfg-enabled.enable {
@@ -54,120 +59,128 @@ in
       zsh.enable = true;
     };
 
-    environment.systemPackages = with pkgs; [
-      # communications
-      abook
-      aerc
-      lynx
-      neomutt
-      pass
+    environment.systemPackages =
+      with pkgs;
+      [
+        # communications
+        abook
+        aerc
+        lynx
+        neomutt
+        pass
 
-      # system-level
-      brightnessctl
-      cyme # lsusb-like
+        # system-level
+        brightnessctl
+        cyme # lsusb-like
 
-      # for nvim
-      buf
-      lua-language-server
-      unstable.neovim
-      nixd
-      nixfmt
-      prettier
-      stylua
-      texlab
-      tinymist
-      websocat
+        # for nvim
+        buf
+        lua-language-server
+        unstable.neovim
+        nixd
+        nixfmt
+        prettier
+        stylua
+        texlab
+        tinymist
+        websocat
 
-      # networking
-      arp-scan
-      dig
-      impala
-      nmap
-      termshark
+        # networking
+        arp-scan
+        dig
+        impala
+        nmap
+        termshark
 
-      # useful
-      bc
-      catimg
-      custom.mountui
-      dust
-      fd
-      ffmpeg-full
-      file
-      fzf
-      inkscape
-      jq
-      (mpv.override {
-        scripts = with mpvScripts; [
-          uosc
-          mpris
-          mpv-image-viewer.detect-image
-          mpv-image-viewer.image-positioning
-        ];
-      })
-      mpv-handler
-      nethogs
-      psmisc
-      ripgrep
-      socat
-      tmux
-      tree
-      units
-      unzip
-      w3m-nographics
-      wget
-      xxd
-      zip
+        # useful
+        bc
+        catimg
+        custom.mountui
+        dust
+        fd
+        ffmpeg-full
+        file
+        fzf
+        inkscape
+        jq
+        (mpv.override {
+          scripts = with mpvScripts; [
+            uosc
+            mpris
+            mpv-image-viewer.detect-image
+            mpv-image-viewer.image-positioning
+          ];
+        })
+        mpv-handler
+        nethogs
+        psmisc
+        ripgrep
+        socat
+        tmux
+        tree
+        units
+        unzip
+        w3m-nographics
+        wget
+        xxd
+        zip
 
-      # man
-      man-pages
-      man-pages-posix
-      tldr
+        # man
+        man-pages
+        man-pages-posix
+        tldr
 
-      # git
-      gh
-      git
+        # git
+        gh
+        git
 
-      # development
-      gnumake
-      (python3.withPackages (python-pkgs: [
-        python3Packages.pygobject3
-        python3Packages.requests
-      ]))
-      typst
+        # development
+        gnumake
+        (python3.withPackages (python-pkgs: [
+          python3Packages.pygobject3
+          python3Packages.requests
+        ]))
+        typst
 
-      # gtk
-      gtk4
-      gtk3
-      gtk2
+        # gtk
+        gtk4
+        gtk3
+        gtk2
 
-      # monitoring
-      htop-vim
-      hyperfine
-      lm_sensors
-      playerctl
-      smartmontools
-      cpufrequtils
+        # monitoring
+        htop-vim
+        hyperfine
+        lm_sensors
+        playerctl
+        smartmontools
+        cpufrequtils
 
-      # fun
-      catimg
-      figlet
-      glow
-      id3v2
-      lolcat
-      opustags
-      vitetris
-      yt-dlp
-    ];
+        # fun
+        catimg
+        figlet
+        glow
+        id3v2
+        lolcat
+        opustags
+        vitetris
+        yt-dlp
+
+        # pinentry
+        pinentry-all
+      ]
+      ++ [
+        pinentry-wrapper-pkg
+      ];
 
     documentation = {
       dev.enable = true;
-      # man.generateCaches = true;
+      man.cache.enable = true;
     };
 
     programs = {
       gnupg.agent = {
         enable = true;
-        pinentryPackage = pkgs.pinentry-gnome3;
+        pinentryPackage = pinentry-wrapper-pkg;
       };
 
       wireshark = {

@@ -1,0 +1,100 @@
+#!/usr/bin/env sh
+
+errexit() {
+	printf 'error: '"$@"'\n'
+	exit 1
+}
+
+infolog() {
+	printf 'info: '"$@"'\n'
+}
+
+dir=/sys/devices/system/cpu
+
+if ! [ -e "${dir}" ]
+then
+	errexit "$dir does not exist"
+fi
+
+case $1 in
+	online|set-online|up)
+		objective_state=on
+		;;
+	offline|set-offline|down)
+		objective_state=off
+		;;
+	*)
+		errexit 'unknown action "'$1'"'
+		;;
+esac
+
+groups="$(echo $2 | tr ',' '\n')"
+
+target_cores=
+
+for group in $groups
+do
+	if [ $(echo $group | tr '-' '\n' | wc -l) -gt 2 ]
+	then
+		errexit 'group "'$group'" has more than one dash'
+	fi
+
+	if echo $group | grep '-' &>/dev/null
+	then
+		first=$(echo $group | cut -f1 -d\-)
+		last=$(echo $group | cut -f2 -d\-)
+
+		if [ -z "$target_cores" ]
+		then
+			target_cores="$(eval echo {$first..$last})"
+		else
+			target_cores="${target_cores} $(eval echo {$first..$last})"
+		fi
+	else
+		echo tbi
+	fi
+done
+
+target_cores=$(echo $target_cores | tr ' ' '\n')
+
+nonexistent_cores=
+
+for core in $target_cores
+do
+	if ! [ -e ${dir}/cpu${core} ] || [ "$core" == "0" ]
+	then
+		if [ -z "$nonexistent_cores" ]
+		then
+			nonexistent_cores="$core"
+		else
+			nonexistent_cores="$nonexistent_cores,$core"
+		fi
+	fi
+done
+
+if ! [ -z "$nonexistent_cores" ]
+then
+	if [ $(echo $nonexistent_cores | tr ',' '\n' | wc -l) == 1 ]
+	then
+		errexit "core $nonexistent_cores does not exist"
+	else
+		errexit "cores $nonexistent_cores do not exist"
+	fi
+fi
+
+set_state () {
+	file=${dir}/cpu${core}/online
+
+	echo $1 | sudo tee $file >/dev/null
+}
+
+for core in $target_cores
+do
+	if [ "$objective_state" == "on" ]
+	then
+		set_state 1 $core
+	elif [ "$objective_state" == "off" ]
+	then
+		set_state 0 $core
+	fi
+done
