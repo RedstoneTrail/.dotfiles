@@ -17,10 +17,10 @@ then
 fi
 
 case $1 in
-	online|set-online|up)
+	online|set-online|up|on)
 		objective_state=on
 		;;
-	offline|set-offline|down)
+	offline|set-offline|down|off)
 		objective_state=off
 		;;
 	*)
@@ -28,7 +28,19 @@ case $1 in
 		;;
 esac
 
-groups="$(echo $2 | tr ',' '\n')"
+if [ "$2" == "all" ]
+then
+	if [ "$objective_state" == "on" ]
+	then
+		selection=$(cat $dir/offline)
+	else
+		selection=$(cat $dir/online)
+	fi
+else
+	selection="$2"
+fi
+
+groups="$(echo $selection | tr ',' '\n')"
 
 target_cores=
 
@@ -51,9 +63,24 @@ do
 			target_cores="${target_cores} $(eval echo {$first..$last})"
 		fi
 	else
-		echo tbi
+		if [ -z "$target_cores" ]
+		then
+			target_cores="$group"
+		else
+			target_cores="${target_cores} $group"
+		fi
 	fi
 done
+
+target_cores=$(echo $target_cores | tr ' ' '\n' | sort -h | uniq | tr '\n' ' ' | rev | cut -b2- | rev)
+
+if [ -z "$target_cores" ]
+then
+	infolog "all specified cores are online"
+	exit
+fi
+
+infolog "turning $objective_state cores $(echo $target_cores | tr ' ' ',')"
 
 target_cores=$(echo $target_cores | tr ' ' '\n')
 
