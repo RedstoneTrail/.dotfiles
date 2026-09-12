@@ -17,10 +17,10 @@ then
 fi
 
 case $1 in
-	online|set-online|up|on)
+	online|set-online|up|u|on)
 		objective_state=on
 		;;
-	offline|set-offline|down|off)
+	offline|set-offline|down|dn|d|off)
 		objective_state=off
 		;;
 	*)
@@ -28,13 +28,23 @@ case $1 in
 		;;
 esac
 
-if [ "$2" == "all" ]
+if [ "$2" == "all" ] || [ "$2" == "a" ]
 then
 	if [ "$objective_state" == "on" ]
 	then
 		selection=$(cat $dir/offline)
 	else
 		selection=$(cat $dir/online)
+
+		if [ "$selection" == "0" ]
+		then
+			selection=
+		elif [ "$(echo $selection | cut -b1-2)" == "0," ]
+		then
+			selection="$(echo $selection | cut -b3-)"
+		else
+			selection="$(echo $selection | sed 's/^0/1/')"
+		fi
 	fi
 else
 	selection="$2"
@@ -46,6 +56,11 @@ target_cores=
 
 for group in $groups
 do
+	if [ -z "$group" ]
+	then
+		errexit "a group is empty"
+	fi
+
 	if [ $(echo $group | tr '-' '\n' | wc -l) -gt 2 ]
 	then
 		errexit 'group "'$group'" has more than one dash'
@@ -56,11 +71,23 @@ do
 		first=$(echo $group | cut -f1 -d\-)
 		last=$(echo $group | cut -f2 -d\-)
 
+		if [ -z "$first" ]
+		then
+			first=1
+		fi
+
+		if [ -z "$last" ]
+		then
+			last=$(cat $dir/enabled | cut -f2 -d\-)
+		fi
+
+		cores_in_group=$(eval echo {$first..$last})
+
 		if [ -z "$target_cores" ]
 		then
-			target_cores="$(eval echo {$first..$last})"
+			target_cores="$cores_in_group"
 		else
-			target_cores="${target_cores} $(eval echo {$first..$last})"
+			target_cores="${target_cores} $cores_in_group"
 		fi
 	else
 		if [ -z "$target_cores" ]
@@ -76,7 +103,7 @@ target_cores=$(echo $target_cores | tr ' ' '\n' | sort -h | uniq | tr '\n' ' ' |
 
 if [ -z "$target_cores" ]
 then
-	infolog "all specified cores are online"
+	infolog "no cores specified"
 	exit
 fi
 
@@ -85,10 +112,11 @@ infolog "turning $objective_state cores $(echo $target_cores | tr ' ' ',')"
 target_cores=$(echo $target_cores | tr ' ' '\n')
 
 nonexistent_cores=
+addressing_core_0=no
 
 for core in $target_cores
 do
-	if ! [ -e ${dir}/cpu${core} ] || [ "$core" == "0" ]
+	if ! [ -e ${dir}/cpu${core} ]
 	then
 		if [ -z "$nonexistent_cores" ]
 		then
@@ -97,16 +125,39 @@ do
 			nonexistent_cores="$nonexistent_cores,$core"
 		fi
 	fi
+
+	if [ "$core" == "0" ]
+	then
+		infolog "cannot control core 0!"
+		addressing_core_0=yes
+	fi
 done
 
-if ! [ -z "$nonexistent_cores" ]
+if ! [ -z "$nonexistent_cores" ] || [ "$addressing_core_0" == "yes" ]
 then
-	if [ $(echo $nonexistent_cores | tr ',' '\n' | wc -l) == 1 ]
+	errmsg=
+
+	if ! [ -z "$nonexistent_cores" ]
 	then
-		errexit "core $nonexistent_cores does not exist"
-	else
-		errexit "cores $nonexistent_cores do not exist"
+		if [ $(echo $nonexistent_cores | tr ',' '\n' | wc -l) == 1 ]
+		then
+			errmsg="${errmsg}core $nonexistent_cores does not exist"
+		else
+			errmsg="${errmsg}cores $nonexistent_cores do not exist"
+		fi
+
+		if [ "$addressing_core_0" == "yes" ]
+		then
+			errmsg="${errmsg}, "
+		fi
 	fi
+
+	if [ "$addressing_core_0" == "yes" ]
+	then
+		errmsg="${errmsg}$([ "$addressing_core_0" == "yes" ] && printf 'core 0 is not offlineable')"
+	fi
+
+	errexit "$errmsg"
 fi
 
 set_state () {
@@ -125,3 +176,5 @@ do
 		set_state 0 $core
 	fi
 done
+
+infolog "current online cores: $(<$dir/online)"
