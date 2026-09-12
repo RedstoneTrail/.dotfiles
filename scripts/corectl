@@ -16,19 +16,53 @@ then
 	errexit "$dir does not exist"
 fi
 
-case $1 in
-	online|set-online|up|u|on)
-		objective_state=on
-		;;
-	offline|set-offline|down|dn|d|off)
-		objective_state=off
-		;;
-	*)
-		errexit 'unknown action "'$1'"'
-		;;
-esac
+online_mode_filter='^online|^on|^up|^u'
+offline_mode_filter='^offline|^off|^down|^dn|^d'
+help_mode_filter='^-h|^--help|^h|^help'
+all_selection_filter='^all|^a'
 
-if [ "$2" == "all" ] || [ "$2" == "a" ]
+if echo $1 | grep -Ex -- "$online_mode_filter" &>/dev/null
+then
+	objective_state=on
+elif echo $1 | grep -Ex -- "$offline_mode_filter" &>/dev/null
+then
+	objective_state=off
+elif echo $1 | grep -Ex -- "$help_mode_filter" &>/dev/null
+then
+	filter_to_list () {
+		sed 's/\^//g' | sed 's/|/, /g'
+	}
+
+	printf "usage: $(basename $0) [MODE] [SELECTION]\n"
+	printf "\n"
+	printf "online-ing mode:\n"
+	printf "\t MODE is one of $(echo $online_mode_filter | filter_to_list)\n"
+	printf "\t cores in SELECTION are set to online\n"
+	printf "\n"
+	printf "offline-ing mode:\n"
+	printf "\t MODE is one of $(echo $offline_mode_filter | filter_to_list)\n"
+	printf "\t cores in SELECTION are set to offline\n"
+	printf "\n"
+	printf "show help:\n"
+	printf "\t MODE is one of $(echo $help_mode_filter | filter_to_list)\n"
+	printf "\t show this help\n"
+	printf "\n"
+	printf "SELECTIONs:\n" 
+	printf "\t selections are defined in the same way as Linux defines cores in ${dir}/online e.t.c.\n"
+	printf "\t for documentation, they are a comma separated list of ranges or specific cores\n"
+	printf "\t alternatively, one of $(echo $all_selection_filter | filter_to_list) can be used to select all offlineable cores\n"
+	printf "\t ranges:\n"
+	printf "\t\t ranges are inclusive, written as [FIRST]-[LAST]\n"
+	printf "\t\t if a FIRST value is not defined, 1 will be used\n"
+	printf "\t\t if a LAST value is not defined, the index of the last core will be used\n"
+	printf "\n"
+	printf "note: core 0 (the boot core) cannot be put offline\n"
+	exit
+else
+	errexit 'unknown action "'$1'"'
+fi
+
+if echo $2 | grep -Ex -- "$all_selection_filter" &>/dev/null
 then
 	if [ "$objective_state" == "on" ]
 	then
