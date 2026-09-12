@@ -61,6 +61,11 @@ do
 		errexit "a group is empty"
 	fi
 
+	if [ "$group" == "-" ]
+	then
+		errexit '"'$group'" is not a valid group'
+	fi
+
 	if [ $(echo $group | tr '-' '\n' | wc -l) -gt 2 ]
 	then
 		errexit 'group "'$group'" has more than one dash'
