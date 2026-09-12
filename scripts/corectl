@@ -167,7 +167,6 @@ do
 
 	if [ "$core" == "0" ]
 	then
-		infolog "cannot control core 0!"
 		addressing_core_0=yes
 	fi
 done
@@ -193,7 +192,7 @@ then
 
 	if [ "$addressing_core_0" == "yes" ]
 	then
-		errmsg="${errmsg}$([ "$addressing_core_0" == "yes" ] && printf 'core 0 is not offlineable')"
+		errmsg="${errmsg}$([ "$addressing_core_0" == "yes" ] && printf 'core 0 is not on/offlineable')"
 	fi
 
 	errexit "$errmsg"
