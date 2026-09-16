@@ -1,5 +1,3 @@
--- new lua format test
-
 local function get_host()
 	local f = io.popen("/bin/hostname")
 	if f == nil then
@@ -9,6 +7,26 @@ local function get_host()
 	f:close()
 	hostname = string.gsub(hostname, "\n$", "")
 	return hostname
+end
+
+local borders = {
+	active = "0xff00AA00",
+	inactive = "0xff077000",
+}
+
+local existing_mode_notification = nil
+
+local function set_mode(mode)
+	return function()
+		hl.dispatch(hl.dsp.submap(mode))
+
+		if existing_mode_notification ~= nil and existing_mode_notification:is_alive() then
+			existing_mode_notification:dismiss()
+		end
+
+		existing_mode_notification =
+			hl.notification.create({ text = mode, timeout = 10000, icon = "none", color = borders.inactive })
+	end
 end
 
 local host = get_host()
@@ -81,7 +99,7 @@ hl.on("hyprland.start", function()
 		hl.exec_cmd(prog)
 	end
 
-	hl.dispatch(hl.dsp.submap("normal"))
+	hl.dispatch(set_mode("normal"))
 end)
 
 local function env(environ_table)
@@ -113,11 +131,6 @@ env({
 	{ "HYPRCURSOR_SIZE", "24" },
 	{ "HYPRCURSOR_THEME", "catppuccin-frappe-green-cursors" },
 })
-
-local borders = {
-	active = "0xff00AA00",
-	inactive = "0xff077000",
-}
 
 hl.config({
 	ecosystem = {
@@ -225,7 +238,7 @@ local function base_bindings()
 	hl.bind("SHIFT + XF86AudioPlay", function()
 		local submap = hl.get_current_submap()
 
-		hl.dispatch(hl.dsp.submap("passthru"))
+		hl.dispatch(set_mode("passthru"))
 		hl.exec_cmd("select-player; hyprctl eval 'hl.dispatch(hl.dsp.submap(\"" .. submap .. "\"))'")
 	end)
 
@@ -369,7 +382,7 @@ local function screenshot()
 		selection = ""
 	elseif screenshot_mode.area == SCREENSHOT_AREA_MODES.selection then
 		selection = '-g "$(slurp)"'
-		hl.dispatch(hl.dsp.submap("passthru"))
+		hl.dispatch(set_mode("passthru"))
 	elseif screenshot_mode.area == SCREENSHOT_AREA_MODES.window then
 		local window = hl.get_active_window()
 
@@ -385,7 +398,7 @@ local function screenshot()
 	hl.exec_cmd("grim " .. selection .. dest .. "; hyprctl eval 'hl.dispatch(hl.dsp.submap('\\''normal'\\''))'")
 
 	if screenshot_mode.area ~= SCREENSHOT_AREA_MODES.selection then
-		hl.dispatch(hl.dsp.submap("normal"))
+		hl.dispatch(set_mode("normal"))
 	end
 
 	remove_screenshot_mode_file()
@@ -397,15 +410,19 @@ hl.define_submap("screenshot", function()
 	base_bindings()
 
 	hl.bind("i", function()
-		hl.dispatch(hl.dsp.submap("passthru"))
+		hl.dispatch(set_mode("passthru"))
+		remove_screenshot_mode_file()
+	end)
+	hl.bind("a", function()
+		hl.dispatch(set_mode("passthru"))
 		remove_screenshot_mode_file()
 	end)
 	hl.bind("m", function()
-		hl.dispatch(hl.dsp.submap("move/resize"))
+		hl.dispatch(set_mode("move/resize"))
 		remove_screenshot_mode_file()
 	end)
 	hl.bind("SUPER_L", function()
-		hl.dispatch(hl.dsp.submap("normal"))
+		hl.dispatch(set_mode("normal"))
 		remove_screenshot_mode_file()
 	end)
 
@@ -443,9 +460,10 @@ hl.define_submap("normal", function()
 
 	base_bindings()
 
-	hl.bind("i", hl.dsp.submap("passthru"))
-	hl.bind("m", hl.dsp.submap("move/resize"))
-	hl.bind("Print", hl.dsp.submap("screenshot"))
+	hl.bind("i", set_mode("passthru"))
+	hl.bind("a", set_mode("passthru"))
+	hl.bind("m", set_mode("move/resize"))
+	hl.bind("Print", set_mode("screenshot"))
 	hl.bind("SHIFT + Print", screenshot)
 	hl.bind("ALT + Print", function()
 		local submap = hl.get_current_submap()
@@ -598,8 +616,9 @@ hl.define_submap("move/resize", function()
 
 	base_bindings()
 
-	hl.bind("i", hl.dsp.submap("passthru"))
-	hl.bind("SUPER_L", hl.dsp.submap("normal"))
+	hl.bind("i", set_mode("passthru"))
+	hl.bind("a", set_mode("passthru"))
+	hl.bind("SUPER_L", set_mode("normal"))
 
 	hl.bind("h", function()
 		dynamic_move("left", 10)
@@ -705,7 +724,7 @@ hl.define_submap("move/resize", function()
 end)
 
 hl.define_submap("passthru", function()
-	hl.bind("SUPER_L", hl.dsp.submap("normal"))
+	hl.bind("SUPER_L", set_mode("normal"))
 
 	base_bindings()
 end)
