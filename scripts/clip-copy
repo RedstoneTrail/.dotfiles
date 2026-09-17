@@ -1,0 +1,12 @@
+#!/bin/sh
+
+if command -v wl-copy &>/dev/null
+then
+	wl-copy
+elif command -v termux-clipboard-set &>/dev/null
+then
+	termux-clipboard-set
+else
+	printf 'no known clipboard tool found!'
+	exit 1
+fi

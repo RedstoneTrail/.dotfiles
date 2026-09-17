@@ -403,10 +403,10 @@ end
 
 local function screenshot()
 	local selection = ""
-	local dest = "- | wl-copy"
+	local dest = "- | clip-copy"
 
 	if screenshot_mode.dest == SCREENSHOT_DESTINATION_MODES.clipboard then
-		dest = " - | wl-copy"
+		dest = " - | clip-copy"
 	elseif screenshot_mode.dest == SCREENSHOT_DESTINATION_MODES.file then
 		dest = ""
 	elseif screenshot_mode.dest == SCREENSHOT_DESTINATION_MODES.mpv then
