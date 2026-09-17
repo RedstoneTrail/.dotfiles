@@ -20,6 +20,7 @@
     graphical.enable = lib.mkEnableOption "Enable graphical features";
     hardware-accessible.enable = lib.mkEnableOption "Enable hardware access";
     input.enable = lib.mkEnableOption "Enable input remapping with kanata";
+    laptop.enable = lib.mkEnableOption "Device is a laptop, apply laptop-specific config";
     networking-control.enable = lib.mkEnableOption "Enable configuration of networking hardware and low-level software";
     pihole.enable = lib.mkEnableOption "Enable hosting pihole for network-wide adblock";
     printing.enable = lib.mkEnableOption "Enable CUPS and other printing features";
@@ -42,6 +43,7 @@
     ./firefox.nix
     ./gaming.nix
     ./input.nix
+    ./laptop.nix
     ./networking.nix
     ./nixosSupport.nix
     ./pihole.nix

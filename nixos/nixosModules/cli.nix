@@ -60,6 +60,7 @@ in
       aerc
       lynx
       neomutt
+      oama
       pass
 
       # system-level

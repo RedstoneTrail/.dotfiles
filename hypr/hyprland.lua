@@ -1,3 +1,16 @@
+local function capture_stdout(cmdline)
+	local child = io.popen(cmdline)
+	if child == nil then
+		return nil
+	else
+		local result = child:read("*a")
+
+		child:close()
+
+		return result
+	end
+end
+
 local function get_host()
 	local f = io.popen("/bin/hostname")
 	if f == nil then
@@ -9,7 +22,7 @@ local function get_host()
 	return hostname
 end
 
-local borders = {
+local colours = {
 	active = "0xff00AA00",
 	inactive = "0xff077000",
 }
@@ -20,12 +33,15 @@ local function set_mode(mode)
 	return function()
 		hl.dispatch(hl.dsp.submap(mode))
 
-		if existing_mode_notification ~= nil and existing_mode_notification:is_alive() then
-			existing_mode_notification:dismiss()
-		end
+		local timeout = 2000
 
-		existing_mode_notification =
-			hl.notification.create({ text = mode, timeout = 10000, icon = "none", color = borders.inactive })
+		if existing_mode_notification ~= nil and existing_mode_notification:is_alive() then
+			existing_mode_notification:set_timeout(timeout)
+			existing_mode_notification:set_text(mode)
+		else
+			existing_mode_notification =
+				hl.notification.create({ text = mode, timeout = timeout, icon = "none", color = colours.inactive })
+		end
 	end
 end
 
@@ -56,14 +72,33 @@ elseif host == "karl" then
 		specialisation_file:close()
 	end
 
-	if SPECIALISATION == "default" then
-		hl.env("AQ_DRM_DEVICES", "/dev/dri/card0")
-	elseif SPECIALISATION == "hybrid-graphics" then
-		hl.env("AQ_DRM_DEVICES", "/dev/dri/card1:/dev/dri/card0")
-	elseif SPECIALISATION == "vfio-maxxing" then
-		hl.env("AQ_DRM_DEVICES", "/dev/dri/card1")
-		-- fix for /dev/nvidia0 remaining open by hyprland for some reason despite not actually using the gpu (important for vfio-tool)
-		hl.env("__EGL_VENDOR_LIBRARY_FILENAMES", "/run/opengl-driver/share/glvnd/egl_vendor.d/50_mesa.json")
+	local igpu_device = capture_stdout("realpath /dev/dri/by-path/pci-0000:00:02.0-card")
+	local dgpu_device = capture_stdout("realpath /dev/dri/by-path/pci-0000:01:00.0-card")
+
+	if igpu_device == nil then
+		if SPECIALISATION == "hybrid-graphics" then
+			if dgpu_device == nil then
+				print("dgpu not found, are drivers not loaded?")
+			else
+				hl.env("AQ_DRM_DEVICES", dgpu_device)
+			end
+		else
+			print("igpu not found, are drivers not loaded?")
+		end
+	else
+		if SPECIALISATION == "default" then
+			hl.env("AQ_DRM_DEVICES", igpu_device)
+		elseif SPECIALISATION == "hybrid-graphics" then
+			if dgpu_device == nil then
+				print("dgpu not found, are drivers not loaded?")
+			else
+				hl.env("AQ_DRM_DEVICES", igpu_device .. ":" .. dgpu_device)
+			end
+		elseif SPECIALISATION == "vfio-maxxing" then
+			hl.env("AQ_DRM_DEVICES", igpu_device)
+			-- fix for /dev/nvidia0 remaining open by hyprland for some reason despite not actually using the gpu (important for vfio-tool)
+			hl.env("__EGL_VENDOR_LIBRARY_FILENAMES", "/run/opengl-driver/share/glvnd/egl_vendor.d/50_mesa.json")
+		end
 	end
 end
 
@@ -171,8 +206,8 @@ hl.config({
 		border_size = 3,
 
 		col = {
-			inactive_border = borders.inactive,
-			active_border = borders.active,
+			inactive_border = colours.inactive,
+			active_border = colours.active,
 		},
 
 		no_focus_fallback = true,
@@ -523,12 +558,12 @@ hl.define_submap("normal", function()
 
 			hl.dispatch(hl.dsp.window.set_prop({
 				prop = "active_border_color",
-				value = borders.active,
+				value = colours.active,
 				window = window,
 			}))
 			hl.dispatch(hl.dsp.window.set_prop({
 				prop = "inactive_border_color",
-				value = borders.inactive,
+				value = colours.inactive,
 				window = window,
 			}))
 		else

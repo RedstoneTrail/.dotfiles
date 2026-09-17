@@ -27,6 +27,7 @@
         graphical = enabled;
         hardware-accessible = enabled;
         input = enabled;
+        laptop = enabled;
         networking-control = enabled;
         rclone = enabled;
         slsk = enabled;
