@@ -37,6 +37,7 @@ config:
 	rm -rf ~/.config/fuzzel
 	ln -s $(realpath fuzzel) ~/.config/fuzzel
 
+	rm -rf ~/.config/gtk-3.0 ~/.config/gtk-4.0
 	mkdir -p ~/.config/gtk-3.0 ~/.config/gtk-4.0
 	ln -s $(realpath ./gtk.css) ~/.config/gtk-3.0/gtk.css
 	ln -s $(realpath ./gtk.css) ~/.config/gtk-4.0/gtk.css
@@ -55,6 +56,9 @@ config:
 
 	rm -rf ~/.config/nvim
 	ln -s $(realpath nvim) ~/.config/nvim
+
+	rm -rf ~/.config/oama
+	ln -s $(realpath oama) ~/.config/oama
 
 	rm -rf ~/.config/pulseaudio-ctl
 	ln -s $(realpath pulseaudio-ctl) ~/.config/pulseaudio-ctl
