@@ -60,7 +60,6 @@ vim.o.winborder = "bold"
 
 vim.o.completeopt = "menuone,popup"
 
-
 _G.coauthorfunc = function(findstart, base)
 	-- :h complete-functions
 	if findstart == 1 then
@@ -83,7 +82,9 @@ vim.keymap.set("i", "<C-x><C-a>", "<cmd>set completefunc=v:lua.coauthorfunc<CR><
 
 vim.opt.shiftwidth = 0
 
-local function gh(x) return "https://github.com/" .. x end
+local function gh(x)
+	return "https://github.com/" .. x
+end
 
 vim.pack.add({
 	gh("tpope/vim-commentary"),

@@ -82,6 +82,7 @@ in
       # networking
       arp-scan
       dig
+      ethtool
       impala
       nmap
       termshark
@@ -133,6 +134,7 @@ in
       (python3.withPackages (python-pkgs: [
         python3Packages.pygobject3
         python3Packages.requests
+        python313Packages.dbus-python
       ]))
       typst
 

@@ -20,6 +20,11 @@
           "ahci"
           "nvme"
           "usbhid"
+
+          # vfio on all specialisations
+          "vfio_pci"
+          "vfio"
+          "vfio_iommu_type1"
         ];
         kernelModules = [ ];
       };
@@ -33,8 +38,11 @@
       '';
 
       kernelParams = [
-        # "reboot=pci" # fix for non-functional direct ethernet connection
         "split_lock_detect=off" # this makes some otherwise unplayably slow games way faster
+
+        # enable iommu for vfio-tool on all specialisations (useful for nvme1 detachment)
+        "intel_iommu=on"
+        "iommu=pt"
       ];
 
       kernel.sysctl = {

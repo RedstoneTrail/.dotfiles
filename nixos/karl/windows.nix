@@ -20,8 +20,10 @@
       ];
     };
 
-    environment.systemPackages = [
-      pkgs.ntfs3g
+    environment.systemPackages = with pkgs; [
+      chntpw
+      ntfs3g
+      rlwrap
     ];
 
     boot = {

@@ -22,6 +22,10 @@ local function get_host()
 	return hostname
 end
 
+local function exec_then_mode(cmdline, mode)
+	hl.exec_cmd(cmdline .. "; hyprctl eval 'set_mode(\"" .. mode .. "\")'")
+end
+
 local colours = {
 	active = "0xff00AA00",
 	inactive = "0xff077000",
@@ -29,7 +33,11 @@ local colours = {
 
 local existing_mode_notification = nil
 
-local function set_mode(mode)
+function set_mode(mode)
+	hl.dispatch(set_mode_dsp_gen(mode))
+end
+
+function set_mode_dsp_gen(mode)
 	return function()
 		hl.dispatch(hl.dsp.submap(mode))
 
@@ -56,9 +64,16 @@ if host == "bosco" then
 	})
 elseif host == "karl" then
 	hl.monitor({
-		output = "",
+		output = "eDP-1",
 		mode = "2560x1600@165",
 		position = "auto",
+		scale = "1",
+	})
+
+	hl.monitor({
+		output = "HDMI-A-5",
+		mode = "1920x1080@60",
+		position = "auto-left",
 		scale = "1",
 	})
 
@@ -134,7 +149,7 @@ hl.on("hyprland.start", function()
 		hl.exec_cmd(prog)
 	end
 
-	hl.dispatch(set_mode("normal"))
+	set_mode("normal")
 end)
 
 local function env(environ_table)
@@ -166,6 +181,10 @@ env({
 	{ "HYPRCURSOR_SIZE", "24" },
 	{ "HYPRCURSOR_THEME", "catppuccin-frappe-green-cursors" },
 })
+
+if os.getenv("CUDA_CHACHE_PATH") == nil then
+	hl.env("CUDA_CHACHE_PATH", os.getenv("HOME") .. "/.cache/nv")
+end
 
 hl.config({
 	ecosystem = {
@@ -271,10 +290,8 @@ local function base_bindings()
 	hl.bind("ALT + XF86AudioNext", hl.dsp.exec_cmd("playerctl-wrapper position 5+"))
 	hl.bind("ALT + XF86AudioPrev", hl.dsp.exec_cmd("playerctl-wrapper position 5-"))
 	hl.bind("SHIFT + XF86AudioPlay", function()
-		local submap = hl.get_current_submap()
-
-		hl.dispatch(set_mode("passthru"))
-		hl.exec_cmd("select-player; hyprctl eval 'hl.dispatch(hl.dsp.submap(\"" .. submap .. "\"))'")
+		exec_then_mode("select-player", hl.get_current_submap())
+		set_mode("passthru")
 	end)
 
 	-- volume keys
@@ -288,7 +305,7 @@ local function base_bindings()
 	hl.bind(minor_change_mod .. "ALT + XF86AudioLowerVolume", change_input_volume("-1%"), { repeating = true })
 
 	hl.bind("XF86AudioMute", hl.dsp.exec_cmd("pactl set-sink-mute @DEFAULT_SINK@ toggle"))
-	hl.bind("ALT + XF86AudioMute", hl.dsp.exec_cmd("pactl set-source-mute @DEFAULT_SORUCE@ toggle"))
+	hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd("pactl set-source-mute @DEFAULT_SOURCE@ toggle"))
 
 	-- brightness keys
 	hl.bind("XF86MonBrightnessUp  ", change_brightness("5%+"), { repeating = true, locked = true })
@@ -417,7 +434,7 @@ local function screenshot()
 		selection = ""
 	elseif screenshot_mode.area == SCREENSHOT_AREA_MODES.selection then
 		selection = '-g "$(slurp)"'
-		hl.dispatch(set_mode("passthru"))
+		set_mode("passthru")
 	elseif screenshot_mode.area == SCREENSHOT_AREA_MODES.window then
 		local window = hl.get_active_window()
 
@@ -430,10 +447,10 @@ local function screenshot()
 		selection = '-g "' .. area_selection .. '"'
 	end
 
-	hl.exec_cmd("grim " .. selection .. dest .. "; hyprctl eval 'hl.dispatch(hl.dsp.submap('\\''normal'\\''))'")
+	exec_then_mode("grim " .. selection .. dest, "normal")
 
 	if screenshot_mode.area ~= SCREENSHOT_AREA_MODES.selection then
-		hl.dispatch(set_mode("normal"))
+		set_mode("normal")
 	end
 
 	remove_screenshot_mode_file()
@@ -445,19 +462,15 @@ hl.define_submap("screenshot", function()
 	base_bindings()
 
 	hl.bind("i", function()
-		hl.dispatch(set_mode("passthru"))
-		remove_screenshot_mode_file()
-	end)
-	hl.bind("a", function()
-		hl.dispatch(set_mode("passthru"))
+		set_mode("passthru")
 		remove_screenshot_mode_file()
 	end)
 	hl.bind("m", function()
-		hl.dispatch(set_mode("move/resize"))
+		set_mode("move/resize")
 		remove_screenshot_mode_file()
 	end)
 	hl.bind("SUPER_L", function()
-		hl.dispatch(set_mode("normal"))
+		set_mode("normal")
 		remove_screenshot_mode_file()
 	end)
 
@@ -495,16 +508,13 @@ hl.define_submap("normal", function()
 
 	base_bindings()
 
-	hl.bind("i", set_mode("passthru"))
-	hl.bind("a", set_mode("passthru"))
-	hl.bind("m", set_mode("move/resize"))
-	hl.bind("Print", set_mode("screenshot"))
+	hl.bind("i", set_mode_dsp_gen("passthru"))
+	hl.bind("m", set_mode_dsp_gen("move/resize"))
+	hl.bind("Print", set_mode_dsp_gen("screenshot"))
 	hl.bind("SHIFT + Print", screenshot)
 	hl.bind("ALT + Print", function()
-		local submap = hl.get_current_submap()
-
-		hl.dispatch(hl.dsp.submap("passthru"))
-		hl.exec_cmd("hyprpicker -a; hyprctl eval 'hl.dispatch(hl.dsp.submap(\"" .. submap .. "\"))'")
+		exec_then_mode("hyprpicker -a", hl.get_current_submap())
+		set_mode("passthru")
 	end)
 
 	hl.bind("SHIFT + ALT + q", hl.dsp.exit())
@@ -513,8 +523,8 @@ hl.define_submap("normal", function()
 	hl.bind("Return", hl.dsp.exec_cmd(term))
 	hl.bind("SHIFT + V", hl.dsp.exec_cmd("virt-manager"))
 	hl.bind("w", function()
-		hl.exec_cmd(launcher .. "; hyprctl eval 'hl.dispatch(hl.dsp.submap('\\''normal'\\''))'")
-		hl.dispatch(hl.dsp.submap("passthru"))
+		exec_then_mode(launcher, "normal")
+		set_mode("passthru")
 	end)
 
 	hl.bind("n", function()
@@ -522,14 +532,14 @@ hl.define_submap("normal", function()
 			term .. " --title impala -e impala",
 			{ float = true, size = { "(monitor_w * 0.3)", "(monitor_h * 0.4)" } }
 		)
-		hl.dispatch(hl.dsp.submap("passthru"))
+		set_mode("passthru")
 	end)
 	hl.bind("SHIFT + n", function()
 		hl.exec_cmd(
 			term .. " --title bluetui -e bluetui",
 			{ float = true, size = { "(monitor_w * 0.3)", "(monitor_h * 0.4)" } }
 		)
-		hl.dispatch(hl.dsp.submap("passthru"))
+		set_mode("passthru")
 	end)
 
 	hl.bind("q", hl.dsp.window.close())
@@ -586,15 +596,18 @@ hl.define_submap("normal", function()
 
 	hl.bind("SPACE", hl.dsp.exec_cmd("dunstctl close"))
 	hl.bind("SHIFT + SPACE", hl.dsp.exec_cmd("dunstctl close-all"))
-	hl.bind("CONTROL + SPACE", hl.dsp.exec_cmd("dunstctl context"))
+	hl.bind("CONTROL + SPACE", function()
+		hl.exec_cmd("dunstctl context")
+		set_mode("passthru")
+	end)
 
 	hl.bind("T", function()
 		hl.dispatch(hl.dsp.exec_cmd("set-timer"))
-		hl.dispatch(hl.dsp.submap("passthru"))
+		set_mode("passthru")
 	end)
 	hl.bind("SHIFT + T", function()
 		hl.dispatch(hl.dsp.exec_cmd("stop-timer"))
-		hl.dispatch(hl.dsp.submap("passthru"))
+		set_mode("passthru")
 	end)
 
 	for i = 1, 10 do
@@ -651,9 +664,8 @@ hl.define_submap("move/resize", function()
 
 	base_bindings()
 
-	hl.bind("i", set_mode("passthru"))
-	hl.bind("a", set_mode("passthru"))
-	hl.bind("SUPER_L", set_mode("normal"))
+	hl.bind("i", set_mode_dsp_gen("passthru"))
+	hl.bind("SUPER_L", set_mode_dsp_gen("normal"))
 
 	hl.bind("h", function()
 		dynamic_move("left", 10)
@@ -759,7 +771,7 @@ hl.define_submap("move/resize", function()
 end)
 
 hl.define_submap("passthru", function()
-	hl.bind("SUPER_L", set_mode("normal"))
+	hl.bind("SUPER_L", set_mode_dsp_gen("normal"))
 
 	base_bindings()
 end)

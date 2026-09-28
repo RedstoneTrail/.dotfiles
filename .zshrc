@@ -28,7 +28,7 @@ compinit
 HISTFILE=~/.histfile
 HISTSIZE=10000
 SAVEHIST=10000
-setopt nobeep notify extendedglob nonomatch autolist globcomplete noautoparamslash globdots rematchpcre interactivecomments
+setopt nobeep notify extendedglob nonomatch autolist globcomplete noautoparamslash globdots rematchpcre interactivecomments print_exit_value
 
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
@@ -183,6 +183,11 @@ setopt no_hist_verify
 
 export FUNCNEST=1000
 
+export VISUAL=nvim
+export EDITOR=nvim
+
+[ -z "$CUDA_CACHE_PATH" ] && export CUDA_CACHE_PATH=$HOME/.config/nv
+
 have_cmd date && export today=$(date '+%Y-%m-%d')
 
 create_prompt() {
@@ -255,23 +260,6 @@ fi
 # ask for tmux session when on vt or in termux
 if [ "$TERM" == "linux" ] || [ ! -z "$TERMUX_VERSION" ] || [ ! -z "$SSH_CONNECTION" ] && [ -z "$TMUX" ]
 then
-	# echo 'Enter a tmux session? (y)'
-	# read -k 1 want_tmux
-	# echo
-
-	# if [ -z "$want_tmux" ]
-	# then
-	# 	want_tmux='n'
-	# fi
-
-	# if [ "$want_tmux" == 'y' ]
-	# then
-	# 	echo 'Entering tmux session'
-	# 	exec tmux
-	# fi
-
-	# echo 'Not entering a tmux session'
-
 	ask_prompt "Enter a tmux session?" && exec tmux
 fi
 

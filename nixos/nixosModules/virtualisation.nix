@@ -9,7 +9,7 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
-    # might as well allow emulating every single available system
+    # might as well allow emulating every single available system, other than some that conflict and cause errors
     boot.binfmt.emulatedSystems = [
       "aarch64-linux"
       "aarch64_be-linux"
@@ -47,12 +47,15 @@ in
         enable = true;
         package = pkgs.waydroid-nftables;
       };
-      # docker = {
-      #   enable = true;
-      #   storageDriver = "btrfs";
-      # };
-      libvirtd.enable = true;
       spiceUSBRedirection.enable = true;
+      libvirtd = {
+        enable = true;
+        qemu = {
+          package = pkgs.qemu_kvm;
+          runAsRoot = true;
+          swtpm.enable = true;
+        };
+      };
     };
 
     environment.systemPackages = [
